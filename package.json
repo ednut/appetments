@@ -1,0 +1,92 @@
+{
+  "name": "appetment",
+  "version": "1.0.0",
+  "description": "Appertment App",
+  "main": "index.js",
+  "scripts": {
+    "dev": "next -p 3000",
+    "build": "next build",
+    "start": "next start"
+  },
+  "author": "Adegbite Babatunde",
+  "license": "ISC",
+  "dependencies": {
+    "@zeit/next-css": "^1.0.1",
+    "babel-core": "^7.0.0-bridge.0",
+    "babel-plugin-styled-components": "^1.7.1",
+    "isomorphic-unfetch": "^3.0.0",
+    "moment": "^2.24.0",
+    "next": "^7.0.0",
+    "nprogress": "^0.2.0",
+    "prop-types": "^15.6.2",
+    "react": "^16.5.2",
+    "react-adopt": "^0.6.0",
+    "react-big-calendar": "^0.20.3",
+    "react-dom": "^16.5.2",
+    "react-redux": "^6.0.0",
+    "react-responsive-modal": "^3.5.1",
+    "react-transition-group": "^2.5.0",
+    "redux": "^4.0.1",
+    "redux-logger": "^3.0.6",
+    "redux-thunk": "^2.3.0",
+    "styled-components": "^3.4.9",
+    "waait": "^1.0.2"
+  },
+  "devDependencies": {
+    "redux-devtools-extension": "^2.13.7"
+  },
+  "//": "This is our babel config, I prefer this over a .babelrc file",
+  "babel": {
+    "env": {
+      "development": {
+        "presets": [
+          "next/babel"
+        ],
+        "plugins": [
+          [
+            "styled-components",
+            {
+              "ssr": true,
+              "displayName": true
+            }
+          ]
+        ]
+      },
+      "production": {
+        "presets": [
+          "next/babel"
+        ],
+        "plugins": [
+          [
+            "styled-components",
+            {
+              "ssr": true,
+              "displayName": true
+            }
+          ]
+        ]
+      },
+      "test": {
+        "presets": [
+          [
+            "next/babel",
+            {
+              "preset-env": {
+                "modules": "commonjs"
+              }
+            }
+          ]
+        ],
+        "plugins": [
+          [
+            "styled-components",
+            {
+              "ssr": true,
+              "displayName": true
+            }
+          ]
+        ]
+      }
+    }
+  }
+}
