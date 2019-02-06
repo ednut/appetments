@@ -10,7 +10,7 @@ const NoData = styled.div`
   margin-top: ${height.spaceHeight};
   .icon {
     i {
-      font-size: 7rem;
+      font-size: 12rem;
       color: ${color.textLight};
     }
   }
