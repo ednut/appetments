@@ -1,6 +1,7 @@
 import { COMPANY_SUCCESS, COMPANY_ERROR, COMPANY_LOADING } from "../types";
 import { Company } from "../../services/userService";
 import Router from "next/router";
+import { success, error } from "./alert";
 
 const initialState = {};
 
@@ -40,11 +41,13 @@ export function createCompany(postData) {
           payload: user
         });
         console.log(user);
+        dispatch(success("Company created successfully"));
         dispatch({ type: COMPANY_LOADING, payload: false });
         Router.push("/dashboard");
       })
       .catch(err => {
-        console.log(err);
+        let e = err[Object.keys(err)[0]];
+        dispatch(error(e));
         dispatch({ type: COMPANY_LOADING, payload: false });
         dispatch({ type: COMPANY_ERROR, payload: err });
       });
