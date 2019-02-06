@@ -4,7 +4,7 @@
   "description": "Appertment App",
   "main": "index.js",
   "scripts": {
-    "dev": "next -p $PORT",
+    "dev": "next -p 3000",
     "build": "next build",
     "start": "next start",
     "heroku-postbuild": "next build"
