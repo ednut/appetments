@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { PropTypes } from "prop-types";
 import styled from "styled-components";
 import { shadowStyle } from "../components/styles/constant";
+import { clear } from "../modules/app/alert";
 
 const AlertPopup = styled.div`
   position: absolute;
@@ -10,13 +11,20 @@ const AlertPopup = styled.div`
   top: 1rem;
   right: 1rem;
   border: 1px solid transparent;
-  color: #155724;
-  background-color: #d4edda;
-  border-color: #c3e6cb;
   padding: 0.75rem 1.25rem;
   border-radius: 0.25rem;
   box-shadow: ${shadowStyle.shadow};
   display: flex;
+  &.success {
+    color: #155724;
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+  }
+  &.error {
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+  }
   .cancel {
     padding-left: 2rem;
     font-weight: 600;
@@ -27,29 +35,27 @@ const AlertPopup = styled.div`
 `;
 
 class Alert extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      active: true
-    };
-  }
+  remove = () => {
+    this.props.clear();
+  };
+
   componentDidMount() {
     setTimeout(() => {
-      this.setState({
-        active: false
-      });
-    }, 9000);
+      this.remove();
+    }, 20000);
   }
   render() {
-    if (this.state.active && this.props.alert) {
+    {
+      console.log;
+    }
+    if (this.props.error !== undefined) {
       return (
         <div>
-          <AlertPopup>
-            <span className="text">{this.props.alert}</span>
-            <span
-              className="cancel"
-              onClick={() => this.setState({ active: false })}
-            >
+          <AlertPopup
+            className={this.props.error.errType ? this.props.error.errType : ""}
+          >
+            <span className="text">{this.props.error.message}</span>
+            <span className="cancel" onClick={this.remove}>
               &times;
             </span>
           </AlertPopup>
@@ -65,7 +71,10 @@ Alert.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  alert: state.alert.message
+  error: state.alert.message
 });
 
-export default connect(mapStateToProps)(Alert);
+export default connect(
+  mapStateToProps,
+  { clear }
+)(Alert);

@@ -1,7 +1,11 @@
 import React, { Component } from "react";
 import styled from "styled-components";
+import { connect } from "react-redux";
+import { authUser } from "../services/authentication";
+import { logout } from "../services/userService";
+
 import Link from "../components/Link";
-import { color, height } from "../components/styles/constant";
+import { color, shadowStyle } from "../components/styles/constant";
 
 const AdminWrapper = styled.section`
   position: relative;
@@ -10,7 +14,7 @@ const AdminWrapper = styled.section`
   header {
     width: 100%;
     height: 6rem;
-    background-color: #303645;
+    background-color: #525ce9;
     box-shadow: 0 0.4rem 1rem 0 rgba(0, 0, 0, 0.1),
       0 0.4rem 2rem 0 rgba(0, 0, 0, 0.04);
     padding: 0 2rem;
@@ -90,7 +94,9 @@ const AdminWrapper = styled.section`
     left: 0;
     top: 6rem;
     bottom: 0;
-    background-color: ${color.adminColor};
+    background-color: ${color.whiteColor};
+    box-shadow: ${shadowStyle.shadow};
+    overflow: auto;
     ul {
       margin: 0;
       padding: 0;
@@ -100,9 +106,10 @@ const AdminWrapper = styled.section`
         position: relative;
         a {
           display: block;
-          color: ${color.whiteColor};
-          padding: 1rem 1.5rem;
+          color: ${color.textColor};
+          padding: 1.4rem 1.5rem 1rem 1.5rem;
           border-left: 4px solid transparent;
+          font-size: 1.5rem;
           span {
             display: inline-block;
             &.icon {
@@ -111,7 +118,7 @@ const AdminWrapper = styled.section`
                 padding-right: 1rem;
                 font-size: 1.7rem;
                 vertical-align: top;
-                color: rgba(239, 239, 239, 0.4);
+                color: ${color.textColor};
                 &.big {
                   font-size: 2rem;
                 }
@@ -124,7 +131,7 @@ const AdminWrapper = styled.section`
           }
           &.active {
             border-left: 4px solid ${color.whiteColor};
-            background-color: #43485d;
+            background-color: #ededed;
             a span.icon i {
               color: ${color.whiteColor};
             }
@@ -133,7 +140,7 @@ const AdminWrapper = styled.section`
               width: 0;
               position: absolute;
               right: 0;
-              top: 1.3rem;
+              top: 1.6rem;
               height: 0;
               border-top: 10px solid transparent;
               border-right: 12px solid ${color.bodyBackground};
@@ -144,7 +151,7 @@ const AdminWrapper = styled.section`
         .search {
           padding: 1rem;
           position: relative;
-          border-bottom: 1px solid rgba(239, 239, 239, 0.0784313725490196);
+          border-bottom: 1px solid ${color.borderColor};
           display: flex;
           width: 90%;
           margin: auto;
@@ -154,7 +161,7 @@ const AdminWrapper = styled.section`
             width: 95%;
             background-color: transparent;
             border: none;
-            color: #fbfbfb;
+            color: ${color.textColor};
             outline: none;
           }
           span.icon {
@@ -167,7 +174,7 @@ const AdminWrapper = styled.section`
           }
         }
         &:hover {
-          background-color: #43485d;
+          background-color: #ededed;
         }
         &.search {
           &:hover {
@@ -197,9 +204,12 @@ class AdminContainer extends Component {
     };
   }
 
+  componentDidMount() {
+    this.props.authUser();
+  }
+
   handleClick = () => {
     if (!this.state.popupVisible) {
-      // attach/remove event handler
       document.addEventListener("click", this.handleOutsideClick, false);
     } else {
       document.removeEventListener("click", this.handleOutsideClick, false);
@@ -211,13 +221,9 @@ class AdminContainer extends Component {
   };
 
   handleOutsideClick = e => {
-    // ignore clicks on the component itself
-    // if (this.node.contains(e.target)) {
-    //   return;
-    // }
-
     this.handleClick();
   };
+
   render() {
     return (
       <AdminWrapper>
@@ -265,13 +271,13 @@ class AdminContainer extends Component {
                           </Link>
                         </li>
                         {/* <li>
-                          <Link href="/">
-                            <span>Contact Support</span>
-                          </Link>
-                        </li> */}
+                            <Link href="/">
+                              <span>Contact Support</span>
+                            </Link>
+                          </li> */}
                         <li>
-                          <Link href="/">
-                            <span>Logout</span>
+                          <Link href="/login">
+                            <span onClick={logout()}>Logout</span>
                           </Link>
                         </li>
                       </ul>
@@ -343,7 +349,7 @@ class AdminContainer extends Component {
               </Link>
             </li>
             <li>
-              <Link activeClassName="active" href="/staff">
+              <Link activeClassName="active" href="/staff-members">
                 <a>
                   <span className="icon">
                     <i className="material-icons"> supervisor_account </i>
@@ -410,4 +416,11 @@ class AdminContainer extends Component {
   }
 }
 
-export default AdminContainer;
+const mapStateToProps = state => ({
+  isAuthenticated: state.auth.isAuthenticated
+});
+
+export default connect(
+  mapStateToProps,
+  { authUser }
+)(AdminContainer);

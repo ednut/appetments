@@ -17,7 +17,7 @@ class Login extends Component {
     super(props);
     // Set the initial state to the value expected from the form submission
     this.state = {
-      email: "",
+      username: "",
       password: "",
       submitted: false
     };
@@ -29,14 +29,14 @@ class Login extends Component {
     Router.onRouteChangeStart = () => {
       NProgress.start();
     };
-    const { email, password } = this.state;
+    const { username, password } = this.state;
     this.setState({ submitted: true });
     const data = {
-      email: email,
+      username: username,
       password: password
     };
-    if (email) {
-      console.log("login called");
+    if (username && password) {
+      console.log(data);
       this.props.loginRequest(data);
     }
   };
@@ -48,7 +48,7 @@ class Login extends Component {
   };
 
   render() {
-    const { email, password, submitted } = this.state;
+    const { username, password, submitted } = this.state;
     return (
       <Wrap>
         <div className="caption">Login to your account</div>
@@ -60,10 +60,10 @@ class Login extends Component {
                 <input
                   type="text"
                   onChange={this.handleChange}
-                  name="email"
+                  name="username"
                   placeholder="Enter Your Email"
                 />
-                {submitted && !email && (
+                {submitted && !username && (
                   <div className="error">Email is required</div>
                 )}
               </div>
@@ -86,9 +86,9 @@ class Login extends Component {
                 className="button full"
               >
                 {" "}
-                Login
+                {this.props.loading ? "Loading...." : "Login"}
               </Button>
-              {/* <span>{this.props.error.message}</span> */}
+              <span>{this.props.error}</span>
             </form>
           </FormInput>
         </div>
@@ -105,11 +105,11 @@ class Login extends Component {
 
 Login.propTypes = {
   loginRequest: PropTypes.func.isRequired,
-  error: PropTypes.string.isRequired
+  error: PropTypes.string
 };
 
 const mapStateToProps = state => ({
-  error: state.login.error
+  loading: state.login.loading
 });
 
 export default connect(

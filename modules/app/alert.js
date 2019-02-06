@@ -1,4 +1,4 @@
-import { ALERT_SUCCESS, ALERT_ERROR } from "../types";
+import { ALERT_SUCCESS, ALERT_ERROR, ALERT_CLEAR } from "../types";
 
 // Reducer
 
@@ -14,6 +14,8 @@ export default function(state = "", action) {
         type: "ALERT_ERROR",
         message: action.payload
       };
+    case ALERT_CLEAR:
+      return {};
     default:
       return state;
   }
@@ -22,9 +24,22 @@ export default function(state = "", action) {
 // Actions
 
 export function success(message) {
-  return dispatch => dispatch({ type: ALERT_SUCCESS, payload: message });
+  return dispatch =>
+    dispatch({
+      type: ALERT_SUCCESS,
+      payload: { errType: "success", message: message }
+    });
+}
+
+export function clear() {
+  return dispatch => dispatch({ type: ALERT_CLEAR });
 }
 
 export function error(message) {
-  return dispatch => dispatch({ type: ALERT_ERROR, payload: message });
+  return dispatch => {
+    dispatch({
+      type: ALERT_ERROR,
+      payload: { errType: "error", message: message }
+    });
+  };
 }

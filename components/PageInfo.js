@@ -18,7 +18,7 @@ const PageInfo = () => {
               <button className="button">Sign up for free</button>
             </Link>
           </div>
-          <img src="static/images/pets.png" alt="" />
+          <div className="img" />
         </div>
       </section>
       <section className="features">
@@ -115,7 +115,7 @@ const PageInfo = () => {
             <div className="col-md-4">
               <div className="pricing-wrap m-auto">
                 <div className="title">Start</div>
-                <div className="amount">₦5,000</div>
+                <div className="amount">$500</div>
                 <div className="benefit">
                   <ul>
                     <li>Lorem ipsum dolor sit amet consectetur.</li>
@@ -139,7 +139,7 @@ const PageInfo = () => {
             <div className="col-md-4">
               <div className="pricing-wrap more-shadow m-auto">
                 <div className="title">Partner</div>
-                <div className="amount">₦25,000</div>
+                <div className="amount">$1,500</div>
                 <div className="benefit">
                   <ul>
                     <li>Lorem ipsum dolor sit amet consectetur.</li>
@@ -163,7 +163,7 @@ const PageInfo = () => {
             <div className="col-md-4">
               <div className="pricing-wrap more-shadow m-auto">
                 <div className="title">Business</div>
-                <div className="amount">₦25,000</div>
+                <div className="amount">$2,500</div>
                 <div className="benefit">
                   <ul>
                     <li>Lorem ipsum dolor sit amet consectetur.</li>
@@ -203,8 +203,7 @@ const PageInfo = () => {
                 complete solution for your business. ”
               </p>
               <footer className="blockquote-footer">
-                Sandra O. David{" "}
-                <cite title="Source Location">Lekki, Lagos</cite>
+                William O. James <cite title="Source Location">Queensland</cite>
               </footer>
             </blockquote>
           </div>

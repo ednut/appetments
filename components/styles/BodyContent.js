@@ -21,12 +21,13 @@ const BodyContent = styled.div`
       font-weight: 500;
       padding-top: 10rem;
     }
-    img {
-      position: absolute;
-      bottom: -15px;
-      left: 20%;
-      /* width: 60%; */
-      width: 57vw;
+    .img {
+      position: relative;
+      background-image: url("static/images/pets.png");
+      height: 52vh;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: contain;
     }
     .page-caption {
       text-align: center;

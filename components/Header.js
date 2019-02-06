@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Link from "next/link";
 import Nav from "./styles/Nav";
 import Button from "../components/styles/Button";
+import Cookies from "js-cookie";
 
 const Header = props => (
   <Nav>
@@ -34,9 +35,15 @@ const Header = props => (
               </Link>
             </li>
             <li>
-              <Link href="/login">
-                <a>Login</a>
-              </Link>
+              {Cookies.get("token") === undefined ? (
+                <Link href="/login">
+                  <a>Login</a>
+                </Link>
+              ) : (
+                <Link href="/dashboard">
+                  <a>Dashboard</a>
+                </Link>
+              )}
             </li>
             <li className="signup">
               <Link href="/signup">

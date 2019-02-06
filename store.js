@@ -4,12 +4,16 @@ import { createLogger } from "redux-logger";
 import { combineReducers } from "redux";
 import loginReducer from "./modules/app/login";
 import signupReducer from "./modules/app/signup";
+import companyReducer from "./modules/app/company";
 import alertReducer from "./modules/app/alert";
+import authentication from "./services/authentication";
 
 export const rootReducer = combineReducers({
   login: loginReducer,
   signup: signupReducer,
-  alert: alertReducer
+  company: companyReducer,
+  alert: alertReducer,
+  auth: authentication
 });
 
 const initialState = {};

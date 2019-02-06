@@ -1,16 +1,20 @@
-import { SIGNUP_SUCCESS, SIGNUP_ERROR } from "../types";
+import { SIGNUP_SUCCESS, SIGNUP_ERROR, SIGNUP_LOADING } from "../types";
 import { Signup } from "../../services/userService";
 import Router from "next/router";
+import Cookies from "js-cookie";
+import { success, error } from "./alert";
 
-const initialState = {
-  user: {},
-  error: {}
-};
+const initialState = {};
 
 // Reducer
 
 export default function(state = initialState, action) {
   switch (action.type) {
+    case SIGNUP_LOADING:
+      return {
+        ...state,
+        loading: action.payload
+      };
     case SIGNUP_SUCCESS:
       return {
         ...state,
@@ -30,6 +34,7 @@ export default function(state = initialState, action) {
 
 export function signupRequest(postData) {
   return dispatch => {
+    dispatch({ type: SIGNUP_LOADING, payload: true });
     Signup(postData)
       .then(user => {
         dispatch({
@@ -37,20 +42,15 @@ export function signupRequest(postData) {
           payload: user
         });
         console.log(user);
+        dispatch(success("Signup Was Successful, input company"));
+        dispatch({ type: SIGNUP_LOADING, payload: false });
+        Cookies.set("token", JSON.stringify(user.auth_token));
         Router.push("/register-company");
-
-        // const loginDetails = {
-        //   "user-name": postData.email,
-        //   "password": postData.password
-        // }
-        // const requestOptions = {
-        //   method: "POST",
-        //   headers: { "Content-Type": "application/json" },
-        //   body: JSON.stringify(loginDetails)
-        // };
       })
       .catch(err => {
-        console.log(err);
+        let e = err[Object.keys(err)[0]][0];
+        dispatch(error(e));
+        dispatch({ type: SIGNUP_LOADING, payload: false });
         dispatch({ type: SIGNUP_ERROR, payload: err });
       });
   };

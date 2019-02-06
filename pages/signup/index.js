@@ -35,7 +35,7 @@ class Signup extends Component {
       console.log(data);
       this.props.signupRequest(data);
     }
-    e.currentTarget.reset();
+    // e.currentTarget.reset();
   };
 
   handleChange = e => {
@@ -115,8 +115,9 @@ class Signup extends Component {
                     type="submit"
                     className="button full"
                   >
-                    Signup
+                    {this.props.loading ? "Loading...." : "Signup"}
                   </Button>
+                  {/* <span>{this.props.error ? this.props.error : null}</span> */}
                 </div>
               </div>
             </form>
@@ -134,7 +135,8 @@ class Signup extends Component {
 }
 
 const mapStateToProps = state => ({
-  error: state.signup.error
+  error: state.signup.error,
+  loading: state.signup.loading
 });
 
 export default connect(

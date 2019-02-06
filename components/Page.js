@@ -5,6 +5,8 @@ import NProgress from "nprogress";
 import Meta from "./Meta";
 import Alert from "../components/Alert";
 
+NProgress.configure({ showSpinner: false });
+
 Router.onRouteChangeStart = () => {
   NProgress.start();
 };
@@ -31,14 +33,16 @@ injectGlobal`
     }
 
     body{
-        font-family: 'Poppins', sans-serif;
-        /* font-family: 'Roboto', sans-serif; */
+        /* font-family: 'Poppins', sans-serif; */
+        font-family: 'Fira Sans', sans-serif;
         font-weight: 400;
         line-height: 1.7;
         box-sizing: border-box;
         font-size: 1.4rem;
     }
-
+    .logo{
+      font-family: "Poppins", sans-serif;
+    }
 `;
 
 class Page extends Component {

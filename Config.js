@@ -1,6 +1,5 @@
-// export const LoginAPI = "http://46.101.224.173:5000/endpoints/user/login";
-
-// this is a test successful login API: "email": "peter@klaven" "password": "cityslicka"
-export const LoginAPI = "https://reqres.in/api/login";
-export const SignupAPI = "http://46.101.224.173/users/";
-// export const SignupAPI = "https://reqres.in/api/register";
+export const SignupAPI = "https://azultech.net/users/";
+export const LoginAPI = "https://azultech.net/login/";
+export const ComapanyAPI = "https://azultech.net/company/";
+export const LocationsAPI = "https://azultech.net/locations/";
+export const StaffAPI = "https://azultech.net/staff/";

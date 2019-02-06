@@ -1,5 +1,6 @@
-import { LOGIN_SUCCESS, LOGIN_ERROR } from "../types";
+import { LOGIN_SUCCESS, LOGIN_ERROR, LOGIN_LOADING } from "../types";
 import { Login } from "../../services/userService";
+import Cookies from "js-cookie";
 import Router from "next/router";
 import { success, error } from "./alert";
 
@@ -12,6 +13,11 @@ const initialState = {
 
 export default function(state = initialState, action) {
   switch (action.type) {
+    case LOGIN_LOADING:
+      return {
+        ...state,
+        loading: action.payload
+      };
     case LOGIN_SUCCESS:
       console.log("called login reducer");
       return {
@@ -32,6 +38,7 @@ export default function(state = initialState, action) {
 
 export function loginRequest(postData) {
   return dispatch => {
+    dispatch({ type: LOGIN_LOADING, payload: true });
     Login(postData).then(
       user => {
         dispatch({
@@ -39,30 +46,20 @@ export function loginRequest(postData) {
           payload: user
         });
         console.log(user);
+        dispatch({ type: LOGIN_LOADING, payload: false });
         Router.push("/dashboard");
-        localStorage.setItem("user", JSON.stringify(postData));
+        Cookies.set("token", JSON.stringify(user.auth_token));
         dispatch(success("Login Was Successful"));
       },
       err => {
-        console.log(err);
+        let e = err[Object.keys(err)[0]];
+        dispatch(error(e));
+        dispatch({ type: LOGIN_LOADING, payload: false });
         dispatch({ type: LOGIN_ERROR, payload: err });
         if (err.message) {
           dispatch(error(err.message));
         }
-        dispatch(error("Your login wasn't successful"));
       }
     );
   };
 }
-
-// async function Login(postData) {
-//   const requestOptions = {
-//     method: "POST",
-//     headers: { "Content-Type": "application/json" },
-//     body: JSON.stringify(postData)
-//   };
-//   const res = await fetch(LoginAPI, requestOptions);
-//   const user = await res.json();
-
-//   return user;
-// }
