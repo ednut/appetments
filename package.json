@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "next -p 3000",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "heroku-postbuild": "next build"
   },
   "author": "Adegbite Babatunde",
   "license": "ISC",
