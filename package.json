@@ -4,9 +4,9 @@
   "description": "Appertment App",
   "main": "index.js",
   "scripts": {
-    "dev": "next -p $PORT",
+    "dev": "next -p 3000",
     "build": "next build",
-    "start": "next start",
+    "start": "next start -p $PORT",
     "heroku-postbuild": "next build"
   },
   "author": "Adegbite Babatunde",
