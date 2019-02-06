@@ -3,10 +3,10 @@ import { connect } from "react-redux";
 import { PropTypes } from "prop-types";
 import styled from "styled-components";
 import { shadowStyle } from "../components/styles/constant";
-import { clear } from "../modules/app/alert";
+import { clear } from "../modules/alert";
 
 const AlertPopup = styled.div`
-  position: absolute;
+  position: fixed;
   z-index: 100;
   top: 1rem;
   right: 1rem;
@@ -40,9 +40,15 @@ class Alert extends Component {
   };
 
   componentDidMount() {
-    setTimeout(() => {
+    this.timeOut = setTimeout(() => {
       this.remove();
-    }, 20000);
+    }, 10000);
+  }
+
+  componentDidUpdate() {
+    if (this.timeOut) {
+      this.timeOut = 0;
+    }
   }
   render() {
     {

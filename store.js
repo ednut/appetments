@@ -1,23 +1,11 @@
 import { createStore, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
 import { createLogger } from "redux-logger";
-import { combineReducers } from "redux";
-import loginReducer from "./modules/app/login";
-import signupReducer from "./modules/app/signup";
-import companyReducer from "./modules/app/company";
-import alertReducer from "./modules/app/alert";
-import authentication from "./services/authentication";
+import { rootReducer } from "./rootReducer";
 
-export const rootReducer = combineReducers({
-  login: loginReducer,
-  signup: signupReducer,
-  company: companyReducer,
-  alert: alertReducer,
-  auth: authentication
-});
+const loggerMiddleware = createLogger({ collapsed: true });
 
 const initialState = {};
-const loggerMiddleware = createLogger({ collapsed: true });
 
 const store = createStore(
   rootReducer,

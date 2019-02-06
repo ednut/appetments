@@ -47,6 +47,7 @@ const BodyContent = styled.div`
       background-color: ${color.brandColor};
       color: ${color.whiteColor};
       outline: none;
+      cursor: pointer;
     }
   }
   section.features {

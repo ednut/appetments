@@ -2,7 +2,7 @@
 
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { loginRequest } from "../../modules/app/login";
+import { loginRequest } from "../../modules/login";
 import { PropTypes } from "prop-types";
 import Router from "next/router";
 import NProgress from "nprogress";

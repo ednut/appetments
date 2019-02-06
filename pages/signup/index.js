@@ -3,7 +3,7 @@
 import React, { Component } from "react";
 import Link from "next/link";
 import { connect } from "react-redux";
-import { signupRequest } from "../../modules/app/signup";
+import { signupRequest } from "../../modules/signup";
 import Wrap from "../../components/FormWrap";
 import FormInput from "../../components/styles/FormInput";
 import Button from "../../components/styles/Button";

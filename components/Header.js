@@ -34,24 +34,30 @@ const Header = props => (
                 <a>Contact us</a>
               </Link>
             </li>
-            <li>
-              {Cookies.get("token") === undefined ? (
-                <Link href="/login">
-                  <a>Login</a>
-                </Link>
-              ) : (
+            {Cookies.get("token") === undefined ? (
+              <React.Fragment>
+                <li>
+                  <Link href="/login">
+                    <a>Login</a>
+                  </Link>
+                </li>
+                <li className="signup">
+                  <Link href="/signup">
+                    <Button noHover withBorder radius={`3rem`}>
+                      Sign up
+                    </Button>
+                  </Link>
+                </li>
+              </React.Fragment>
+            ) : (
+              <li className="signup">
                 <Link href="/dashboard">
-                  <a>Dashboard</a>
+                  <Button noHover withBorder radius={`3rem`}>
+                    Dashboard
+                  </Button>
                 </Link>
-              )}
-            </li>
-            <li className="signup">
-              <Link href="/signup">
-                <Button noHover withBorder radius={`3rem`}>
-                  Sign up
-                </Button>
-              </Link>
-            </li>
+              </li>
+            )}
           </ul>
         </div>
       </div>

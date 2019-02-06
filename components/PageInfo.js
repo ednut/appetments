@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { color } from "../components/styles/constant";
 import Button from "../components/styles/Button";
+import Cookies from "js-cookie";
 
 const PageInfo = () => {
   return (
@@ -14,9 +15,15 @@ const PageInfo = () => {
             Simple, flexible and powerful booking software for your business
           </div>
           <div className="text-center">
-            <Link href="/signup">
-              <button className="button">Sign up for free</button>
-            </Link>
+            {Cookies.get("token") === undefined ? (
+              <Link href="/signup">
+                <button className="button">Get Started</button>
+              </Link>
+            ) : (
+              <Link href="/dashboard">
+                <button className="button">View Your Dashboard</button>
+              </Link>
+            )}
           </div>
           <div className="img" />
         </div>

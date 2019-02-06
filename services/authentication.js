@@ -1,6 +1,6 @@
 import Cookies from "js-cookie";
 import Router from "next/router";
-import { error } from "../modules/app/alert";
+import { error } from "../modules/alert";
 
 export default function(state = { authenticate: true }, action) {
   switch (action.type) {

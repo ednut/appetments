@@ -65,6 +65,7 @@ const Nav = styled.header`
             display: inline;
             padding: 1rem 2rem;
             border-radius: 2rem;
+            outline: none;
             &:hover {
               border: 0.1rem solid transparent;
               color: ${color.whiteColor};

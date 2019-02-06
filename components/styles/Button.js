@@ -31,6 +31,9 @@ const button = styled.button`
         box-shadow: none;
       `};
   }
+  &:focus {
+    outline: none;
+  }
   &:active {
     transform: translateY(-0.1rem);
     box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2);
