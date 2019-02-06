@@ -43,9 +43,9 @@ const PageInfo = () => {
                 <div className="title">Schedule Appointments</div>
                 <div className="description">
                   Appetments is a clean, simple tool with powerful calendar
-                  scheduling features that can handle all your salon appointment
-                  bookings. Features include online booking, pos with payments
-                  and mobile apps.
+                  scheduling features that can handle all your veterinary
+                  appointment bookings. Features include online booking, pos
+                  with payments and mobile apps.
                 </div>
               </div>
 
@@ -55,9 +55,10 @@ const PageInfo = () => {
                 </div>
                 <div className="title">Manage your clients</div>
                 <div className="description">
-                  Maintain client relationships with advanced salon software
-                  management features with detailed client appointments history,
-                  booking preferences, future bookings and contact details.
+                  Maintain client relationships with advanced veterinary
+                  software management features with detailed client appointments
+                  history, booking preferences, future bookings and contact
+                  details.
                 </div>
               </div>
 
@@ -69,7 +70,7 @@ const PageInfo = () => {
                 <div className="description">
                   Send automated reminders and custom messages to clients about
                   appointments and notify them of any changes. Appetment
-                  Scheduling app is the best software for bussiness.
+                  Scheduling app is the best software for veterinary bussiness.
                 </div>
               </div>
 
@@ -106,9 +107,9 @@ const PageInfo = () => {
                 <div className="title">Sales & Products</div>
                 <div className="description">
                   Appetments has point-of-sale built-in, takes care of your
-                  salon and Spa pos sales transactions, invoicing, receipts,
-                  taxes and retail product management. Appetments POS is
-                  advanced and fully integrated with salon scheduling app.
+                  veterinary pos sales transactions, invoicing, receipts, taxes
+                  and retail product management. Appetments POS is advanced and
+                  fully integrated with veterinary scheduling app.
                 </div>
               </div>
             </div>
@@ -120,7 +121,7 @@ const PageInfo = () => {
           <div className="section-title">Choose Pricing Plan</div>
           <div className="row">
             <div className="col-md-4">
-              <div className="pricing-wrap m-auto">
+              <div className="pricing-wrap more-shadow m-auto">
                 <div className="title">Start</div>
                 <div className="amount">$500</div>
                 <div className="benefit">
@@ -144,7 +145,7 @@ const PageInfo = () => {
             </div>
 
             <div className="col-md-4">
-              <div className="pricing-wrap more-shadow m-auto">
+              <div className="pricing-wrap m-auto">
                 <div className="title">Partner</div>
                 <div className="amount">$1,500</div>
                 <div className="benefit">
