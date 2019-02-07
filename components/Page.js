@@ -42,6 +42,12 @@ injectGlobal`
     }
     .logo{
       font-family: "Poppins", sans-serif;
+      a{
+        outline: none;
+      }
+      a:focus{
+        outline: none;
+      }
     }
 `;
 
