@@ -25,19 +25,22 @@ const FilterSection = styled.div`
 const ContentWrap = styled.div`
   table {
     background-color: ${color.whiteColor};
-    box-shadow: ${shadowStyle.lightShadow};
+    box-shadow: 0 2px 5px 0 rgba(164, 173, 186, 0.25);
     border-bottom: none;
+    border-radius: 0.2rem;
+    tr {
+      border-bottom: 1px solid #eef0f2;
+    }
     th {
-      padding: 1rem;
+      padding: 1.7rem 3rem;
       color: ${color.textLight};
     }
     td {
-      padding: 2rem 1rem;
-      border-top: 1px solid ${color.borderColor};
+      padding: 1.7rem 3rem;
       color: ${color.textColor};
     }
     tbody tr:hover {
-      box-shadow: ${shadowStyle.shadow};
+      background-color: #fbfbfb;
       cursor: pointer;
     }
   }

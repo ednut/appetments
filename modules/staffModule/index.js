@@ -1,4 +1,4 @@
-import { createStaff, getAllStaffs } from "./staffServices";
+import { createStaff, getAllStaffs, update } from "./staffServices";
 
 import { success, error } from "../alert";
 import {
@@ -45,12 +45,13 @@ export function createStaffRequest(data) {
     dispatch({ type: STAFF_LOADING, payload: true });
     createStaff(data)
       .then(staff => {
-        dispatch(success("Staff created successfully"));
-        dispatch({ type: STAFF_LOADING, payload: false });
         dispatch({
           type: GET_STAFF,
           payload: staff
         });
+        console.log(staff);
+        dispatch(success("Staff created successfully"));
+        dispatch({ type: STAFF_LOADING, payload: false });
       })
       .catch(err => {
         let e = err[Object.keys(err)[0]];
@@ -70,6 +71,24 @@ export function getAllStaffsRequest() {
           type: GET_ALL_STAFFS,
           payload: staffs
         });
+        dispatch({ type: STAFF_LOADING, payload: false });
+      })
+      .catch(err => {
+        let e = err[Object.keys(err)[0]];
+        dispatch(error(e));
+        dispatch({ type: STAFF_LOADING, payload: false });
+        dispatch({ type: STAFF_ERROR, payload: err });
+      });
+  };
+}
+
+export function updateStaffRequest(data) {
+  return dispatch => {
+    dispatch({ type: STAFF_LOADING, payload: true });
+    update(data)
+      .then(staff => {
+        console.log(staff);
+        dispatch(success("Staff updated successfully"));
         dispatch({ type: STAFF_LOADING, payload: false });
       })
       .catch(err => {

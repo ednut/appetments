@@ -62,7 +62,7 @@ class Setup extends Component {
                       </Link>
                     </li>
                     <li>
-                      <Link href="#">
+                      <Link href="/locations">
                         <a>Locations</a>
                       </Link>
                     </li>

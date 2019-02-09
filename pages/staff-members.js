@@ -5,29 +5,37 @@ import styled from "styled-components";
 import { shadowStyle, color, height } from "../components/styles/constant";
 import {
   getAllStaffsRequest,
-  createStaffRequest
+  createStaffRequest,
+  updateStaffRequest
 } from "../modules/staffModule";
 import SpinerWrap from "../components/Spinner";
 import Button from "../components/styles/Button";
-import Modal from "react-responsive-modal";
-import FormInput from "../components/styles/FormInput";
+import CreateStaffModal from "./staff/createStaffModal";
+import UpdateStaffModal from "./staff/updateStaffModal";
 
 const ContentWrap = styled.div`
+  .action-wrap {
+    margin-bottom: ${height.gutterHeight};
+    text-align: right;
+  }
   table {
     background-color: ${color.whiteColor};
-    box-shadow: ${shadowStyle.lightShadow};
+    box-shadow: 0 2px 5px 0 rgba(164, 173, 186, 0.25);
     border-bottom: none;
+    border-radius: 0.2rem;
+    tr {
+      border-bottom: 1px solid #eef0f2;
+    }
     th {
-      padding: 1rem;
+      padding: 1.7rem 3rem;
       color: ${color.textLight};
     }
     td {
-      padding: 2rem 1rem;
-      border-top: 1px solid ${color.borderColor};
+      padding: 1.7rem 3rem;
       color: ${color.textColor};
     }
     tbody tr:hover {
-      box-shadow: ${shadowStyle.shadow};
+      background-color: #fbfbfb;
       cursor: pointer;
     }
   }
@@ -42,20 +50,15 @@ class StaffMembers extends Component {
       password: "",
       email: "",
       submitted: false,
-      open: false
+      openCreateStaff: false,
+      openUpdateStaff: false
     };
   }
   componentDidMount() {
     this.props.getAllStaffsRequest();
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.staff && this.props.staffs) {
-      // this.props.getAllStaffsRequest();
-    }
-  }
-
-  handleSubmit = e => {
+  handleCreateSubmit = e => {
     e.preventDefault();
     const { first_name, last_name, password, email } = this.state;
     this.setState({ submitted: true });
@@ -67,6 +70,23 @@ class StaffMembers extends Component {
     };
     if (first_name && last_name && password && email) {
       this.props.createStaffRequest(data);
+      this.setState({ openCreateStaff: false });
+    }
+  };
+
+  handleUpdateSubmit = e => {
+    e.preventDefault();
+    const { first_name, last_name, password, email } = this.state;
+    this.setState({ submitted: true });
+    const data = {
+      first_name: first_name,
+      last_name: last_name,
+      password: password,
+      email: email
+    };
+    if (first_name && last_name && password && email) {
+      this.props.updateStaffRequest(data);
+      this.setState({ openUpdateStaff: false });
     }
   };
 
@@ -74,121 +94,71 @@ class StaffMembers extends Component {
     this.setState({
       [e.target.name]: e.target.value
     });
+    console.log({ [e.target.name]: e.target.value });
+    console.log(this.state);
   };
 
-  onOpenModal = () => {
-    this.setState({ open: true });
+  onOpenCreateModal = () => {
+    this.setState({ openCreateStaff: true });
   };
 
-  onOpenModal = () => {
-    this.setState({ open: true });
+  onCloseCreateModal = () => {
+    this.setState({ openCreateStaff: false });
   };
 
-  onCloseModal = () => {
-    this.setState({ open: false });
+  onOpenUpdateModal = () => {
+    this.setState({ openUpdateStaff: true });
   };
 
-  ready = () => {
-    if (this.props.staffs) {
-      return true;
-    } else {
-      return <SpinerWrap />;
-    }
+  onCloseUpdateModal = () => {
+    this.setState({ openUpdateStaff: false });
+  };
+
+  updateStaff = staff => {
+    this.setState({
+      first_name: staff.first_name,
+      last_name: staff.last_name,
+      password: staff.password,
+      email: staff.email,
+      openUpdateStaff: true
+    });
+    console.log(this.state);
   };
 
   render() {
-    const {
-      first_name,
-      last_name,
-      email,
-      password,
-      submitted,
-      open
-    } = this.state;
     if (this.props.staffs !== undefined) {
       return (
         <Staff>
-          {this.props.loading === true ? <SpinerWrap /> : null}
-          <Modal open={open} onClose={this.onCloseModal}>
-            <FormInput>
-              <form onSubmit={this.handleSubmit}>
-                <div className="form-wrap">
-                  <label htmlFor="">First Name</label>
-                  <input
-                    type="text"
-                    onChange={this.handleChange}
-                    name="first_name"
-                    placeholder="Enter Your First Name"
-                  />
-                  {submitted && !first_name && (
-                    <div className="error">First name is required</div>
-                  )}
-                </div>
-                <div className="form-wrap">
-                  <label htmlFor="">Last Name</label>
-                  <input
-                    type="text"
-                    name="last_name"
-                    onChange={this.handleChange}
-                    placeholder="Enter Your Last Name"
-                  />
-                  {submitted && !last_name && (
-                    <div className="error">Last name is required</div>
-                  )}
-                </div>
-                <div className="form-wrap">
-                  <label htmlFor="">Email</label>
-                  <input
-                    type="email"
-                    name="email"
-                    onChange={this.handleChange}
-                    placeholder="Enter Your email"
-                  />
-                  {submitted && !email && (
-                    <div className="error">email is required</div>
-                  )}
-                </div>
-                <div className="form-wrap">
-                  <label htmlFor="">Password</label>
-                  <input
-                    type="password"
-                    name="password"
-                    onChange={this.handleChange}
-                    placeholder="Enter Your password"
-                  />
-                  {submitted && !password && (
-                    <div className="error">password is required</div>
-                  )}
-                </div>
-
-                <Button
-                  buttonColor={color.brandColor}
-                  textColor={color.whiteColor}
-                  type="submit"
-                  className="button full"
-                  onClick={this.onCloseModal}
-                >
-                  {" "}
-                  {this.props.loading ? "Loading...." : "Create Staff"}
-                </Button>
-                <span>{this.props.error}</span>
-              </form>
-            </FormInput>
-          </Modal>
-          <div className="col-md-12">
-            <Button
-              buttonColor={color.brandColor}
-              textColor={color.whiteColor}
-              className="float-right"
-              onClick={this.onOpenModal}
-            >
-              Add New Staff
-            </Button>
-            <br />
-            <br />
-            <br />
-          </div>
           <ContentWrap>
+            {this.props.loading === true ? <SpinerWrap /> : null}
+
+            <CreateStaffModal
+              modalState={this.state}
+              onCloseModal={this.onCloseCreateModal}
+              handleChange={this.handleChange}
+              handleSubmit={this.handleCreateSubmit}
+              loading={this.props.loading}
+              title={"Create Staff"}
+            />
+            <UpdateStaffModal
+              modalState={this.state}
+              onCloseModal={this.onCloseUpdateModal}
+              handleChange={this.handleChange}
+              handleSubmit={this.handleUpdateSubmit}
+              loading={this.props.loading}
+              title={"Update Staff"}
+            />
+
+            <div className="action-wrap">
+              <Button
+                buttonColor={color.brandColor}
+                textColor={color.whiteColor}
+                onClick={this.onOpenCreateModal}
+              >
+                Add New Staff
+              </Button>
+            </div>
+
             <table className="table table-borderless">
               <thead>
                 <tr>
@@ -198,20 +168,34 @@ class StaffMembers extends Component {
                 </tr>
               </thead>
               <tbody>
-                {this.props.staffs.map(staff => (
-                  <tr key={staff.id}>
-                    <td>{staff.first_name}</td>
-                    <td>{staff.last_name}</td>
-                    <td>{staff.email}</td>
+                {this.props.staffs.map(x => (
+                  <tr
+                    key={x.id}
+                    onClick={() => {
+                      this.updateStaff(x);
+                    }}
+                  >
+                    <td>{x.first_name}</td>
+                    <td>{x.last_name}</td>
+                    <td>{x.email}</td>
                   </tr>
                 ))}
               </tbody>
             </table>
+            {this.props.staffs && this.props.staffs.length < 0
+              ? "No data"
+              : null}
           </ContentWrap>
         </Staff>
       );
     } else {
-      return <SpinerWrap />;
+      return (
+        <Staff>
+          <ContentWrap>
+            <SpinerWrap />
+          </ContentWrap>
+        </Staff>
+      );
     }
   }
 }
@@ -224,5 +208,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { getAllStaffsRequest, createStaffRequest }
+  { getAllStaffsRequest, createStaffRequest, updateStaffRequest }
 )(StaffMembers);

@@ -1,9 +1,9 @@
 import Router from "next/router";
 import Fetch from "isomorphic-unfetch";
 import Cookies from "js-cookie";
-import { StaffAPI } from "../../Config";
+import { LocationAPI } from "../../Config";
 
-export function createStaff(data) {
+export function createLocation(data) {
   var auth = "Token " + Cookies.get("token");
   const requestOptions = {
     method: "POST",
@@ -14,12 +14,12 @@ export function createStaff(data) {
     body: JSON.stringify(data)
   };
 
-  return Fetch(StaffAPI, requestOptions)
+  return Fetch(LocationAPI, requestOptions)
     .then(handleResponse)
-    .then(staff => staff);
+    .then(location => location);
 }
 
-export function getAllStaffs() {
+export function getAllLocations() {
   var auth = "Token " + Cookies.get("token");
   const requestOptions = {
     method: "GET",
@@ -29,12 +29,12 @@ export function getAllStaffs() {
     }
   };
 
-  return Fetch(StaffAPI, requestOptions)
+  return Fetch(LocationAPI, requestOptions)
     .then(handleResponse)
-    .then(staffs => staffs);
+    .then(locations => locations);
 }
 
-export function getStaffsById(id) {
+export function getLocationsById(id) {
   var auth = "Token " + Cookies.get("token");
   const requestOptions = {
     method: "GET",
@@ -45,7 +45,7 @@ export function getStaffsById(id) {
     body: JSON.stringify(id)
   };
 
-  return Fetch(StaffAPI, requestOptions).then(handleResponse);
+  return Fetch(LocationAPI, requestOptions).then(handleResponse);
 }
 
 export function update(data) {
@@ -59,7 +59,7 @@ export function update(data) {
     body: JSON.stringify(data)
   };
 
-  return fetch(StaffAPI, requestOptions).then(handleResponse);
+  return fetch(LocationAPI, requestOptions).then(handleResponse);
 }
 
 // prefixed function name with underscore because delete is a reserved word in javascript
@@ -74,7 +74,7 @@ export function _delete(id) {
     body: JSON.stringify(id)
   };
 
-  return Fetch(StaffAPI, requestOptions).then(handleResponse);
+  return Fetch(LocationAPI, requestOptions).then(handleResponse);
 }
 
 function handleResponse(response) {

@@ -32,7 +32,7 @@ export const Signup = postData => {
 };
 
 export const Company = postData => {
-  var auth = "Token " + JSON.parse(Cookies.get("token"));
+  var auth = "Token " + Cookies.get("token");
   const requestOptions = {
     method: "POST",
     headers: {

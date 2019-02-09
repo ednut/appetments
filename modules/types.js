@@ -20,5 +20,11 @@ export const DELETE_STAFF = "DELETE_STAFF";
 export const STAFF_ERROR = "STAFF_ERROR";
 export const STAFF_LOADING = "STAFF_LOADING";
 
+export const GET_LOCATION = "GET_LOCATION";
+export const GET_ALL_LOCATIONS = "GET_ALL_LOCATIONS";
+export const DELETE_LOCATION = "DELETE_LOCATION";
+export const LOCATION_ERROR = "LOCATION_ERROR";
+export const LOCATION_LOADING = "LOCATION_LOADING";
+
 export const OPEN_POPUP = "OPEN_POPUP";
 export const CLOSE_POPUP = "CLOSE_POPUP";
