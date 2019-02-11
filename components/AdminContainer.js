@@ -369,12 +369,12 @@ class AdminContainer extends Component {
               </Link>
             </li>
             <li>
-              <Link activeClassName="active" href="/inventory">
+              <Link activeClassName="active" href="/product">
                 <a>
                   <span className="icon">
                     <i className="material-icons"> playlist_add_check </i>
                   </span>
-                  <span className="text">Inventory</span>
+                  <span className="text">Product</span>
                 </a>
               </Link>
             </li>

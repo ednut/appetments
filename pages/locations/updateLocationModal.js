@@ -31,6 +31,7 @@ class UpdateLocationModal extends Component {
       address,
       city,
       state,
+      zip_code,
       submitted,
       openUpdateLocation
     } = this.props.modalState;
@@ -100,7 +101,22 @@ class UpdateLocationModal extends Component {
                     )}
                   </div>
                 </div>
-                <div className="col-md-6">
+                <div className="col-md-4">
+                  <div className="form-wrap">
+                    <label htmlFor="">Zip code</label>
+                    <input
+                      type="text"
+                      name="zip_code"
+                      value={zip_code}
+                      onChange={this.props.handleChange}
+                      placeholder="Enter Your zip code"
+                    />
+                    {submitted && !zip_code && (
+                      <div className="error">zip code is required</div>
+                    )}
+                  </div>
+                </div>
+                <div className="col-md-4">
                   <div className="form-wrap">
                     <label htmlFor="">City</label>
                     <input
@@ -115,7 +131,7 @@ class UpdateLocationModal extends Component {
                     )}
                   </div>
                 </div>
-                <div className="col-md-6">
+                <div className="col-md-4">
                   <div className="form-wrap">
                     <label htmlFor="">State</label>
                     <input

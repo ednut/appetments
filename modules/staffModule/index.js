@@ -2,7 +2,7 @@ import { createStaff, getAllStaffs, update } from "./staffServices";
 
 import { success, error } from "../alert";
 import {
-  GET_STAFF,
+  CREATE_STAFF,
   GET_ALL_STAFFS,
   DELETE_STAFF,
   STAFF_ERROR,
@@ -19,7 +19,7 @@ export default function(state = initialState, action) {
         ...state,
         loading: action.payload
       };
-    case GET_STAFF:
+    case CREATE_STAFF:
       return {
         ...state,
         staff: action.payload
@@ -46,8 +46,8 @@ export function createStaffRequest(data) {
     createStaff(data)
       .then(staff => {
         dispatch({
-          type: GET_STAFF,
-          payload: staff
+          type: CREATE_STAFF,
+          payload: true
         });
         console.log(staff);
         dispatch(success("Staff created successfully"));
@@ -71,6 +71,7 @@ export function getAllStaffsRequest() {
           type: GET_ALL_STAFFS,
           payload: staffs
         });
+        dispatch({ type: CREATE_STAFF, payload: false });
         dispatch({ type: STAFF_LOADING, payload: false });
       })
       .catch(err => {

@@ -47,7 +47,7 @@ export function createLocationRequest(data) {
       .then(location => {
         dispatch({
           type: GET_LOCATION,
-          payload: location
+          payload: true
         });
         console.log(location);
         dispatch(success("Location created successfully"));
@@ -70,6 +70,10 @@ export function getAllLocationsRequest() {
         dispatch({
           type: GET_ALL_LOCATIONS,
           payload: locations
+        });
+        dispatch({
+          type: GET_LOCATION,
+          payload: false
         });
         dispatch({ type: LOCATION_LOADING, payload: false });
       })

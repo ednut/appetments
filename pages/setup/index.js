@@ -67,8 +67,8 @@ class Setup extends Component {
                       </Link>
                     </li>
                     <li>
-                      <Link href="#">
-                        <a>Resources</a>
+                      <Link href="product-categories">
+                        <a>Product Categories</a>
                       </Link>
                     </li>
                     <li>

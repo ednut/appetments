@@ -51,6 +51,7 @@ class Location extends Component {
       address: "",
       city: "",
       state: "",
+      zip_code: "",
       submitted: false,
       openCreateLocation: false,
       openUpdateLocation: false
@@ -58,6 +59,12 @@ class Location extends Component {
   }
   componentDidMount() {
     this.props.getAllLocationsRequest();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.location) {
+      this.props.getAllLocationsRequest();
+    }
   }
 
   handleCreateSubmit = e => {
@@ -68,7 +75,8 @@ class Location extends Component {
       contact_email,
       address,
       city,
-      state
+      state,
+      zip_code
     } = this.state;
     this.setState({ submitted: true });
     const data = {
@@ -77,7 +85,8 @@ class Location extends Component {
       contact_email: contact_email,
       address: address,
       city: city,
-      state: state
+      state: state,
+      zip_code: zip_code
     };
     if (
       location_name &&
@@ -100,7 +109,8 @@ class Location extends Component {
       contact_email,
       address,
       city,
-      state
+      state,
+      zip_code
     } = this.state;
     this.setState({ submitted: true });
     const data = {
@@ -109,7 +119,8 @@ class Location extends Component {
       contact_email: contact_email,
       address: address,
       city: city,
-      state: state
+      state: state,
+      zip_code: zip_code
     };
     if (
       location_name &&
@@ -156,6 +167,7 @@ class Location extends Component {
       address: location.address,
       city: location.city,
       state: location.state,
+      zip_code: location.zip_code,
       openUpdateLocation: true
     });
     console.log(this.state);
@@ -202,6 +214,7 @@ class Location extends Component {
                   <th>Contact Number</th>
                   <th>Contact Email</th>
                   <th>Address</th>
+                  <th>Zip Code</th>
                   <th>City</th>
                   <th>State</th>
                 </tr>
@@ -218,6 +231,7 @@ class Location extends Component {
                     <td>{x.contact_number}</td>
                     <td>{x.contact_email}</td>
                     <td>{x.address}</td>
+                    <td>{x.zip_code}</td>
                     <td>{x.city}</td>
                     <td>{x.state}</td>
                   </tr>

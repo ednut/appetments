@@ -1,18 +1,17 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import Staff from "./staff";
-import styled from "styled-components";
-import { shadowStyle, color, height } from "../components/styles/constant";
 import {
-  getAllStaffsRequest,
-  createStaffRequest,
-  updateStaffRequest
-} from "../modules/staffModule";
-import SpinerWrap from "../components/Spinner";
-import Button from "../components/styles/Button";
-import CreateStaffModal from "./staff/createStaffModal";
-import UpdateStaffModal from "./staff/updateStaffModal";
-import NoData from "../components/NoData";
+  getAllProductCategoriesRequest,
+  createProductCategoryRequest,
+  updateProductCategoryRequest
+} from "../../modules/productModule";
+import SpinerWrap from "../../components/Spinner";
+import AdminContainer from "../../components/AdminContainer";
+import Button from "../../components/styles/Button";
+import CreateProductCategoryModal from "./createProductCategoryModal";
+import UpdateProductCategoryModal from "./updateProductCategoryModal";
+import styled from "styled-components";
+import { color, height } from "../../components/styles/constant";
 
 const ContentWrap = styled.div`
   .action-wrap {
@@ -42,58 +41,49 @@ const ContentWrap = styled.div`
   }
 `;
 
-class StaffMembers extends Component {
+class ProductCategory extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      first_name: "",
-      last_name: "",
-      password: "",
-      email: "",
+      category_name: "",
       submitted: false,
-      openCreateStaff: false,
-      openUpdateStaff: false
+      openCreateProductCategory: false,
+      openUpdateProductCategory: false
     };
   }
   componentDidMount() {
-    this.props.getAllStaffsRequest();
+    this.props.getAllProductCategoriesRequest();
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.staff) {
-      this.props.getAllStaffsRequest();
+    if (nextProps.categoryCreation) {
+      this.props.getAllProductCategoriesRequest();
     }
   }
 
   handleCreateSubmit = e => {
     e.preventDefault();
-    const { first_name, last_name, password, email } = this.state;
+    const { category_name } = this.state;
     this.setState({ submitted: true });
     const data = {
-      first_name: first_name,
-      last_name: last_name,
-      password: password,
-      email: email
+      category_name: category_name
     };
-    if (first_name && last_name && password && email) {
-      this.props.createStaffRequest(data);
-      this.setState({ openCreateStaff: false });
+    if (category_name) {
+      this.props.createProductCategoryRequest(data);
+      this.setState({ openCreateProductCategory: false });
     }
   };
 
   handleUpdateSubmit = e => {
     e.preventDefault();
-    const { first_name, last_name, password, email } = this.state;
+    const { category_name } = this.state;
     this.setState({ submitted: true });
     const data = {
-      first_name: first_name,
-      last_name: last_name,
-      password: password,
-      email: email
+      category_name: category_name
     };
-    if (first_name && last_name && password && email) {
-      this.props.updateStaffRequest(data);
-      this.setState({ openUpdateStaff: false });
+    if (category_name) {
+      this.props.updateProductCategoryRequest(data);
+      this.setState({ openUpdateProductCategory: false });
     }
   };
 
@@ -104,53 +94,50 @@ class StaffMembers extends Component {
   };
 
   onOpenCreateModal = () => {
-    this.setState({ openCreateStaff: true });
+    this.setState({ openCreateProductCategory: true });
   };
 
   onCloseCreateModal = () => {
-    this.setState({ openCreateStaff: false });
+    this.setState({ openCreateProductCategory: false });
   };
 
   onOpenUpdateModal = () => {
-    this.setState({ openUpdateStaff: true });
+    this.setState({ openUpdateProductCategory: true });
   };
 
   onCloseUpdateModal = () => {
-    this.setState({ openUpdateStaff: false });
+    this.setState({ openUpdateProductCategory: false });
   };
 
-  updateStaff = staff => {
+  updateProductCategory = product => {
     this.setState({
-      first_name: staff.first_name,
-      last_name: staff.last_name,
-      password: staff.password,
-      email: staff.email,
-      openUpdateStaff: true
+      category_name: product.category_name,
+      openUpdateProductCategory: true
     });
   };
 
   render() {
-    if (this.props.staffs !== undefined) {
+    if (this.props.productCategories !== undefined) {
       return (
-        <Staff>
+        <AdminContainer>
           <ContentWrap>
             {this.props.loading === true ? <SpinerWrap /> : null}
 
-            <CreateStaffModal
+            <CreateProductCategoryModal
               modalState={this.state}
               onCloseModal={this.onCloseCreateModal}
               handleChange={this.handleChange}
               handleSubmit={this.handleCreateSubmit}
               loading={this.props.loading}
-              title={"Create Staff"}
+              title={"Create Product Category"}
             />
-            <UpdateStaffModal
+            <UpdateProductCategoryModal
               modalState={this.state}
               onCloseModal={this.onCloseUpdateModal}
               handleChange={this.handleChange}
               handleSubmit={this.handleUpdateSubmit}
               loading={this.props.loading}
-              title={"Update Staff"}
+              title={"Update Product Category"}
             />
 
             <div className="action-wrap">
@@ -159,58 +146,60 @@ class StaffMembers extends Component {
                 textColor={color.whiteColor}
                 onClick={this.onOpenCreateModal}
               >
-                Add New Staff
+                Add New Product Category
               </Button>
             </div>
 
             <table className="table table-borderless">
               <thead>
                 <tr>
-                  <th>First Name</th>
-                  <th>Last Name</th>
-                  <th>Email</th>
+                  <th>Category Name</th>
                 </tr>
               </thead>
               <tbody>
-                {this.props.staffs.map(x => (
+                {this.props.productCategories.map(x => (
                   <tr
                     key={x.id}
                     onClick={() => {
-                      this.updateStaff(x);
+                      this.updateProductCategory(x);
                     }}
                   >
-                    <td>{x.first_name}</td>
-                    <td>{x.last_name}</td>
-                    <td>{x.email}</td>
+                    <td>{x.category_name}</td>
                   </tr>
                 ))}
               </tbody>
             </table>
-            {this.props.staffs.length === 0 ? (
-              <NoData message="No Staff Created Yet" />
-            ) : null}
+            {this.props.productCategories &&
+            this.props.productCategories.length < 0
+              ? "No data"
+              : null}
           </ContentWrap>
-        </Staff>
+        </AdminContainer>
       );
     } else {
       return (
-        <Staff>
+        <AdminContainer>
           <ContentWrap>
             <SpinerWrap />
           </ContentWrap>
-        </Staff>
+        </AdminContainer>
       );
     }
   }
 }
 
 const mapStateToProps = state => ({
-  staffs: state.staffReducer.staffs,
-  staff: state.staffReducer.staff,
-  loading: state.staffReducer.loading
+  productCategories: state.productReducer.productCategories,
+  productCategory: state.productReducer.productCategory,
+  loading: state.productReducer.loadingProductCategory,
+  categoryCreation: state.productReducer.productCategoryCreated
 });
 
 export default connect(
   mapStateToProps,
-  { getAllStaffsRequest, createStaffRequest, updateStaffRequest }
-)(StaffMembers);
+  {
+    getAllProductCategoriesRequest,
+    createProductCategoryRequest,
+    updateProductCategoryRequest
+  }
+)(ProductCategory);

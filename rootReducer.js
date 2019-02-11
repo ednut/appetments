@@ -7,6 +7,7 @@ import alertReducer from "./modules/alert";
 import authentication from "./services/authentication";
 import staffReducer from "./modules/staffModule";
 import locationReducer from "./modules/locationModule";
+import productReducer from "./modules/productModule";
 
 export const rootReducer = combineReducers({
   login: loginReducer,
@@ -15,5 +16,6 @@ export const rootReducer = combineReducers({
   alert: alertReducer,
   auth: authentication,
   staffReducer: staffReducer,
-  locationReducer: locationReducer
+  locationReducer: locationReducer,
+  productReducer: productReducer
 });

@@ -31,6 +31,7 @@ class CreateLocationModal extends Component {
       address,
       city,
       state,
+      zip_code,
       submitted,
       openCreateLocation
     } = this.props.modalState;
@@ -96,7 +97,21 @@ class CreateLocationModal extends Component {
                     )}
                   </div>
                 </div>
-                <div className="col-md-6">
+                <div className="col-md-4">
+                  <div className="form-wrap">
+                    <label htmlFor="">Zip Code</label>
+                    <input
+                      type="text"
+                      name="zip_code"
+                      onChange={this.props.handleChange}
+                      placeholder="Enter Your zip code"
+                    />
+                    {submitted && !zip_code && (
+                      <div className="error">zip code is required</div>
+                    )}
+                  </div>
+                </div>
+                <div className="col-md-4">
                   <div className="form-wrap">
                     <label htmlFor="">City</label>
                     <input
@@ -110,7 +125,7 @@ class CreateLocationModal extends Component {
                     )}
                   </div>
                 </div>
-                <div className="col-md-6">
+                <div className="col-md-4">
                   <div className="form-wrap">
                     <label htmlFor="">State</label>
                     <input
