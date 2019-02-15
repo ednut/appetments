@@ -8,6 +8,8 @@ import authentication from "./services/authentication";
 import staffReducer from "./modules/staffModule";
 import locationReducer from "./modules/locationModule";
 import productReducer from "./modules/productModule";
+import serviceGroupReducer from "./modules/serviceGroupModule";
+import serviceReducer from "./modules/serviceModule";
 
 export const rootReducer = combineReducers({
   login: loginReducer,
@@ -17,5 +19,7 @@ export const rootReducer = combineReducers({
   auth: authentication,
   staffReducer: staffReducer,
   locationReducer: locationReducer,
-  productReducer: productReducer
+  productReducer: productReducer,
+  serviceGroupReducer: serviceGroupReducer,
+  serviceReducer: serviceReducer
 });

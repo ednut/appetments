@@ -349,7 +349,7 @@ class AdminContainer extends Component {
               </Link>
             </li>
             <li>
-              <Link activeClassName="active" href="/staff-members">
+              <Link activeClassName="active" as="/staff" href="/staff-members">
                 <a>
                   <span className="icon">
                     <i className="material-icons"> supervisor_account </i>
@@ -359,7 +359,11 @@ class AdminContainer extends Component {
               </Link>
             </li>
             <li>
-              <Link activeClassName="active" href="/services">
+              <Link
+                activeClassName="active"
+                as="/service-groups"
+                href="/service-groups"
+              >
                 <a>
                   <span className="icon">
                     <i className="material-icons"> format_list_bulleted </i>

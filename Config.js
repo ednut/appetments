@@ -5,3 +5,7 @@ export const LocationAPI = "https://azultech.net/locations/";
 export const StaffAPI = "https://azultech.net/staff/";
 export const ProductsAPi = "https://azultech.net/products/";
 export const ProductCategoriesAPi = "https://azultech.net/product-categories/";
+export const ServiceAPi = "https://azultech.net/services/";
+export const ServiceGroupsAPi = "https://azultech.net/service-groups/";
+export const AddStaffAPI = "https://azultech.net/services/add-staff/";
+export const RemoveStaffAPI = "https://azultech.net/services/remove-staff/";
