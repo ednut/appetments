@@ -48,10 +48,10 @@ export function getServiceGroupsById(id) {
   return Fetch(ServiceGroupsAPi, requestOptions).then(handleResponse);
 }
 
-export function updateServiceGroup(data) {
+export function updateServiceGroup(data, id) {
   var auth = "Token " + Cookies.get("token");
   const requestOptions = {
-    method: "PUT",
+    method: "PATCH",
     headers: {
       Authorization: auth,
       "Content-Type": "application/json"
@@ -59,7 +59,9 @@ export function updateServiceGroup(data) {
     body: JSON.stringify(data)
   };
 
-  return fetch(ServiceGroupsAPi, requestOptions).then(handleResponse);
+  return fetch(ServiceGroupsAPi + `${id}/`, requestOptions).then(
+    handleResponse
+  );
 }
 
 // prefixed function name with underscore because delete is a reserved word in javascript
@@ -74,7 +76,9 @@ export function _delete(id) {
     body: JSON.stringify(id)
   };
 
-  return Fetch(ServiceGroupsAPi, requestOptions).then(handleResponse);
+  return Fetch(ServiceGroupsAPi + `${id}/`, requestOptions).then(
+    handleResponse
+  );
 }
 
 function handleResponse(response) {

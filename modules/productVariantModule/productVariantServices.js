@@ -1,9 +1,9 @@
 import Router from "next/router";
 import Fetch from "isomorphic-unfetch";
 import Cookies from "js-cookie";
-import { ServiceAPi, AddStaffAPI, RemoveStaffAPI } from "../../Config";
+import { ProductVariantAPi } from "../../Config";
 
-export function createService(data) {
+export function createProductVariant(data) {
   var auth = "Token " + Cookies.get("token");
   const requestOptions = {
     method: "POST",
@@ -14,44 +14,12 @@ export function createService(data) {
     body: JSON.stringify(data)
   };
 
-  return Fetch(ServiceAPi, requestOptions)
+  return Fetch(ProductVariantAPi, requestOptions)
     .then(handleResponse)
-    .then(service => service);
+    .then(variant => variant);
 }
 
-export function addStaff(data) {
-  var auth = "Token " + Cookies.get("token");
-  const requestOptions = {
-    method: "POST",
-    headers: {
-      Authorization: auth,
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify(data)
-  };
-
-  return Fetch(AddStaffAPI, requestOptions)
-    .then(handleResponse)
-    .then(staff => staff);
-}
-
-export function removeStaff(data) {
-  var auth = "Token " + Cookies.get("token");
-  const requestOptions = {
-    method: "POST",
-    headers: {
-      Authorization: auth,
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify(data)
-  };
-
-  return Fetch(RemoveStaffAPI, requestOptions)
-    .then(handleResponse)
-    .then(staff => staff);
-}
-
-export function getAllService() {
+export function getAllProductVariants() {
   var auth = "Token " + Cookies.get("token");
   const requestOptions = {
     method: "GET",
@@ -61,12 +29,12 @@ export function getAllService() {
     }
   };
 
-  return Fetch(ServiceAPi, requestOptions)
+  return Fetch(ProductVariantAPi, requestOptions)
     .then(handleResponse)
-    .then(service => service);
+    .then(variants => variants);
 }
 
-export function getServiceById(id) {
+export function getProductVariantsById(id) {
   var auth = "Token " + Cookies.get("token");
   const requestOptions = {
     method: "GET",
@@ -77,10 +45,12 @@ export function getServiceById(id) {
     body: JSON.stringify(id)
   };
 
-  return Fetch(ServiceAPi, requestOptions).then(handleResponse);
+  return Fetch(ProductVariantAPi + `${id}/`, requestOptions).then(
+    handleResponse
+  );
 }
 
-export function updateService(data, id) {
+export function update(data, id) {
   var auth = "Token " + Cookies.get("token");
   const requestOptions = {
     method: "PATCH",
@@ -91,7 +61,58 @@ export function updateService(data, id) {
     body: JSON.stringify(data)
   };
 
-  return fetch(ServiceAPi + `${id}/`, requestOptions).then(handleResponse);
+  return fetch(ProductVariantAPi + `${id}/`, requestOptions).then(
+    handleResponse
+  );
+}
+
+export function activateVariant(data, id) {
+  var auth = "Token " + Cookies.get("token");
+  const requestOptions = {
+    method: "POST",
+    headers: {
+      Authorization: auth,
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(data)
+  };
+
+  return fetch(ProductVariantAPi + `${id}/activate/`, requestOptions).then(
+    handleResponse
+  );
+}
+
+export function deactivateVariant(data, id) {
+  var auth = "Token " + Cookies.get("token");
+  const requestOptions = {
+    method: "POST",
+    headers: {
+      Authorization: auth,
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(data)
+  };
+
+  return fetch(ProductVariantAPi + `${id}/deactivate/`, requestOptions).then(
+    handleResponse
+  );
+}
+
+export function adjustInventory(data, id) {
+  var auth = "Token " + Cookies.get("token");
+  const requestOptions = {
+    method: "POST",
+    headers: {
+      Authorization: auth,
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(data)
+  };
+
+  return fetch(
+    ProductVariantAPi + `${id}/adjust_inventory/`,
+    requestOptions
+  ).then(handleResponse);
 }
 
 // prefixed function name with underscore because delete is a reserved word in javascript
@@ -106,7 +127,9 @@ export function _delete(id) {
     body: JSON.stringify(id)
   };
 
-  return Fetch(ServiceAPi + `${id}/`, requestOptions).then(handleResponse);
+  return Fetch(ProductVariantAPi + `${id}/`, requestOptions).then(
+    handleResponse
+  );
 }
 
 function handleResponse(response) {

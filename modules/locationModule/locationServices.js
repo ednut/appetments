@@ -48,10 +48,10 @@ export function getLocationsById(id) {
   return Fetch(LocationAPI, requestOptions).then(handleResponse);
 }
 
-export function update(data) {
+export function update(data, id) {
   var auth = "Token " + Cookies.get("token");
   const requestOptions = {
-    method: "PUT",
+    method: "PATCH",
     headers: {
       Authorization: auth,
       "Content-Type": "application/json"
@@ -59,10 +59,9 @@ export function update(data) {
     body: JSON.stringify(data)
   };
 
-  return fetch(LocationAPI, requestOptions).then(handleResponse);
+  return fetch(LocationAPI + `${id}/`, requestOptions).then(handleResponse);
 }
 
-// prefixed function name with underscore because delete is a reserved word in javascript
 export function _delete(id) {
   var auth = "Token " + Cookies.get("token");
   const requestOptions = {
@@ -74,7 +73,71 @@ export function _delete(id) {
     body: JSON.stringify(id)
   };
 
-  return Fetch(LocationAPI, requestOptions).then(handleResponse);
+  return Fetch(LocationAPI + `${id}/`, requestOptions).then(handleResponse);
+}
+
+export function addStaff(data, id) {
+  var auth = "Token " + Cookies.get("token");
+  const requestOptions = {
+    method: "POST",
+    headers: {
+      Authorization: auth,
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(data)
+  };
+
+  return Fetch(LocationAPI + `${id}/add_staff/`, requestOptions)
+    .then(handleResponse)
+    .then(staff => staff);
+}
+
+export function removeStaff(data, id) {
+  var auth = "Token " + Cookies.get("token");
+  const requestOptions = {
+    method: "POST",
+    headers: {
+      Authorization: auth,
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(data)
+  };
+
+  return Fetch(LocationAPI + `${id}/remove_staff/`, requestOptions)
+    .then(handleResponse)
+    .then(staff => staff);
+}
+
+export function activateLocation(data, id) {
+  var auth = "Token " + Cookies.get("token");
+  const requestOptions = {
+    method: "POST",
+    headers: {
+      Authorization: auth,
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(data)
+  };
+
+  return Fetch(LocationAPI + `${id}/activate/`, requestOptions)
+    .then(handleResponse)
+    .then(location => location);
+}
+
+export function deactivateLocation(data, id) {
+  var auth = "Token " + Cookies.get("token");
+  const requestOptions = {
+    method: "POST",
+    headers: {
+      Authorization: auth,
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(data)
+  };
+
+  return Fetch(LocationAPI + `${id}/deactivate/`, requestOptions)
+    .then(handleResponse)
+    .then(location => location);
 }
 
 function handleResponse(response) {

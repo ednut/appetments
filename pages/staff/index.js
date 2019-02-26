@@ -3,6 +3,7 @@ import AdminContainer from "../../components/AdminContainer";
 import Link from "../../components/Link";
 import styled from "styled-components";
 import { shadowStyle, color, height } from "../../components/styles/constant";
+import { relative } from "path";
 
 const StaffNav = styled.div`
   margin-bottom: 3rem;
@@ -59,7 +60,7 @@ class Staff extends Component {
             </li>
           </ul>
         </StaffNav>
-        {this.props.children}
+        <div style={{ position: relative }}>{this.props.children}</div>
       </AdminContainer>
     );
   }

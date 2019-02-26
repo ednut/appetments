@@ -93,7 +93,7 @@ class CreateProductModal extends Component {
 
                 <div className="col-md-6">
                   <div className="form-wrap">
-                    <label htmlFor="">Sku</label>
+                    <label htmlFor="">SKU</label>
                     <input
                       type="text"
                       onChange={this.props.handleChange}

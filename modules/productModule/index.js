@@ -4,7 +4,9 @@ import {
   getAllProduct,
   getAllProductCategories,
   updateProduct,
-  updateProductCategory
+  updateProductCategory,
+  _deleteProduct,
+  _deleteProductCategory
 } from "./productServices";
 
 import { success, error } from "../alert";
@@ -173,12 +175,15 @@ export function getAllProductCategoriesRequest() {
   };
 }
 
-export function updateProductRequest(data) {
+export function updateProductRequest(data, id) {
   return dispatch => {
     dispatch({ type: LOADING_PRODUCT, payload: true });
-    updateProduct(data)
+    updateProduct(data, id)
       .then(product => {
-        console.log(product);
+        dispatch({
+          type: PRODUCT_CREATED,
+          payload: true
+        });
         dispatch(success("Product updated successfully"));
         dispatch({ type: LOADING_PRODUCT, payload: false });
       })
@@ -191,12 +196,15 @@ export function updateProductRequest(data) {
   };
 }
 
-export function updateProductCategoryRequest(data) {
+export function updateProductCategoryRequest(data, id) {
   return dispatch => {
     dispatch({ type: LOADING_PRODUCT_CATEGORY, payload: true });
-    updateProductCategory(data)
+    updateProductCategory(data, id)
       .then(productCategory => {
-        console.log(productCategory);
+        dispatch({
+          type: PRODUCT_CATEGORY_CREATED,
+          payload: true
+        });
         dispatch(success("Product Category updated successfully"));
         dispatch({ type: LOADING_PRODUCT_CATEGORY, payload: false });
       })
@@ -205,6 +213,48 @@ export function updateProductCategoryRequest(data) {
         dispatch(error(e));
         dispatch({ type: LOADING_PRODUCT_CATEGORY, payload: false });
         dispatch({ type: PRODUCT_CATEGORY_ERROR, payload: err });
+      });
+  };
+}
+
+export function deleteProductCategoryRequest(id) {
+  return dispatch => {
+    dispatch({ type: LOADING_PRODUCT_CATEGORY, payload: true });
+    _deleteProductCategory(id)
+      .then(productCategory => {
+        dispatch({
+          type: PRODUCT_CATEGORY_CREATED,
+          payload: true
+        });
+        dispatch(success("Product Category deleted successfully"));
+        dispatch({ type: LOADING_PRODUCT_CATEGORY, payload: false });
+      })
+      .catch(err => {
+        let e = err[Object.keys(err)[0]];
+        dispatch(error(e));
+        dispatch({ type: LOADING_PRODUCT_CATEGORY, payload: false });
+        dispatch({ type: PRODUCT_CATEGORY_ERROR, payload: err });
+      });
+  };
+}
+
+export function deleteProductRequest(id) {
+  return dispatch => {
+    dispatch({ type: LOADING_PRODUCT, payload: true });
+    _deleteProduct(id)
+      .then(productCategory => {
+        dispatch({
+          type: PRODUCT_CREATED,
+          payload: true
+        });
+        dispatch(success("Product Category deleted successfully"));
+        dispatch({ type: LOADING_PRODUCT, payload: false });
+      })
+      .catch(err => {
+        let e = err[Object.keys(err)[0]];
+        dispatch(error(e));
+        dispatch({ type: LOADING_PRODUCT, payload: false });
+        dispatch({ type: PRODUCT_ERROR, payload: err });
       });
   };
 }

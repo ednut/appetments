@@ -72,14 +72,14 @@ class UpdateServiceModal extends Component {
                       onChange={this.props.handleChange}
                     >
                       <option>---- Select Duration ----</option>
-                      <option value="15">15 minute</option>
-                      <option value="30">30 minute</option>
-                      <option value="45">45 minute</option>
-                      <option value="60">1 day</option>
-                      <option value="75">75 minute</option>
-                      <option value="90">90 minute</option>
-                      <option value="105">105 minute</option>
-                      <option value="120">2 days</option>
+                      <option value="15">15 minutes</option>
+                      <option value="30">30 minutes</option>
+                      <option value="45">45 minutes</option>
+                      <option value="60">60 minutes</option>
+                      <option value="75">75 minutes</option>
+                      <option value="90">90 minutes</option>
+                      <option value="105">105 minutes</option>
+                      <option value="120">120 minutes</option>
                     </select>
                     {submitted && !duration && (
                       <div className="error">Duration is required</div>
@@ -108,6 +108,7 @@ class UpdateServiceModal extends Component {
                       name="staff"
                       value={staff}
                       onChange={this.props.handleChange}
+                      // multiple
                     >
                       <option>---- Select Staff ----</option>
                       {this.props.staff

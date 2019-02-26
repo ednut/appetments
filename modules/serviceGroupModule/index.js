@@ -1,7 +1,8 @@
 import {
   createServiceGroup,
   getAllServiceGroups,
-  updateServiceGroup
+  updateServiceGroup,
+  _delete
 } from "./serviceGroupServices";
 
 import { success, error } from "../alert";
@@ -90,13 +91,37 @@ export function getAllServiceGroupsRequest() {
   };
 }
 
-export function updateServiceGroupRequest(data) {
+export function updateServiceGroupRequest(data, id) {
   return dispatch => {
     dispatch({ type: SERVICE_GROUP_LOADING, payload: true });
-    updateServiceGroup(data)
+    updateServiceGroup(data, id)
       .then(serviceGroup => {
-        console.log(serviceGroup);
+        dispatch({
+          type: GET_SERVICE_GROUP,
+          payload: true
+        });
         dispatch(success("ServiceGroup updated successfully"));
+        dispatch({ type: SERVICE_GROUP_LOADING, payload: false });
+      })
+      .catch(err => {
+        let e = err[Object.keys(err)[0]];
+        dispatch(error(e));
+        dispatch({ type: SERVICE_GROUP_LOADING, payload: false });
+        dispatch({ type: SERVICE_GROUP_ERROR, payload: err });
+      });
+  };
+}
+
+export function deleteServiceGroupRequest(id) {
+  return dispatch => {
+    dispatch({ type: SERVICE_GROUP_LOADING, payload: true });
+    _delete(id)
+      .then(serviceGroup => {
+        dispatch({
+          type: GET_SERVICE_GROUP,
+          payload: true
+        });
+        dispatch(success("ServiceGroup deleted successfully"));
         dispatch({ type: SERVICE_GROUP_LOADING, payload: false });
       })
       .catch(err => {

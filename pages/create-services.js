@@ -6,7 +6,9 @@ import { shadowStyle, color, height } from "../components/styles/constant";
 import {
   createServiceRequest,
   getAllServiceRequest,
-  updateServiceRequest
+  updateServiceRequest,
+  addStaffRequest,
+  deleteServiceRequest
 } from "../modules/serviceModule";
 import { getAllServiceGroupsRequest } from "../modules/serviceGroupModule";
 import { getAllStaffsRequest } from "../modules/staffModule";
@@ -14,6 +16,7 @@ import SpinerWrap from "../components/Spinner";
 import Button from "../components/styles/Button";
 import CreateServiceModal from "./services/createServiceModal";
 import UpdateServiceModal from "./services/updateServiceModal";
+import AddStaffToService from "./services/addStaffToServiceModal";
 import NoData from "../components/NoData";
 
 const ContentWrap = styled.div`
@@ -28,6 +31,13 @@ const ContentWrap = styled.div`
     border-radius: 0.2rem;
     tr {
       border-bottom: 1px solid #eef0f2;
+      &:hover {
+        .action {
+          span.add {
+            visibility: visible;
+          }
+        }
+      }
     }
     th {
       padding: 1.7rem 3rem;
@@ -36,6 +46,12 @@ const ContentWrap = styled.div`
     td {
       padding: 1.7rem 3rem;
       color: ${color.textColor};
+      &.action {
+        span.add {
+          color: #083e8d;
+          visibility: hidden;
+        }
+      }
     }
     tbody tr:hover {
       background-color: #fbfbfb;
@@ -48,14 +64,18 @@ class CreateService extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      id: "",
       name: "",
       group: "",
       duration: "",
       staff: [],
       description: "",
+      service: "",
+      selected: false,
       submitted: false,
       openCreateService: false,
-      openUpdateService: false
+      openUpdateService: false,
+      openStaffService: false
     };
   }
   componentDidMount() {
@@ -66,6 +86,9 @@ class CreateService extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.service) {
+      this.props.getAllServiceRequest();
+    }
+    if (nextProps.addingStaff) {
       this.props.getAllServiceRequest();
     }
   }
@@ -81,7 +104,6 @@ class CreateService extends Component {
       duration: duration,
       description: description
     };
-    console.log(data);
     if (name && group && duration && description) {
       this.props.createServiceRequest(data);
       this.setState({ openCreateService: false });
@@ -100,8 +122,22 @@ class CreateService extends Component {
       description: description
     };
     if (name && group && duration && description) {
-      this.props.updateServiceRequest(data);
+      this.props.updateServiceRequest(data, this.state.id);
       this.setState({ openUpdateService: false });
+    }
+  };
+
+  handleStaffSubmit = e => {
+    e.preventDefault();
+    const { name, staff } = this.state;
+    this.setState({ submitted: true });
+    const data = {
+      service: this.state.service,
+      staff: staff.split(",")
+    };
+    if (staff) {
+      this.props.addStaffRequest(data);
+      this.setState({ openStaffService: false });
     }
   };
 
@@ -109,7 +145,26 @@ class CreateService extends Component {
     this.setState({
       [e.target.name]: e.target.value
     });
-    console.log(e.target.value);
+  };
+
+  // checkedItems = [];
+  // handleBulkActions = obj => {
+  //   this.checkedItems.push(obj.id);
+  //   console.log(this.checkedItems);
+  //   for (let i = 1; i < this.checkedItems.length; i++) {
+  //     if (this.checkedItems[i] === obj.id) {
+  //       this.checkedItems.splice(i, 1);
+  //     }
+  //   }
+  //   console.log(this.checkedItems);
+  //   debugger;
+  // };
+
+  onOpenStaffModal = () => {
+    this.setState({ openStaffService: true });
+  };
+  onCloseStaffModal = () => {
+    this.setState({ openStaffService: false });
   };
 
   onOpenCreateModal = () => {
@@ -130,13 +185,29 @@ class CreateService extends Component {
 
   updateService = service => {
     this.setState({
+      id: service.id,
       name: service.name,
       group: service.group,
       duration: service.duration,
       description: service.description,
       openUpdateService: true
     });
+    this.setState({ openUpdateService: true });
   };
+
+  addingStaffToService = staff => {
+    this.setState({
+      staff: staff.staff,
+      service: staff.id
+    });
+    this.setState({ openStaffService: true });
+  };
+
+  deleteService = id => {
+    this.props.deleteServiceRequest(id);
+  };
+
+  ids = [];
 
   render() {
     if (this.props.services !== undefined) {
@@ -164,6 +235,15 @@ class CreateService extends Component {
               loading={this.props.loading}
               title={"Update Service"}
             />
+            <AddStaffToService
+              modalState={this.state}
+              onCloseModal={this.onCloseStaffModal}
+              handleChange={this.handleChange}
+              handleSubmit={this.handleStaffSubmit}
+              staff={this.props.staffs}
+              loading={this.props.loading}
+              title={"Add Staff to Service"}
+            />
             <div className="action-wrap">
               <Button
                 buttonColor={color.brandColor}
@@ -176,28 +256,54 @@ class CreateService extends Component {
             <table className="table table-borderless">
               <thead>
                 <tr>
+                  {/* <th /> */}
                   <th>Service Name</th>
                   <th>Group</th>
                   <th>Duration</th>
                   <th>Staff</th>
                   <th>Description</th>
+                  <th />
                 </tr>
               </thead>
               <tbody>
                 {this.props.services.map(x => (
-                  <tr
-                    key={x.id}
-                    onClick={() => {
-                      this.updateService(x);
-                    }}
-                  >
-                    <td>{x.name}</td>
+                  <tr key={x.id}>
+                    {/* <td>
+                      <input
+                        type="checkbox"
+                        onChange={() => this.handleBulkActions(x)}
+                        name="selected"
+                        id={x.id}
+                      />
+                    </td> */}
+                    <td
+                      onClick={() => {
+                        this.updateService(x);
+                      }}
+                    >
+                      {x.name}
+                    </td>
                     <td>{x.group}</td>
                     <td>
-                      {x.duration} {""}
+                      {x.duration} {"minutes"}
                     </td>
                     <td>{x.staff}</td>
                     <td>{x.description}</td>
+                    <td className="action">
+                      <span
+                        onClick={() => this.addingStaffToService(x)}
+                        className="add"
+                      >
+                        + Add Staff
+                      </span>
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                      <span
+                        onClick={() => this.deleteService(x.id)}
+                        className="add"
+                      >
+                        Delete Service
+                      </span>
+                    </td>
                   </tr>
                 ))}
               </tbody>
@@ -225,6 +331,7 @@ const mapStateToProps = state => ({
   serviceGroups: state.serviceGroupReducer.serviceGroups,
   services: state.serviceReducer.services,
   service: state.serviceReducer.service,
+  addingStaff: state.serviceReducer.staffAddedService,
   loading: state.serviceReducer.loading
 });
 
@@ -235,6 +342,8 @@ export default connect(
     getAllServiceRequest,
     updateServiceRequest,
     getAllServiceGroupsRequest,
-    getAllStaffsRequest
+    getAllStaffsRequest,
+    addStaffRequest,
+    deleteServiceRequest
   }
 )(CreateService);

@@ -3,7 +3,8 @@ import {
   getAllService,
   updateService,
   addStaff,
-  removeStaff
+  removeStaff,
+  _delete
 } from "./serviceServices";
 
 import { success, error } from "../alert";
@@ -118,12 +119,15 @@ export function getAllServiceRequest() {
   };
 }
 
-export function updateServiceRequest(data) {
+export function updateServiceRequest(data, id) {
   return dispatch => {
     dispatch({ type: SERVICE_LOADING, payload: true });
-    updateService(data)
+    updateService(data, id)
       .then(service => {
-        console.log(service);
+        dispatch({
+          type: GET_SERVICE,
+          payload: true
+        });
         dispatch(success("Service updated successfully"));
         dispatch({ type: SERVICE_LOADING, payload: false });
       })
@@ -176,6 +180,27 @@ export function removeStaffRequest(data) {
         dispatch(error(e));
         dispatch({ type: SERVICE_LOADING, payload: false });
         dispatch({ type: STAFF_ADDING_ERROR, payload: err });
+      });
+  };
+}
+
+export function deleteServiceRequest(id) {
+  return dispatch => {
+    dispatch({ type: SERVICE_LOADING, payload: true });
+    _delete(id)
+      .then(service => {
+        dispatch({
+          type: GET_SERVICE,
+          payload: true
+        });
+        dispatch(success("Service deleted successfully"));
+        dispatch({ type: SERVICE_LOADING, payload: false });
+      })
+      .catch(err => {
+        let e = err[Object.keys(err)[0]];
+        dispatch(error(e));
+        dispatch({ type: SERVICE_LOADING, payload: false });
+        dispatch({ type: SERVICE_ERROR, payload: err });
       });
   };
 }

@@ -22,68 +22,44 @@ const ModalWrap = styled.div`
   }
 `;
 
-class UpdateProductModal extends Component {
+class UpdateProductVariantModal extends Component {
   render() {
     const {
-      category,
-      barcode,
       name,
+      barcode,
       sku,
-      description,
+      quantity,
+      retail_price,
       submitted,
-      openUpdateProduct
+      openUpdateProductVariant
     } = this.props.modalState;
     return (
-      <Modal open={openUpdateProduct} onClose={this.props.onCloseModal}>
+      <Modal open={openUpdateProductVariant} onClose={this.props.onCloseModal}>
         <ModalWrap>
           <div className="title">{this.props.title}</div>
           <FormInput>
             <form onSubmit={this.props.handleSubmit}>
               <div className="row">
-                <div className="col-md-6">
+                <div className="col-md-12">
                   <div className="form-wrap">
-                    <label htmlFor="">Product Name</label>
+                    <label htmlFor="">Name</label>
                     <input
                       type="text"
                       onChange={this.props.handleChange}
                       name="name"
                       value={name}
-                      placeholder="Enter barcode"
+                      placeholder="Enter name"
                     />
                     {submitted && !name && (
-                      <div className="error">Product name is required</div>
+                      <div className="error">Name is required</div>
                     )}
                   </div>
                 </div>
-
                 <div className="col-md-6">
                   <div className="form-wrap">
-                    <label htmlFor="">Category</label>
-                    <select
-                      name="category"
-                      value={category}
-                      onChange={this.props.handleChange}
-                    >
-                      <option>---- Select Category ----</option>
-                      {this.props.categories
-                        ? this.props.categories.map(x => (
-                            <option key={x.id} value={x.id}>
-                              {x.category_name}
-                            </option>
-                          ))
-                        : null}
-                    </select>
-                    {submitted && !category && (
-                      <div className="error">Category is required</div>
-                    )}
-                  </div>
-                </div>
-
-                <div className="col-md-6">
-                  <div className="form-wrap">
-                    <label htmlFor="">barcode</label>
+                    <label htmlFor="">Barcode</label>
                     <input
-                      type="text"
+                      type="number"
                       onChange={this.props.handleChange}
                       name="barcode"
                       value={barcode}
@@ -94,36 +70,48 @@ class UpdateProductModal extends Component {
                     )}
                   </div>
                 </div>
-
                 <div className="col-md-6">
                   <div className="form-wrap">
                     <label htmlFor="">SKU</label>
                     <input
-                      type="text"
+                      type="name"
                       onChange={this.props.handleChange}
                       name="sku"
                       value={sku}
-                      placeholder="Enter barcode"
+                      placeholder="Enter SKU"
                     />
                     {submitted && !sku && (
-                      <div className="error">Sku is required</div>
+                      <div className="error">SKU is required</div>
                     )}
                   </div>
                 </div>
-
-                <div className="col-md-12">
+                <div className="col-md-6">
                   <div className="form-wrap">
-                    <label htmlFor="">Product Description</label>
-                    <textarea
-                      name="description"
-                      value={description}
+                    <label htmlFor="">Quantity</label>
+                    <input
+                      type="number"
                       onChange={this.props.handleChange}
-                      placeholder="Product Description"
+                      name="quantity"
+                      value={quantity}
+                      placeholder="Enter Quantity"
                     />
-                    {submitted && !description && (
-                      <div className="error">
-                        Product Description is required
-                      </div>
+                    {submitted && !quantity && (
+                      <div className="error">Quantity is required</div>
+                    )}
+                  </div>
+                </div>
+                <div className="col-md-6">
+                  <div className="form-wrap">
+                    <label htmlFor="">Retail Price</label>
+                    <input
+                      type="number"
+                      onChange={this.props.handleChange}
+                      name="retail_price"
+                      value={retail_price}
+                      placeholder="Enter Retail Price"
+                    />
+                    {submitted && !retail_price && (
+                      <div className="error">Retail Price is required</div>
                     )}
                   </div>
                 </div>
@@ -137,9 +125,7 @@ class UpdateProductModal extends Component {
                   className="float-right"
                 >
                   {" "}
-                  {this.props.loading
-                    ? "Loading...."
-                    : "Create Product Category"}
+                  {this.props.loading ? "Loading...." : "Update Variant"}
                 </Button>
               </footer>
             </form>
@@ -150,4 +136,4 @@ class UpdateProductModal extends Component {
   }
 }
 
-export default UpdateProductModal;
+export default UpdateProductVariantModal;

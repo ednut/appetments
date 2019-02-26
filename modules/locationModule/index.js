@@ -1,4 +1,13 @@
-import { createLocation, getAllLocations, update } from "./locationServices";
+import {
+  createLocation,
+  getAllLocations,
+  update,
+  _delete,
+  addStaff,
+  removeStaff,
+  activateLocation,
+  deactivateLocation
+} from "./locationServices";
 
 import { success, error } from "../alert";
 import {
@@ -86,13 +95,121 @@ export function getAllLocationsRequest() {
   };
 }
 
-export function updateLocationRequest(data) {
+export function updateLocationRequest(data, id) {
   return dispatch => {
     dispatch({ type: LOCATION_LOADING, payload: true });
-    update(data)
+    update(data, id)
       .then(location => {
-        console.log(location);
+        dispatch({
+          type: GET_LOCATION,
+          payload: true
+        });
         dispatch(success("Location updated successfully"));
+        dispatch({ type: LOCATION_LOADING, payload: false });
+      })
+      .catch(err => {
+        let e = err[Object.keys(err)[0]];
+        dispatch(error(e));
+        dispatch({ type: LOCATION_LOADING, payload: false });
+        dispatch({ type: LOCATION_ERROR, payload: err });
+      });
+  };
+}
+
+export function deleteLocationRequest(id) {
+  return dispatch => {
+    dispatch({ type: LOCATION_LOADING, payload: true });
+    _delete(id)
+      .then(location => {
+        dispatch({
+          type: GET_LOCATION,
+          payload: true
+        });
+        dispatch(success("Location deleted successfully"));
+        dispatch({ type: LOCATION_LOADING, payload: false });
+      })
+      .catch(err => {
+        let e = err[Object.keys(err)[0]];
+        dispatch(error(e));
+        dispatch({ type: LOCATION_LOADING, payload: false });
+        dispatch({ type: LOCATION_ERROR, payload: err });
+      });
+  };
+}
+
+export function addStaffToLocationRequest(data, id) {
+  return dispatch => {
+    dispatch({ type: LOCATION_LOADING, payload: true });
+    addStaff(data, id)
+      .then(location => {
+        dispatch({
+          type: GET_LOCATION,
+          payload: true
+        });
+        dispatch(success("Staff added to Location successfully"));
+        dispatch({ type: LOCATION_LOADING, payload: false });
+      })
+      .catch(err => {
+        let e = err[Object.keys(err)[0]];
+        dispatch(error(e));
+        dispatch({ type: LOCATION_LOADING, payload: false });
+        dispatch({ type: LOCATION_ERROR, payload: err });
+      });
+  };
+}
+
+export function removeStaffFromLocationRequest(data, id) {
+  return dispatch => {
+    dispatch({ type: LOCATION_LOADING, payload: true });
+    removeStaff(data, id)
+      .then(location => {
+        dispatch({
+          type: GET_LOCATION,
+          payload: true
+        });
+        dispatch(success("Staff removed from Location successfully"));
+        dispatch({ type: LOCATION_LOADING, payload: false });
+      })
+      .catch(err => {
+        let e = err[Object.keys(err)[0]];
+        dispatch(error(e));
+        dispatch({ type: LOCATION_LOADING, payload: false });
+        dispatch({ type: LOCATION_ERROR, payload: err });
+      });
+  };
+}
+
+export function activateLocationRequest(data, id) {
+  return dispatch => {
+    dispatch({ type: LOCATION_LOADING, payload: true });
+    activateLocation(data, id)
+      .then(location => {
+        dispatch({
+          type: GET_LOCATION,
+          payload: true
+        });
+        dispatch(success("Location activated successfully"));
+        dispatch({ type: LOCATION_LOADING, payload: false });
+      })
+      .catch(err => {
+        let e = err[Object.keys(err)[0]];
+        dispatch(error(e));
+        dispatch({ type: LOCATION_LOADING, payload: false });
+        dispatch({ type: LOCATION_ERROR, payload: err });
+      });
+  };
+}
+
+export function deactivateLocationRequest(data, id) {
+  return dispatch => {
+    dispatch({ type: LOCATION_LOADING, payload: true });
+    activateLocation(data, id)
+      .then(location => {
+        dispatch({
+          type: GET_LOCATION,
+          payload: true
+        });
+        dispatch(success("Location deactivated successfully"));
         dispatch({ type: LOCATION_LOADING, payload: false });
       })
       .catch(err => {

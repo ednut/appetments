@@ -1,4 +1,4 @@
-import { createStaff, getAllStaffs, update } from "./staffServices";
+import { createStaff, getAllStaffs, update, _delete } from "./staffServices";
 
 import { success, error } from "../alert";
 import {
@@ -83,13 +83,37 @@ export function getAllStaffsRequest() {
   };
 }
 
-export function updateStaffRequest(data) {
+export function updateStaffRequest(data, staffID) {
   return dispatch => {
     dispatch({ type: STAFF_LOADING, payload: true });
-    update(data)
+    update(data, staffID)
       .then(staff => {
-        console.log(staff);
+        dispatch({
+          type: CREATE_STAFF,
+          payload: true
+        });
         dispatch(success("Staff updated successfully"));
+        dispatch({ type: STAFF_LOADING, payload: false });
+      })
+      .catch(err => {
+        let e = err[Object.keys(err)[0]];
+        dispatch(error(e));
+        dispatch({ type: STAFF_LOADING, payload: false });
+        dispatch({ type: STAFF_ERROR, payload: err });
+      });
+  };
+}
+
+export function deleteStaffRequest(id) {
+  return dispatch => {
+    dispatch({ type: STAFF_LOADING, payload: true });
+    _delete(id)
+      .then(staff => {
+        dispatch({
+          type: CREATE_STAFF,
+          payload: true
+        });
+        dispatch(success("Staff deleted successfully"));
         dispatch({ type: STAFF_LOADING, payload: false });
       })
       .catch(err => {

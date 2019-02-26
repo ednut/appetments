@@ -10,6 +10,7 @@ import locationReducer from "./modules/locationModule";
 import productReducer from "./modules/productModule";
 import serviceGroupReducer from "./modules/serviceGroupModule";
 import serviceReducer from "./modules/serviceModule";
+import productVariantReducer from "./modules/productVariantModule";
 
 export const rootReducer = combineReducers({
   login: loginReducer,
@@ -21,5 +22,6 @@ export const rootReducer = combineReducers({
   locationReducer: locationReducer,
   productReducer: productReducer,
   serviceGroupReducer: serviceGroupReducer,
-  serviceReducer: serviceReducer
+  serviceReducer: serviceReducer,
+  productVariantReducer: productVariantReducer
 });

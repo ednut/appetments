@@ -1,19 +1,21 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import {
+  getAllProductsRequest,
+  createProductRequest,
+  updateProductRequest,
   getAllProductCategoriesRequest,
-  createProductCategoryRequest,
-  updateProductCategoryRequest,
-  deleteProductCategoryRequest
-} from "../../modules/productModule";
-import SpinerWrap from "../../components/Spinner";
-import AdminContainer from "../../components/AdminContainer";
-import Button from "../../components/styles/Button";
-import Product from "../product";
-import CreateProductCategoryModal from "./createProductCategoryModal";
-import UpdateProductCategoryModal from "./updateProductCategoryModal";
+  deleteProductRequest
+} from "../modules/productModule";
+import SpinerWrap from "../components/Spinner";
+import Product from "./product";
+import AdminContainer from "../components/AdminContainer";
+import Button from "../components/styles/Button";
+import CreateProductModal from "./product/createProductModal";
+import UpdateProductModal from "./product/updateProductModal";
 import styled from "styled-components";
-import { color, height } from "../../components/styles/constant";
+import { color, height } from "../components/styles/constant";
+import NoData from "../components/NoData";
 
 const ContentWrap = styled.div`
   .action-wrap {
@@ -58,52 +60,65 @@ const ContentWrap = styled.div`
   }
 `;
 
-class ProductCategory extends Component {
+class CreateProduct extends Component {
   constructor(props) {
     super(props);
     this.state = {
       id: "",
-      company: "",
-      category_name: "",
+      category: "",
+      barcode: "",
+      name: "",
+      sku: "",
+      description: "",
       submitted: false,
-      openCreateProductCategory: false,
-      openUpdateProductCategory: false
+      openCreateProduct: false,
+      openUpdateProduct: false
     };
   }
   componentDidMount() {
+    this.props.getAllProductsRequest();
     this.props.getAllProductCategoriesRequest();
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.categoryCreation) {
-      this.props.getAllProductCategoriesRequest();
+    if (nextProps.productCreated) {
+      this.props.getAllProductsRequest();
     }
   }
 
   handleCreateSubmit = e => {
     e.preventDefault();
-    const { category_name } = this.state;
+    const { category, barcode, name, sku, description } = this.state;
     this.setState({ submitted: true });
     const data = {
-      category_name: category_name
+      category: parseInt(category),
+      company: "",
+      barcode: barcode,
+      name: name,
+      sku: sku,
+      description: description
     };
-    if (category_name) {
-      this.props.createProductCategoryRequest(data);
-      this.setState({ openCreateProductCategory: false });
+    if (category && barcode && name && sku && description) {
+      this.props.createProductRequest(data);
+      this.setState({ openCreateProduct: false });
     }
   };
 
   handleUpdateSubmit = e => {
     e.preventDefault();
-    const { category_name } = this.state;
+    const { category, barcode, name, sku, description } = this.state;
     this.setState({ submitted: true });
     const data = {
-      category_name: category_name,
-      company: this.state.company
+      company: this.state.company,
+      category: category,
+      barcode: barcode,
+      name: name,
+      sku: sku,
+      description: description
     };
-    if (category_name) {
-      this.props.updateProductCategoryRequest(data, this.state.id);
-      this.setState({ openUpdateProductCategory: false });
+    if (category && barcode && name && sku && description) {
+      this.props.updateProductRequest(data, this.state.id);
+      this.setState({ openUpdateProduct: false });
     }
   };
 
@@ -114,57 +129,62 @@ class ProductCategory extends Component {
   };
 
   onOpenCreateModal = () => {
-    this.setState({ openCreateProductCategory: true });
+    this.setState({ openCreateProduct: true });
   };
 
   onCloseCreateModal = () => {
-    this.setState({ openCreateProductCategory: false });
+    this.setState({ openCreateProduct: false });
   };
 
   onOpenUpdateModal = () => {
-    this.setState({ openUpdateProductCategory: true });
+    this.setState({ openUpdateProduct: true });
   };
 
   onCloseUpdateModal = () => {
-    this.setState({ openUpdateProductCategory: false });
+    this.setState({ openUpdateProduct: false });
   };
 
-  updateProductCategory = product => {
+  updateProduct = product => {
     this.setState({
       id: product.id,
+      category: product.category,
       company: product.company,
-      category_name: product.category_name,
-      openUpdateProductCategory: true
+      barcode: product.barcode,
+      name: product.name,
+      sku: product.sku,
+      description: product.description,
+      openUpdateProduct: true
     });
   };
-
-  deleteProductCategory = id => {
-    this.props.deleteProductCategoryRequest(id);
+  deleteProduct = id => {
+    this.props.deleteProductRequest(id);
   };
 
   render() {
-    if (this.props.productCategories !== undefined) {
+    if (this.props.products !== undefined) {
       return (
         <AdminContainer>
           <Product>
             <ContentWrap>
               {this.props.loading === true ? <SpinerWrap /> : null}
 
-              <CreateProductCategoryModal
+              <CreateProductModal
                 modalState={this.state}
                 onCloseModal={this.onCloseCreateModal}
                 handleChange={this.handleChange}
                 handleSubmit={this.handleCreateSubmit}
                 loading={this.props.loading}
-                title={"Create Product Category"}
+                categories={this.props.productCategories}
+                title={"Create Product"}
               />
-              <UpdateProductCategoryModal
+              <UpdateProductModal
                 modalState={this.state}
                 onCloseModal={this.onCloseUpdateModal}
                 handleChange={this.handleChange}
                 handleSubmit={this.handleUpdateSubmit}
                 loading={this.props.loading}
-                title={"Update Product Category"}
+                categories={this.props.productCategories}
+                title={"Update Product"}
               />
 
               <div className="action-wrap">
@@ -173,31 +193,38 @@ class ProductCategory extends Component {
                   textColor={color.whiteColor}
                   onClick={this.onOpenCreateModal}
                 >
-                  Add New Product Category
+                  Add New Product
                 </Button>
               </div>
 
               <table className="table table-borderless">
                 <thead>
                   <tr>
-                    <th>Category Name</th>
+                    <th>Category</th>
+                    <th>Barcode</th>
+                    <th>Name</th>
+                    <th>SKU</th>
+                    <th>description</th>
                     <th />
                   </tr>
                 </thead>
                 <tbody>
-                  {this.props.productCategories.map(x => (
+                  {this.props.products.map(x => (
                     <tr key={x.id}>
                       <td
                         onClick={() => {
-                          this.updateProductCategory(x);
+                          this.updateProduct(x);
                         }}
                       >
-                        {x.category_name}
+                        {x.category}
                       </td>
-
+                      <td>{x.barcode}</td>
+                      <td>{x.name}</td>
+                      <td>{x.sku}</td>
+                      <td>{x.description}</td>
                       <td
                         className="action"
-                        onClick={() => this.deleteProductCategory(x.id)}
+                        onClick={() => this.deleteProduct(x.id)}
                       >
                         <span className="delete">delete</span>
                       </td>
@@ -205,10 +232,9 @@ class ProductCategory extends Component {
                   ))}
                 </tbody>
               </table>
-              {this.props.productCategories &&
-              this.props.productCategories.length < 0
-                ? "No data"
-                : null}
+              {this.props.products.length === 0 ? (
+                <NoData message="No Product Available" />
+              ) : null}
             </ContentWrap>
           </Product>
         </AdminContainer>
@@ -229,17 +255,19 @@ class ProductCategory extends Component {
 
 const mapStateToProps = state => ({
   productCategories: state.productReducer.productCategories,
-  productCategory: state.productReducer.productCategory,
-  loading: state.productReducer.loadingProductCategory,
-  categoryCreation: state.productReducer.productCategoryCreated
+  products: state.productReducer.products,
+  product: state.productReducer.product,
+  loading: state.productReducer.loadingProduct,
+  productCreated: state.productReducer.productCreated
 });
 
 export default connect(
   mapStateToProps,
   {
+    getAllProductsRequest,
+    createProductRequest,
+    updateProductRequest,
     getAllProductCategoriesRequest,
-    createProductCategoryRequest,
-    updateProductCategoryRequest,
-    deleteProductCategoryRequest
+    deleteProductRequest
   }
-)(ProductCategory);
+)(CreateProduct);

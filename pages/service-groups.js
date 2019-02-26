@@ -6,7 +6,8 @@ import { shadowStyle, color, height } from "../components/styles/constant";
 import {
   createServiceGroupRequest,
   getAllServiceGroupsRequest,
-  updateServiceGroupRequest
+  updateServiceGroupRequest,
+  deleteServiceGroupRequest
 } from "../modules/serviceGroupModule";
 import SpinerWrap from "../components/Spinner";
 import Button from "../components/styles/Button";
@@ -26,6 +27,14 @@ const ContentWrap = styled.div`
     border-radius: 0.2rem;
     tr {
       border-bottom: 1px solid #eef0f2;
+      &:hover {
+        .action {
+          span.delete {
+            visibility: visible;
+            color: red;
+          }
+        }
+      }
     }
     th {
       padding: 1.7rem 3rem;
@@ -34,6 +43,12 @@ const ContentWrap = styled.div`
     td {
       padding: 1.7rem 3rem;
       color: ${color.textColor};
+      &.action {
+        span.delete {
+          color: #083e8d;
+          visibility: hidden;
+        }
+      }
     }
     tbody tr:hover {
       background-color: #fbfbfb;
@@ -46,6 +61,7 @@ class ServiceGroups extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      id: "",
       name: "",
       appointment_color: "",
       description: "",
@@ -89,7 +105,7 @@ class ServiceGroups extends Component {
       description: description
     };
     if (name && appointment_color && description) {
-      this.props.updateServiceGroupRequest(data);
+      this.props.updateServiceGroupRequest(data, this.state.id);
       this.setState({ openUpdateServiceGroup: false });
     }
   };
@@ -119,11 +135,16 @@ class ServiceGroups extends Component {
   updateServiceGroup = serviceGroup => {
     console.log("update", serviceGroup);
     this.setState({
+      id: serviceGroup.id,
       name: serviceGroup.name,
       appointment_color: serviceGroup.appointment_color,
       description: serviceGroup.description,
       openUpdateServiceGroup: true
     });
+  };
+
+  deleteServiceGroup = id => {
+    this.props.deleteServiceGroupRequest(id);
   };
 
   render() {
@@ -163,17 +184,18 @@ class ServiceGroups extends Component {
                   <th>Color</th>
                   <th>Service Group Name</th>
                   <th>Description</th>
+                  <th />
                 </tr>
               </thead>
               <tbody>
                 {this.props.serviceGroups.map(x => (
-                  <tr
-                    key={x.id}
-                    onClick={() => {
-                      this.updateServiceGroup(x);
-                    }}
-                  >
-                    <td style={{ width: "14rem" }}>
+                  <tr key={x.id}>
+                    <td
+                      onClick={() => {
+                        this.updateServiceGroup(x);
+                      }}
+                      style={{ width: "14rem" }}
+                    >
                       <span
                         style={{
                           width: "3rem",
@@ -184,8 +206,26 @@ class ServiceGroups extends Component {
                         }}
                       />
                     </td>
-                    <td>{x.name}</td>
-                    <td>{x.description}</td>
+                    <td
+                      onClick={() => {
+                        this.updateServiceGroup(x);
+                      }}
+                    >
+                      {x.name}
+                    </td>
+                    <td
+                      onClick={() => {
+                        this.updateServiceGroup(x);
+                      }}
+                    >
+                      {x.description}
+                    </td>
+                    <td
+                      className="action"
+                      onClick={() => this.deleteServiceGroup(x.id)}
+                    >
+                      <span className="delete">delete</span>
+                    </td>
                   </tr>
                 ))}
               </tbody>
@@ -219,6 +259,7 @@ export default connect(
   {
     createServiceGroupRequest,
     getAllServiceGroupsRequest,
-    updateServiceGroupRequest
+    updateServiceGroupRequest,
+    deleteServiceGroupRequest
   }
 )(ServiceGroups);

@@ -6,7 +6,8 @@ import { shadowStyle, color, height } from "../components/styles/constant";
 import {
   getAllStaffsRequest,
   createStaffRequest,
-  updateStaffRequest
+  updateStaffRequest,
+  deleteStaffRequest
 } from "../modules/staffModule";
 import SpinerWrap from "../components/Spinner";
 import Button from "../components/styles/Button";
@@ -15,6 +16,7 @@ import UpdateStaffModal from "./staff/updateStaffModal";
 import NoData from "../components/NoData";
 
 const ContentWrap = styled.div`
+  position: relative;
   .action-wrap {
     margin-bottom: ${height.gutterHeight};
     text-align: right;
@@ -26,6 +28,14 @@ const ContentWrap = styled.div`
     border-radius: 0.2rem;
     tr {
       border-bottom: 1px solid #eef0f2;
+      &:hover {
+        .action {
+          span.delete {
+            visibility: visible;
+            color: red;
+          }
+        }
+      }
     }
     th {
       padding: 1.7rem 3rem;
@@ -34,6 +44,12 @@ const ContentWrap = styled.div`
     td {
       padding: 1.7rem 3rem;
       color: ${color.textColor};
+      &.action {
+        span.delete {
+          color: #083e8d;
+          visibility: hidden;
+        }
+      }
     }
     tbody tr:hover {
       background-color: #fbfbfb;
@@ -46,6 +62,7 @@ class StaffMembers extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      id: "",
       first_name: "",
       last_name: "",
       password: "",
@@ -83,16 +100,14 @@ class StaffMembers extends Component {
 
   handleUpdateSubmit = e => {
     e.preventDefault();
-    const { first_name, last_name, password, email } = this.state;
+    const { first_name, last_name } = this.state;
     this.setState({ submitted: true });
     const data = {
       first_name: first_name,
-      last_name: last_name,
-      password: password,
-      email: email
+      last_name: last_name
     };
-    if (first_name && last_name && password && email) {
-      this.props.updateStaffRequest(data);
+    if (first_name && last_name) {
+      this.props.updateStaffRequest(data, this.state.id);
       this.setState({ openUpdateStaff: false });
     }
   };
@@ -121,12 +136,16 @@ class StaffMembers extends Component {
 
   updateStaff = staff => {
     this.setState({
+      id: staff.id,
       first_name: staff.first_name,
       last_name: staff.last_name,
-      password: staff.password,
-      email: staff.email,
       openUpdateStaff: true
     });
+    this.setState({ openUpdateStaff: true });
+  };
+
+  deleteStaff = id => {
+    this.props.deleteStaffRequest(id);
   };
 
   render() {
@@ -169,19 +188,39 @@ class StaffMembers extends Component {
                   <th>First Name</th>
                   <th>Last Name</th>
                   <th>Email</th>
+                  <th />
                 </tr>
               </thead>
               <tbody>
                 {this.props.staffs.map(x => (
-                  <tr
-                    key={x.id}
-                    onClick={() => {
-                      this.updateStaff(x);
-                    }}
-                  >
-                    <td>{x.first_name}</td>
-                    <td>{x.last_name}</td>
-                    <td>{x.email}</td>
+                  <tr key={x.id}>
+                    <td
+                      onClick={() => {
+                        this.updateStaff(x);
+                      }}
+                    >
+                      {x.first_name}
+                    </td>
+                    <td
+                      onClick={() => {
+                        this.updateStaff(x);
+                      }}
+                    >
+                      {x.last_name}
+                    </td>
+                    <td
+                      onClick={() => {
+                        this.updateStaff(x);
+                      }}
+                    >
+                      {x.email}
+                    </td>
+                    <td
+                      className="action"
+                      onClick={() => this.deleteStaff(x.id)}
+                    >
+                      <span className="delete">delete</span>
+                    </td>
                   </tr>
                 ))}
               </tbody>
@@ -212,5 +251,10 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { getAllStaffsRequest, createStaffRequest, updateStaffRequest }
+  {
+    getAllStaffsRequest,
+    createStaffRequest,
+    updateStaffRequest,
+    deleteStaffRequest
+  }
 )(StaffMembers);

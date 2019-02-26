@@ -79,7 +79,7 @@ export function getProductById(id) {
   return Fetch(ProductsAPi, requestOptions).then(handleResponse);
 }
 
-export function updateProduct(data) {
+export function updateProduct(data, id) {
   var auth = "Token " + Cookies.get("token");
   const requestOptions = {
     method: "PUT",
@@ -90,10 +90,10 @@ export function updateProduct(data) {
     body: JSON.stringify(data)
   };
 
-  return fetch(ProductsAPi, requestOptions).then(handleResponse);
+  return fetch(ProductsAPi + `${id}/`, requestOptions).then(handleResponse);
 }
 
-export function updateProductCategory(data) {
+export function updateProductCategory(data, id) {
   var auth = "Token " + Cookies.get("token");
   const requestOptions = {
     method: "PUT",
@@ -104,10 +104,12 @@ export function updateProductCategory(data) {
     body: JSON.stringify(data)
   };
 
-  return fetch(ProductCategoriesAPi, requestOptions).then(handleResponse);
+  return fetch(ProductCategoriesAPi + `${id}/`, requestOptions).then(
+    handleResponse
+  );
 }
 
-export function _delete(id) {
+export function _deleteProduct(id) {
   var auth = "Token " + Cookies.get("token");
   const requestOptions = {
     method: "DELETE",
@@ -118,7 +120,21 @@ export function _delete(id) {
     body: JSON.stringify(id)
   };
 
-  return Fetch(ProductsAPi, requestOptions).then(handleResponse);
+  return Fetch(ProductsAPi + `${id}/`, requestOptions).then(handleResponse);
+}
+
+export function _deleteProductCategory(id) {
+  var auth = "Token " + Cookies.get("token");
+  const requestOptions = {
+    method: "DELETE",
+    headers: {
+      Authorization: auth,
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(id)
+  };
+
+  return Fetch(ProductsAPi + `${id}/`, requestOptions).then(handleResponse);
 }
 
 function handleResponse(response) {

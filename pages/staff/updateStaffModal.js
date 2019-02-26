@@ -27,8 +27,6 @@ class UpdateStaffModal extends Component {
     const {
       first_name,
       last_name,
-      email,
-      password,
       submitted,
       openUpdateStaff
     } = this.props.modalState;
@@ -66,36 +64,6 @@ class UpdateStaffModal extends Component {
                     />
                     {submitted && !last_name && (
                       <div className="error">Last name is required</div>
-                    )}
-                  </div>
-                </div>
-                <div className="col-md-6">
-                  <div className="form-wrap">
-                    <label htmlFor="">Email</label>
-                    <input
-                      type="email"
-                      name="email"
-                      value={email}
-                      onChange={this.props.handleChange}
-                      placeholder="Enter Your email"
-                    />
-                    {submitted && !email && (
-                      <div className="error">email is required</div>
-                    )}
-                  </div>
-                </div>
-                <div className="col-md-6">
-                  <div className="form-wrap">
-                    <label htmlFor="">Password</label>
-                    <input
-                      type="password"
-                      name="password"
-                      value={password}
-                      onChange={this.props.handleChange}
-                      placeholder="Enter Your password"
-                    />
-                    {submitted && !password && (
-                      <div className="error">password is required</div>
                     )}
                   </div>
                 </div>

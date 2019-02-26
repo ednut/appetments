@@ -1,17 +1,20 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import {
-  getAllProductCategoriesRequest,
-  createProductCategoryRequest,
-  updateProductCategoryRequest,
-  deleteProductCategoryRequest
-} from "../../modules/productModule";
+  getAllVariantsRequest,
+  createVariantRequest,
+  updateVariantRequest,
+  deleteVariantRequest,
+  activateVariantRequest,
+  deactivateVariantRequest,
+  adjustInventoryRequest
+} from "../../modules/productVariantModule";
 import SpinerWrap from "../../components/Spinner";
 import AdminContainer from "../../components/AdminContainer";
 import Button from "../../components/styles/Button";
 import Product from "../product";
-import CreateProductCategoryModal from "./createProductCategoryModal";
-import UpdateProductCategoryModal from "./updateProductCategoryModal";
+import CreateProductVariantModal from "./createProductVariantModal";
+import UpdateProductVariantModal from "./updateProductVariantModal";
 import styled from "styled-components";
 import { color, height } from "../../components/styles/constant";
 
@@ -58,52 +61,62 @@ const ContentWrap = styled.div`
   }
 `;
 
-class ProductCategory extends Component {
+class ProductVariant extends Component {
   constructor(props) {
     super(props);
     this.state = {
       id: "",
-      company: "",
-      category_name: "",
+      name: "",
+      barcode: "",
+      sku: "",
+      quantity: "",
+      retail_price: "",
       submitted: false,
-      openCreateProductCategory: false,
-      openUpdateProductCategory: false
+      openCreateProductVariant: false,
+      openUpdateProductVariant: false
     };
   }
   componentDidMount() {
-    this.props.getAllProductCategoriesRequest();
+    this.props.getAllVariantsRequest();
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.categoryCreation) {
-      this.props.getAllProductCategoriesRequest();
+    if (nextProps.rerender) {
+      this.props.getAllVariantsRequest();
     }
   }
 
   handleCreateSubmit = e => {
     e.preventDefault();
-    const { category_name } = this.state;
+    const { name, barcode, sku, quantity, retail_price } = this.state;
     this.setState({ submitted: true });
     const data = {
-      category_name: category_name
+      name: name,
+      barcode: barcode,
+      sku: sku,
+      quantity: quantity,
+      retail_price: retail_price
     };
-    if (category_name) {
-      this.props.createProductCategoryRequest(data);
-      this.setState({ openCreateProductCategory: false });
+    if (name && barcode && sku && quantity && retail_price) {
+      this.props.createVariantRequest(data);
+      this.setState({ openCreateProductVariant: false });
     }
   };
 
   handleUpdateSubmit = e => {
     e.preventDefault();
-    const { category_name } = this.state;
+    const { name, barcode, sku, quantity, retail_price } = this.state;
     this.setState({ submitted: true });
     const data = {
-      category_name: category_name,
-      company: this.state.company
+      name: name,
+      barcode: barcode,
+      sku: sku,
+      quantity: quantity,
+      retail_price: retail_price
     };
-    if (category_name) {
-      this.props.updateProductCategoryRequest(data, this.state.id);
-      this.setState({ openUpdateProductCategory: false });
+    if (name && barcode && sku && quantity && retail_price) {
+      this.props.updateVariantRequest(data, this.state.id);
+      this.setState({ openUpdateProductVariant: false });
     }
   };
 
@@ -114,57 +127,60 @@ class ProductCategory extends Component {
   };
 
   onOpenCreateModal = () => {
-    this.setState({ openCreateProductCategory: true });
+    this.setState({ openCreateProductVariant: true });
   };
 
   onCloseCreateModal = () => {
-    this.setState({ openCreateProductCategory: false });
+    this.setState({ openCreateProductVariant: false });
   };
 
   onOpenUpdateModal = () => {
-    this.setState({ openUpdateProductCategory: true });
+    this.setState({ openUpdateProductVariant: true });
   };
 
   onCloseUpdateModal = () => {
-    this.setState({ openUpdateProductCategory: false });
+    this.setState({ openUpdateProductVariant: false });
   };
 
-  updateProductCategory = product => {
+  updateProductVariant = variant => {
     this.setState({
-      id: product.id,
-      company: product.company,
-      category_name: product.category_name,
-      openUpdateProductCategory: true
+      id: variant.id,
+      name: variant.name,
+      barcode: variant.barcode,
+      sku: variant.sku,
+      quantity: variant.quantity,
+      retail_price: variant.retail_price,
+      openUpdateProductVariant: true
     });
   };
 
-  deleteProductCategory = id => {
-    this.props.deleteProductCategoryRequest(id);
+  deleteProductVariant = id => {
+    this.props.deleteVariantRequest(id);
   };
 
   render() {
-    if (this.props.productCategories !== undefined) {
+    if (this.props.productVariants !== undefined) {
       return (
         <AdminContainer>
           <Product>
             <ContentWrap>
               {this.props.loading === true ? <SpinerWrap /> : null}
 
-              <CreateProductCategoryModal
+              <CreateProductVariantModal
                 modalState={this.state}
                 onCloseModal={this.onCloseCreateModal}
                 handleChange={this.handleChange}
                 handleSubmit={this.handleCreateSubmit}
                 loading={this.props.loading}
-                title={"Create Product Category"}
+                title={"Create Product Variant"}
               />
-              <UpdateProductCategoryModal
+              <UpdateProductVariantModal
                 modalState={this.state}
                 onCloseModal={this.onCloseUpdateModal}
                 handleChange={this.handleChange}
                 handleSubmit={this.handleUpdateSubmit}
                 loading={this.props.loading}
-                title={"Update Product Category"}
+                title={"Update Product Variant"}
               />
 
               <div className="action-wrap">
@@ -173,31 +189,38 @@ class ProductCategory extends Component {
                   textColor={color.whiteColor}
                   onClick={this.onOpenCreateModal}
                 >
-                  Add New Product Category
+                  Add New Product Variant
                 </Button>
               </div>
 
               <table className="table table-borderless">
                 <thead>
                   <tr>
-                    <th>Category Name</th>
+                    <th>Variant Name</th>
+                    <th>Barcode</th>
+                    <th>SKU</th>
+                    <th>Quantity</th>
+                    <th>Retail Price</th>
                     <th />
                   </tr>
                 </thead>
                 <tbody>
-                  {this.props.productCategories.map(x => (
+                  {this.props.productVariants.map(x => (
                     <tr key={x.id}>
                       <td
                         onClick={() => {
-                          this.updateProductCategory(x);
+                          this.updateProductVariant(x);
                         }}
                       >
-                        {x.category_name}
+                        {x.name}
                       </td>
-
+                      <td>{x.barcode}</td>
+                      <td>{x.sku}</td>
+                      <td>{x.quantity}</td>
+                      <td>{x.retail_price}</td>
                       <td
                         className="action"
-                        onClick={() => this.deleteProductCategory(x.id)}
+                        onClick={() => this.deleteProductVariant(x.id)}
                       >
                         <span className="delete">delete</span>
                       </td>
@@ -205,8 +228,8 @@ class ProductCategory extends Component {
                   ))}
                 </tbody>
               </table>
-              {this.props.productCategories &&
-              this.props.productCategories.length < 0
+              {this.props.productVariants &&
+              this.props.productVariants.length < 0
                 ? "No data"
                 : null}
             </ContentWrap>
@@ -228,18 +251,20 @@ class ProductCategory extends Component {
 }
 
 const mapStateToProps = state => ({
-  productCategories: state.productReducer.productCategories,
-  productCategory: state.productReducer.productCategory,
-  loading: state.productReducer.loadingProductCategory,
-  categoryCreation: state.productReducer.productCategoryCreated
+  productVariants: state.productVariantReducer.variants,
+  rerender: state.productVariantReducer.rerender,
+  loading: state.productVariantReducer.loading
 });
 
 export default connect(
   mapStateToProps,
   {
-    getAllProductCategoriesRequest,
-    createProductCategoryRequest,
-    updateProductCategoryRequest,
-    deleteProductCategoryRequest
+    getAllVariantsRequest,
+    createVariantRequest,
+    updateVariantRequest,
+    deleteVariantRequest,
+    activateVariantRequest,
+    deactivateVariantRequest,
+    adjustInventoryRequest
   }
-)(ProductCategory);
+)(ProductVariant);
