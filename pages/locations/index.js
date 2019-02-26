@@ -333,7 +333,7 @@ class Location extends Component {
                         onClick={() => this.deleteLocation(x.id)}
                         className="add"
                       >
-                        Delete Service
+                        Delete Location
                       </span>
                     </td>
                   </tr>
