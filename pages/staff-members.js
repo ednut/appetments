@@ -14,6 +14,7 @@ import Button from "../components/styles/Button";
 import CreateStaffModal from "./staff/createStaffModal";
 import UpdateStaffModal from "./staff/updateStaffModal";
 import NoData from "../components/NoData";
+import TableWrapper from "../components/styles/TableWrap";
 
 const ContentWrap = styled.div`
   position: relative;
@@ -21,39 +22,27 @@ const ContentWrap = styled.div`
     margin-bottom: ${height.gutterHeight};
     text-align: right;
   }
-  table {
-    background-color: ${color.whiteColor};
-    box-shadow: 0 2px 5px 0 rgba(164, 173, 186, 0.25);
-    border-bottom: none;
-    border-radius: 0.2rem;
-    tr {
-      border-bottom: 1px solid #eef0f2;
-      &:hover {
-        .action {
-          span.delete {
-            visibility: visible;
-            color: red;
-          }
-        }
-      }
+  button {
+    width: 6rem;
+    height: 6rem;
+    border-radius: 50%;
+    border: none;
+    background-color: #083e8d;
+    color: #fff;
+    animation: moveInBottom 1s linear;
+    transition: all 0.2s;
+    padding-top: 5px;
+    box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.2);
+    position: fixed;
+    bottom: 50px;
+    right: 40px;
+    cursor: pointer;
+    outline: none;
+    i {
+      font-size: 32px;
     }
-    th {
-      padding: 1.7rem 3rem;
-      color: ${color.textLight};
-    }
-    td {
-      padding: 1.7rem 3rem;
-      color: ${color.textColor};
-      &.action {
-        span.delete {
-          color: #083e8d;
-          visibility: hidden;
-        }
-      }
-    }
-    tbody tr:hover {
-      background-color: #fbfbfb;
-      cursor: pointer;
+    &:hover {
+      transform: translateY(-0.3rem);
     }
   }
 `;
@@ -173,58 +162,67 @@ class StaffMembers extends Component {
             />
 
             <div className="action-wrap">
-              <Button
+              {/* <Button
                 buttonColor={color.brandColor}
                 textColor={color.whiteColor}
                 onClick={this.onOpenCreateModal}
               >
                 Add New Staff
-              </Button>
-            </div>
+              </Button> */}
 
-            <table className="table table-borderless">
-              <thead>
-                <tr>
-                  <th>First Name</th>
-                  <th>Last Name</th>
-                  <th>Email</th>
-                  <th />
-                </tr>
-              </thead>
-              <tbody>
-                {this.props.staffs.map(x => (
-                  <tr key={x.id}>
-                    <td
-                      onClick={() => {
-                        this.updateStaff(x);
-                      }}
-                    >
-                      {x.first_name}
-                    </td>
-                    <td
-                      onClick={() => {
-                        this.updateStaff(x);
-                      }}
-                    >
-                      {x.last_name}
-                    </td>
-                    <td
-                      onClick={() => {
-                        this.updateStaff(x);
-                      }}
-                    >
-                      {x.email}
-                    </td>
-                    <td
-                      className="action"
-                      onClick={() => this.deleteStaff(x.id)}
-                    >
-                      <span className="delete">delete</span>
-                    </td>
+              <button onClick={this.onOpenCreateModal}>
+                <i className="material-icons"> add </i>
+              </button>
+            </div>
+            <TableWrapper>
+              <table>
+                <thead>
+                  <tr>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Email</th>
+                    <th />
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {this.props.staffs.map(x => (
+                    <tr key={x.id}>
+                      <td>{x.first_name}</td>
+                      <td>{x.last_name}</td>
+                      <td>{x.email}</td>
+                      <td className="more-options dropdown-toggle">
+                        <div className="dropdown">
+                          <span
+                            className="icon-more"
+                            data-toggle="dropdown"
+                            aria-haspopup="true"
+                            aria-expanded="false"
+                          >
+                            <i className="fas fa-ellipsis-h" />
+                          </span>
+                          <div className="dropdown-menu">
+                            <a
+                              onClick={() => {
+                                this.updateStaff(x);
+                              }}
+                              className="dropdown-item"
+                            >
+                              Edit
+                            </a>
+                            <a
+                              onClick={() => this.deleteStaff(x.id)}
+                              className="dropdown-item delete"
+                            >
+                              Delete
+                            </a>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </TableWrapper>
             {this.props.staffs.length === 0 ? (
               <NoData message="No Staff Created Yet" />
             ) : null}

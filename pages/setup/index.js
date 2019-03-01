@@ -57,7 +57,7 @@ class Setup extends Component {
                   </div>
                   <ul>
                     <li>
-                      <Link href="#">
+                      <Link href="/company-details">
                         <a>Company Details</a>
                       </Link>
                     </li>
@@ -76,7 +76,7 @@ class Setup extends Component {
                         <a>Calendar Settings</a>
                       </Link>
                     </li>
-                    <li>
+                    {/* <li>
                       <Link href="#">
                         <a>Online Booking Settings</a>
                       </Link>
@@ -85,7 +85,7 @@ class Setup extends Component {
                       <Link href="#">
                         <a>Staff Notifications</a>
                       </Link>
-                    </li>
+                    </li> */}
                   </ul>
                 </div>
               </div>
@@ -115,11 +115,11 @@ class Setup extends Component {
                         <a>Sales Settings</a>
                       </Link>
                     </li>
-                    <li>
+                    {/* <li>
                       <Link href="#">
                         <a>Invoices & Receipts</a>
                       </Link>
-                    </li>
+                    </li> */}
                   </ul>
                 </div>
               </div>

@@ -14,45 +14,34 @@ import Button from "../components/styles/Button";
 import CreateServiceGroupModal from "./services/createServiceGroupModal";
 import UpdateServiceGroupModal from "./services/updateServiceGroupModal";
 import NoData from "../components/NoData";
+import TableWrapper from "../components/styles/TableWrap";
 
 const ContentWrap = styled.div`
   .action-wrap {
     margin-bottom: ${height.gutterHeight};
     text-align: right;
   }
-  table {
-    background-color: ${color.whiteColor};
-    box-shadow: 0 2px 5px 0 rgba(164, 173, 186, 0.25);
-    border-bottom: none;
-    border-radius: 0.2rem;
-    tr {
-      border-bottom: 1px solid #eef0f2;
-      &:hover {
-        .action {
-          span.delete {
-            visibility: visible;
-            color: red;
-          }
-        }
-      }
+  button {
+    width: 6rem;
+    height: 6rem;
+    border-radius: 50%;
+    border: none;
+    background-color: #083e8d;
+    color: #fff;
+    animation: moveInBottom 1s linear;
+    transition: all 0.2s;
+    padding-top: 5px;
+    box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.2);
+    position: fixed;
+    bottom: 50px;
+    right: 40px;
+    cursor: pointer;
+    outline: none;
+    i {
+      font-size: 32px;
     }
-    th {
-      padding: 1.7rem 3rem;
-      color: ${color.textLight};
-    }
-    td {
-      padding: 1.7rem 3rem;
-      color: ${color.textColor};
-      &.action {
-        span.delete {
-          color: #083e8d;
-          visibility: hidden;
-        }
-      }
-    }
-    tbody tr:hover {
-      background-color: #fbfbfb;
-      cursor: pointer;
+    &:hover {
+      transform: translateY(-0.3rem);
     }
   }
 `;
@@ -170,66 +159,77 @@ class ServiceGroups extends Component {
               title={"Update Service Group"}
             />
             <div className="action-wrap">
-              <Button
+              {/* <Button
                 buttonColor={color.brandColor}
                 textColor={color.whiteColor}
                 onClick={this.onOpenCreateModal}
               >
                 Create Service Group
-              </Button>
+              </Button> */}
+
+              <button onClick={this.onOpenCreateModal}>
+                <i className="material-icons"> add </i>
+              </button>
             </div>
-            <table className="table table-borderless">
-              <thead>
-                <tr>
-                  <th>Color</th>
-                  <th>Service Group Name</th>
-                  <th>Description</th>
-                  <th />
-                </tr>
-              </thead>
-              <tbody>
-                {this.props.serviceGroups.map(x => (
-                  <tr key={x.id}>
-                    <td
-                      onClick={() => {
-                        this.updateServiceGroup(x);
-                      }}
-                      style={{ width: "14rem" }}
-                    >
-                      <span
-                        style={{
-                          width: "3rem",
-                          height: "3rem",
-                          borderRadius: "50%",
-                          background: x.appointment_color,
-                          display: "inline-block"
-                        }}
-                      />
-                    </td>
-                    <td
-                      onClick={() => {
-                        this.updateServiceGroup(x);
-                      }}
-                    >
-                      {x.name}
-                    </td>
-                    <td
-                      onClick={() => {
-                        this.updateServiceGroup(x);
-                      }}
-                    >
-                      {x.description}
-                    </td>
-                    <td
-                      className="action"
-                      onClick={() => this.deleteServiceGroup(x.id)}
-                    >
-                      <span className="delete">delete</span>
-                    </td>
+            <TableWrapper>
+              <table>
+                <thead>
+                  <tr>
+                    <th>Color</th>
+                    <th>Service Group Name</th>
+                    <th>Description</th>
+                    <th />
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {this.props.serviceGroups.map(x => (
+                    <tr key={x.id}>
+                      <td style={{ width: "14rem" }}>
+                        <span
+                          style={{
+                            width: "3rem",
+                            height: "3rem",
+                            borderRadius: "50%",
+                            background: x.appointment_color,
+                            display: "inline-block"
+                          }}
+                        />
+                      </td>
+                      <td>{x.name}</td>
+                      <td>{x.description}</td>
+                      <td className="more-options dropdown-toggle">
+                        <div className="dropdown">
+                          <span
+                            className="icon-more"
+                            data-toggle="dropdown"
+                            aria-haspopup="true"
+                            aria-expanded="false"
+                          >
+                            <i className="fas fa-ellipsis-h" />
+                          </span>
+                          <div className="dropdown-menu">
+                            <a
+                              onClick={() => {
+                                this.updateServiceGroup(x);
+                              }}
+                              className="dropdown-item"
+                            >
+                              Edit
+                            </a>
+                            <a
+                              onClick={() => this.deleteServiceGroup(x.id)}
+                              className="dropdown-item delete"
+                            >
+                              Delete
+                            </a>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </TableWrapper>
             {this.props.serviceGroups.length === 0 ? (
               <NoData message="No Service Group Created Yet." />
             ) : null}

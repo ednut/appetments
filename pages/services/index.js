@@ -39,12 +39,12 @@ class Services extends Component {
           <ul>
             <li>
               <Link activeClassName="active" href="/service-groups">
-                <a>Create Service Groups</a>
+                <a>Service Groups</a>
               </Link>
             </li>
             <li>
               <Link activeClassName="active" href="/create-services">
-                <a>Create Services</a>
+                <a>Services</a>
               </Link>
             </li>
           </ul>

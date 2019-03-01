@@ -1,9 +1,9 @@
 import Router from "next/router";
 import Fetch from "isomorphic-unfetch";
 import Cookies from "js-cookie";
-import { ProductVariantAPi } from "../../Config";
+import { ProductVariantAPi, ProductsAPi } from "../../Config";
 
-export function createProductVariant(data) {
+export function createProductVariant(data, id) {
   var auth = "Token " + Cookies.get("token");
   const requestOptions = {
     method: "POST",
@@ -14,12 +14,12 @@ export function createProductVariant(data) {
     body: JSON.stringify(data)
   };
 
-  return Fetch(ProductVariantAPi, requestOptions)
+  return Fetch(ProductsAPi + `${id}/variants/`, requestOptions)
     .then(handleResponse)
     .then(variant => variant);
 }
 
-export function getAllProductVariants() {
+export function getAllProductVariants(id) {
   var auth = "Token " + Cookies.get("token");
   const requestOptions = {
     method: "GET",
@@ -29,7 +29,7 @@ export function getAllProductVariants() {
     }
   };
 
-  return Fetch(ProductVariantAPi, requestOptions)
+  return Fetch(ProductsAPi + `${id}/variants/`, requestOptions)
     .then(handleResponse)
     .then(variants => variants);
 }

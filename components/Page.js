@@ -49,6 +49,7 @@ injectGlobal`
         outline: none;
       }
     }
+    .dropdown-toggle:after { content: none }
 `;
 
 class Page extends Component {

@@ -9,6 +9,7 @@ import {
   deactivateVariantRequest,
   adjustInventoryRequest
 } from "../../modules/productVariantModule";
+import { getAllProductsRequest } from "../../modules/productModule";
 import SpinerWrap from "../../components/Spinner";
 import AdminContainer from "../../components/AdminContainer";
 import Button from "../../components/styles/Button";
@@ -251,6 +252,7 @@ class ProductVariant extends Component {
 }
 
 const mapStateToProps = state => ({
+  products: state.productReducer.products,
   productVariants: state.productVariantReducer.variants,
   rerender: state.productVariantReducer.rerender,
   loading: state.productVariantReducer.loading
@@ -265,6 +267,7 @@ export default connect(
     deleteVariantRequest,
     activateVariantRequest,
     deactivateVariantRequest,
-    adjustInventoryRequest
+    adjustInventoryRequest,
+    getAllProductsRequest
   }
 )(ProductVariant);

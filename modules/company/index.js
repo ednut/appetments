@@ -34,7 +34,7 @@ export default function(state = initialState, action) {
 export function createCompany(postData) {
   return dispatch => {
     dispatch({ type: COMPANY_LOADING, payload: true });
-    Company(postData)
+    createCompany(postData)
       .then(user => {
         dispatch({
           type: COMPANY_SUCCESS,

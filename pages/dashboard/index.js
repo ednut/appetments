@@ -7,8 +7,9 @@ const DashboardCard = styled.div`
   box-shadow: ${shadowStyle.lightShadow};
   background-color: ${color.whiteColor};
   padding: 2rem;
-  margin-bottom: ${height.spaceHeight};
+  margin-bottom: 3rem;
   border-radius: 1.3rem;
+  border: 1px solid #e6e9ed;
   .title {
     font-weight: 600;
     text-transform: uppercase;

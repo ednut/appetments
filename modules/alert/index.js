@@ -24,11 +24,15 @@ export default function(state = "", action) {
 // Actions
 
 export function success(message) {
-  return dispatch =>
+  return dispatch => {
     dispatch({
       type: ALERT_SUCCESS,
       payload: { errType: "success", message: message }
     });
+    setTimeout(() => {
+      dispatch({ type: ALERT_CLEAR });
+    }, 3000);
+  };
 }
 
 export function clear() {

@@ -18,44 +18,34 @@ import CreateServiceModal from "./services/createServiceModal";
 import UpdateServiceModal from "./services/updateServiceModal";
 import AddStaffToService from "./services/addStaffToServiceModal";
 import NoData from "../components/NoData";
+import TableWrapper from "../components/styles/TableWrap";
 
 const ContentWrap = styled.div`
   .action-wrap {
     margin-bottom: ${height.gutterHeight};
     text-align: right;
   }
-  table {
-    background-color: ${color.whiteColor};
-    box-shadow: 0 2px 5px 0 rgba(164, 173, 186, 0.25);
-    border-bottom: none;
-    border-radius: 0.2rem;
-    tr {
-      border-bottom: 1px solid #eef0f2;
-      &:hover {
-        .action {
-          span.add {
-            visibility: visible;
-          }
-        }
-      }
+  button {
+    width: 6rem;
+    height: 6rem;
+    border-radius: 50%;
+    border: none;
+    background-color: #083e8d;
+    color: #fff;
+    animation: moveInBottom 1s linear;
+    transition: all 0.2s;
+    padding-top: 5px;
+    box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.2);
+    position: fixed;
+    bottom: 50px;
+    right: 40px;
+    cursor: pointer;
+    outline: none;
+    i {
+      font-size: 32px;
     }
-    th {
-      padding: 1.7rem 3rem;
-      color: ${color.textLight};
-    }
-    td {
-      padding: 1.7rem 3rem;
-      color: ${color.textColor};
-      &.action {
-        span.add {
-          color: #083e8d;
-          visibility: hidden;
-        }
-      }
-    }
-    tbody tr:hover {
-      background-color: #fbfbfb;
-      cursor: pointer;
+    &:hover {
+      transform: translateY(-0.3rem);
     }
   }
 `;
@@ -245,30 +235,34 @@ class CreateService extends Component {
               title={"Add Staff to Service"}
             />
             <div className="action-wrap">
-              <Button
+              {/* <Button
                 buttonColor={color.brandColor}
                 textColor={color.whiteColor}
                 onClick={this.onOpenCreateModal}
               >
                 Create Service
-              </Button>
+              </Button> */}
+              <button onClick={this.onOpenCreateModal}>
+                <i className="material-icons"> add </i>
+              </button>
             </div>
-            <table className="table table-borderless">
-              <thead>
-                <tr>
-                  {/* <th /> */}
-                  <th>Service Name</th>
-                  <th>Group</th>
-                  <th>Duration</th>
-                  <th>Staff</th>
-                  <th>Description</th>
-                  <th />
-                </tr>
-              </thead>
-              <tbody>
-                {this.props.services.map(x => (
-                  <tr key={x.id}>
-                    {/* <td>
+            <TableWrapper>
+              <table>
+                <thead>
+                  <tr>
+                    {/* <th /> */}
+                    <th>Service Name</th>
+                    <th>Group</th>
+                    <th>Duration</th>
+                    <th>Staff</th>
+                    <th>Description</th>
+                    <th />
+                  </tr>
+                </thead>
+                <tbody>
+                  {this.props.services.map(x => (
+                    <tr key={x.id}>
+                      {/* <td>
                       <input
                         type="checkbox"
                         onChange={() => this.handleBulkActions(x)}
@@ -276,38 +270,54 @@ class CreateService extends Component {
                         id={x.id}
                       />
                     </td> */}
-                    <td
-                      onClick={() => {
-                        this.updateService(x);
-                      }}
-                    >
-                      {x.name}
-                    </td>
-                    <td>{x.group}</td>
-                    <td>
-                      {x.duration} {"minutes"}
-                    </td>
-                    <td>{x.staff}</td>
-                    <td>{x.description}</td>
-                    <td className="action">
-                      <span
-                        onClick={() => this.addingStaffToService(x)}
-                        className="add"
-                      >
-                        + Add Staff
-                      </span>
-                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                      <span
-                        onClick={() => this.deleteService(x.id)}
-                        className="add"
-                      >
-                        Delete Service
-                      </span>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+                      <td>{x.name}</td>
+                      <td>{x.group}</td>
+                      <td>
+                        {x.duration} {"minutes"}
+                      </td>
+                      <td>{x.staff}</td>
+                      <td>{x.description}</td>
+                      <td className="more-options dropdown-toggle">
+                        <div className="dropdown">
+                          <span
+                            className="icon-more"
+                            data-toggle="dropdown"
+                            aria-haspopup="true"
+                            aria-expanded="false"
+                          >
+                            <i className="fas fa-ellipsis-h" />
+                          </span>
+                          <div className="dropdown-menu">
+                            <a
+                              onClick={() => {
+                                this.addingStaffToService(x);
+                              }}
+                              className="dropdown-item"
+                            >
+                              Add Staff
+                            </a>
+                            <a
+                              onClick={() => {
+                                this.updateService(x);
+                              }}
+                              className="dropdown-item"
+                            >
+                              Edit
+                            </a>
+                            <a
+                              onClick={() => this.deleteService(x.id)}
+                              className="dropdown-item delete"
+                            >
+                              Delete
+                            </a>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </TableWrapper>
             {this.props.services.length === 0 ? (
               <NoData message="No Service Created Yet." />
             ) : null}

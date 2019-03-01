@@ -6,7 +6,8 @@ import {
   updateProduct,
   updateProductCategory,
   _deleteProduct,
-  _deleteProductCategory
+  _deleteProductCategory,
+  getProductById
 } from "./productServices";
 
 import { success, error } from "../alert";
@@ -22,7 +23,8 @@ import {
   LOADING_PRODUCT,
   LOADING_PRODUCT_CATEGORY,
   PRODUCT_ERROR,
-  PRODUCT_CATEGORY_ERROR
+  PRODUCT_CATEGORY_ERROR,
+  RERENDER
 } from "../types";
 
 // Reducer
@@ -141,6 +143,28 @@ export function getAllProductsRequest() {
         });
         dispatch({ type: PRODUCT_CREATED, payload: false });
         dispatch({ type: LOADING_PRODUCT, payload: false });
+      })
+      .catch(err => {
+        let e = err[Object.keys(err)[0]];
+        dispatch(error(e));
+        dispatch({ type: LOADING_PRODUCT, payload: false });
+        dispatch({ type: PRODUCT_ERROR, payload: err });
+      });
+  };
+}
+
+export function getProductsByIdRequest(id) {
+  return dispatch => {
+    dispatch({ type: LOADING_PRODUCT, payload: true });
+    getProductById(id)
+      .then(product => {
+        dispatch({
+          type: GET_PRODUCT,
+          payload: product
+        });
+        dispatch({ type: PRODUCT_CREATED, payload: false });
+        dispatch({ type: LOADING_PRODUCT, payload: false });
+        dispatch({ type: RERENDER, payload: false });
       })
       .catch(err => {
         let e = err[Object.keys(err)[0]];

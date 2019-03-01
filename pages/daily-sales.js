@@ -72,6 +72,8 @@ const SalesWrapper = styled.div`
   }
   table {
     color: ${color.textColor};
+    border: 1px solid #e6e9ed;
+    background: #fff;
     thead {
       tr {
         background-color: #efefef;
@@ -124,7 +126,7 @@ const generateTime = () => {
 
 const dailySales = () => (
   <Sales>
-    <FilterSection>
+    {/* <FilterSection>
       <div className="row">
         <div className=" offset-md-8 col-md-4">
           <form>
@@ -150,7 +152,7 @@ const dailySales = () => (
           </form>
         </div>
       </div>
-    </FilterSection>
+    </FilterSection> */}
     <SalesWrapper>
       <div className="date-section">
         <div className="date">Daily Sales: {generateDate()}</div>

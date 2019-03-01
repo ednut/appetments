@@ -39,17 +39,12 @@ class Product extends Component {
           <ul>
             <li>
               <Link activeClassName="active" href="/product-categories">
-                <a>Create Product Categories</a>
+                <a>Product Categories</a>
               </Link>
             </li>
             <li>
               <Link activeClassName="active" href="/create-products">
-                <a>Create Products</a>
-              </Link>
-            </li>
-            <li>
-              <Link activeClassName="active" href="/product-variant">
-                <a>Create Product Variants</a>
+                <a>Products</a>
               </Link>
             </li>
           </ul>

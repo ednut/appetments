@@ -19,44 +19,34 @@ import UpdateLocationModal from "./updateLocationModal";
 import AddStaffToLocation from "./addStaffToLocationModal";
 import styled from "styled-components";
 import { color, height } from "../../components/styles/constant";
+import TableWrapper from "../../components/styles/TableWrap";
 
 const ContentWrap = styled.div`
   .action-wrap {
     margin-bottom: ${height.gutterHeight};
     text-align: right;
   }
-  table {
-    background-color: ${color.whiteColor};
-    box-shadow: 0 2px 5px 0 rgba(164, 173, 186, 0.25);
-    border-bottom: none;
-    border-radius: 0.2rem;
-    tr {
-      border-bottom: 1px solid #eef0f2;
-      &:hover {
-        .action {
-          span.add {
-            visibility: visible;
-          }
-        }
-      }
+  button {
+    width: 6rem;
+    height: 6rem;
+    border-radius: 50%;
+    border: none;
+    background-color: #083e8d;
+    color: #fff;
+    animation: moveInBottom 1s linear;
+    transition: all 0.2s;
+    padding-top: 5px;
+    box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.2);
+    position: fixed;
+    bottom: 50px;
+    right: 40px;
+    cursor: pointer;
+    outline: none;
+    i {
+      font-size: 32px;
     }
-    th {
-      padding: 1.7rem 3rem;
-      color: ${color.textLight};
-    }
-    td {
-      padding: 1.7rem 3rem;
-      color: ${color.textColor};
-      &.action {
-        span.add {
-          color: #083e8d;
-          visibility: hidden;
-        }
-      }
-    }
-    tbody tr:hover {
-      background-color: #fbfbfb;
-      cursor: pointer;
+    &:hover {
+      transform: translateY(-0.3rem);
     }
   }
 `;
@@ -100,7 +90,6 @@ class Location extends Component {
       contact_email,
       address,
       city,
-      staff,
       state,
       zip_code
     } = this.state;
@@ -111,7 +100,6 @@ class Location extends Component {
       contact_email: contact_email,
       address: address,
       city: city,
-      staff: staff.length !== 0 ? staff.split() : [],
       state: state,
       zip_code: zip_code
     };
@@ -136,7 +124,6 @@ class Location extends Component {
       contact_email,
       address,
       city,
-      staff,
       state,
       zip_code
     } = this.state;
@@ -147,7 +134,6 @@ class Location extends Component {
       contact_email: contact_email,
       address: address,
       city: city,
-      staff: staff.length !== 0 ? staff.split() : [],
       state: state,
       zip_code: zip_code
     };
@@ -269,77 +255,102 @@ class Location extends Component {
             />
 
             <div className="action-wrap">
-              <Button
+              {/* <Button
                 buttonColor={color.brandColor}
                 textColor={color.whiteColor}
                 onClick={this.onOpenCreateModal}
               >
                 Add New Location
-              </Button>
+              </Button> */}
+              <button onClick={this.onOpenCreateModal}>
+                <i className="material-icons"> add </i>
+              </button>
             </div>
+            <TableWrapper>
+              <table>
+                <thead>
+                  <tr>
+                    <th>Location</th>
+                    {/* <th>Contact Number</th> */}
+                    <th>Contact Email</th>
+                    <th>Staff</th>
+                    {/* <th>Address</th> */}
+                    <th>Zip Code</th>
+                    <th>City</th>
+                    <th>State</th>
 
-            <table className="table table-borderless">
-              <thead>
-                <tr>
-                  <th>Location</th>
-                  {/* <th>Contact Number</th> */}
-                  <th>Contact Email</th>
-                  {/* <th>Address</th> */}
-                  <th>Zip Code</th>
-                  <th>City</th>
-                  <th>State</th>
-                  <th>Staff</th>
-                  <th />
-                </tr>
-              </thead>
-              <tbody>
-                {this.props.locations.map(x => (
-                  <tr key={x.id}>
-                    <td
-                      onClick={() => {
-                        this.updateLocation(x);
-                      }}
-                    >
-                      <strong>{x.location_name}</strong>
-                      <br />
-                      {x.address}
-                      <br />
-                      {x.contact_number}
-                    </td>
-                    {/* <td>{x.contact_number}</td> */}
-                    <td>{x.contact_email}</td>
-                    {/* <td>{x.address}</td> */}
-                    <td>{x.zip_code}</td>
-                    <td>{x.city}</td>
-                    <td>{x.state}</td>
-                    <td>
-                      {x.staff.length > 1
-                        ? x.staff.map(
-                            staff => `${staff.first_name} ${staff.last_name}, `
-                          )
-                        : x.staff.map(
-                            staff => `${staff.first_name} ${staff.last_name}`
-                          )}
-                    </td>
-                    <td style={{ width: "20%" }} className="action">
-                      <span
-                        onClick={() => this.addingStaffToLocation(x)}
-                        className="add"
-                      >
-                        + Add Staff
-                      </span>
-                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                      <span
-                        onClick={() => this.deleteLocation(x.id)}
-                        className="add"
-                      >
-                        Delete Location
-                      </span>
-                    </td>
+                    <th />
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {this.props.locations.map(x => (
+                    <tr key={x.id}>
+                      <td style={{ width: "30%" }}>
+                        <strong>{x.location_name}</strong>
+                        <br />
+                        {x.address}
+                        <br />
+                        {x.contact_number}
+                      </td>
+                      <td>{x.contact_email}</td>
+                      <td style={{ width: "25%" }}>
+                        {x.staff.length > 0 ? (
+                          x.staff.map(staff => (
+                            <span key={staff.id} className="multi">
+                              {staff.first_name} {staff.last_name}
+                            </span>
+                          ))
+                        ) : (
+                          <span className="red">
+                            <strong>No staff assigned to location</strong>
+                          </span>
+                        )}
+                      </td>
+                      <td>{x.zip_code}</td>
+                      <td>{x.city}</td>
+                      <td>{x.state}</td>
+
+                      <td className="more-options dropdown-toggle">
+                        <div className="dropdown">
+                          <span
+                            className="icon-more"
+                            data-toggle="dropdown"
+                            aria-haspopup="true"
+                            aria-expanded="false"
+                          >
+                            <i className="fas fa-ellipsis-h" />
+                          </span>
+                          <div className="dropdown-menu">
+                            <a
+                              onClick={() => {
+                                this.addingStaffToLocation(x);
+                              }}
+                              className="dropdown-item"
+                            >
+                              Add Staff
+                            </a>
+                            <a
+                              onClick={() => {
+                                this.updateLocation(x);
+                              }}
+                              className="dropdown-item"
+                            >
+                              Edit
+                            </a>
+                            <a
+                              onClick={() => this.deleteLocation(x.id)}
+                              className="dropdown-item delete"
+                            >
+                              Delete
+                            </a>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </TableWrapper>
             {this.props.locations && this.props.locations.length < 0
               ? "No data"
               : null}

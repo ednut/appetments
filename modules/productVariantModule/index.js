@@ -13,7 +13,8 @@ import {
   GET_ALL_PRODUCT_VARIANTS,
   PRODUCT_VARIANT_ERROR,
   PRODUCT_VARIANT_LOADING,
-  RERENDER
+  RERENDER,
+  GET_ALL_PRODUCT
 } from "../types";
 
 // Reducer
@@ -47,10 +48,10 @@ export default function(state = initialState, action) {
 }
 
 // Action
-export function createVariantRequest(data) {
+export function createVariantRequest(data, id) {
   return dispatch => {
     dispatch({ type: PRODUCT_VARIANT_LOADING, payload: true });
-    createProductVariant(data)
+    createProductVariant(data, id)
       .then(variant => {
         dispatch({
           type: RERENDER,
@@ -69,10 +70,10 @@ export function createVariantRequest(data) {
   };
 }
 
-export function getAllVariantsRequest() {
+export function getAllVariantsRequest(id) {
   return dispatch => {
     dispatch({ type: PRODUCT_VARIANT_LOADING, payload: true });
-    getAllProductVariants()
+    getAllProductVariants(id)
       .then(variants => {
         dispatch({
           type: GET_ALL_PRODUCT_VARIANTS,

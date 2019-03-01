@@ -39,12 +39,6 @@ class Alert extends Component {
     this.props.clear();
   };
 
-  componentDidMount() {
-    this.timeOut = setTimeout(() => {
-      this.remove();
-    }, 10000);
-  }
-
   componentDidUpdate() {
     if (this.timeOut) {
       this.timeOut = 0;

@@ -1,9 +1,9 @@
 import Router from "next/router";
 import Fetch from "isomorphic-unfetch";
 import Cookies from "js-cookie";
-import { ProductsAPi, ProductCategoriesAPi } from "../../Config";
+import { ClientAPi } from "../../Config";
 
-export function createProductCategory(data) {
+export function createClient(data) {
   var auth = "Token " + Cookies.get("token");
   const requestOptions = {
     method: "POST",
@@ -14,12 +14,55 @@ export function createProductCategory(data) {
     body: JSON.stringify(data)
   };
 
-  return Fetch(ProductCategoriesAPi, requestOptions)
+  return Fetch(ClientAPi, requestOptions)
     .then(handleResponse)
-    .then(productCategory => productCategory);
+    .then(client => client);
 }
 
-export function createProduct(data) {
+export function getAllClients() {
+  var auth = "Token " + Cookies.get("token");
+  const requestOptions = {
+    method: "GET",
+    headers: {
+      Authorization: auth,
+      "Content-Type": "application/json"
+    }
+  };
+
+  return Fetch(ClientAPi, requestOptions)
+    .then(handleResponse)
+    .then(clients => clients);
+}
+
+export function getClientById(id) {
+  var auth = "Token " + Cookies.get("token");
+  const requestOptions = {
+    method: "GET",
+    headers: {
+      Authorization: auth,
+      "Content-Type": "application/json"
+    }
+  };
+
+  return Fetch(ClientAPi + `${id}/`, requestOptions).then(handleResponse);
+}
+
+export function activateClient(id) {
+  var auth = "Token " + Cookies.get("token");
+  const requestOptions = {
+    method: "POST",
+    headers: {
+      Authorization: auth,
+      "Content-Type": "application/json"
+    }
+  };
+
+  return Fetch(ClientAPi + `${id}/activate/`, requestOptions)
+    .then(handleResponse)
+    .then(client => client);
+}
+
+export function deactivateClient(id) {
   var auth = "Token " + Cookies.get("token");
   const requestOptions = {
     method: "POST",
@@ -30,58 +73,15 @@ export function createProduct(data) {
     body: JSON.stringify(data)
   };
 
-  return Fetch(ProductsAPi, requestOptions)
+  return Fetch(ClientAPi + `${id}/deactivate/`, requestOptions)
     .then(handleResponse)
-    .then(product => product);
+    .then(client => client);
 }
 
-export function getAllProduct() {
+export function addPetToClient(data, id) {
   var auth = "Token " + Cookies.get("token");
   const requestOptions = {
-    method: "GET",
-    headers: {
-      Authorization: auth,
-      "Content-Type": "application/json"
-    }
-  };
-
-  return Fetch(ProductsAPi, requestOptions)
-    .then(handleResponse)
-    .then(products => products);
-}
-
-export function getAllProductCategories() {
-  var auth = "Token " + Cookies.get("token");
-  const requestOptions = {
-    method: "GET",
-    headers: {
-      Authorization: auth,
-      "Content-Type": "application/json"
-    }
-  };
-
-  return Fetch(ProductCategoriesAPi, requestOptions)
-    .then(handleResponse)
-    .then(productCategories => productCategories);
-}
-
-export function getProductById(id) {
-  var auth = "Token " + Cookies.get("token");
-  const requestOptions = {
-    method: "GET",
-    headers: {
-      Authorization: auth,
-      "Content-Type": "application/json"
-    }
-  };
-
-  return Fetch(ProductsAPi + `${id}`, requestOptions).then(handleResponse);
-}
-
-export function updateProduct(data, id) {
-  var auth = "Token " + Cookies.get("token");
-  const requestOptions = {
-    method: "PUT",
+    method: "POST",
     headers: {
       Authorization: auth,
       "Content-Type": "application/json"
@@ -89,13 +89,30 @@ export function updateProduct(data, id) {
     body: JSON.stringify(data)
   };
 
-  return fetch(ProductsAPi + `${id}/`, requestOptions).then(handleResponse);
+  return Fetch(ClientAPi + `${id}/pets/`, requestOptions)
+    .then(handleResponse)
+    .then(client => client);
 }
 
-export function updateProductCategory(data, id) {
+export function getPetById(id) {
   var auth = "Token " + Cookies.get("token");
   const requestOptions = {
-    method: "PUT",
+    method: "GET",
+    headers: {
+      Authorization: auth,
+      "Content-Type": "application/json"
+    }
+  };
+
+  return Fetch(ClientAPi + `${id}/pets/`, requestOptions)
+    .then(handleResponse)
+    .then(client => client);
+}
+
+export function updateClient(data, id) {
+  var auth = "Token " + Cookies.get("token");
+  const requestOptions = {
+    method: "PATCH",
     headers: {
       Authorization: auth,
       "Content-Type": "application/json"
@@ -103,12 +120,10 @@ export function updateProductCategory(data, id) {
     body: JSON.stringify(data)
   };
 
-  return fetch(ProductCategoriesAPi + `${id}/`, requestOptions).then(
-    handleResponse
-  );
+  return fetch(ClientAPi + `${id}/`, requestOptions).then(handleResponse);
 }
 
-export function _deleteProduct(id) {
+export function _deleteClient(id) {
   var auth = "Token " + Cookies.get("token");
   const requestOptions = {
     method: "DELETE",
@@ -119,21 +134,7 @@ export function _deleteProduct(id) {
     body: JSON.stringify(id)
   };
 
-  return Fetch(ProductsAPi + `${id}/`, requestOptions).then(handleResponse);
-}
-
-export function _deleteProductCategory(id) {
-  var auth = "Token " + Cookies.get("token");
-  const requestOptions = {
-    method: "DELETE",
-    headers: {
-      Authorization: auth,
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify(id)
-  };
-
-  return Fetch(ProductsAPi + `${id}/`, requestOptions).then(handleResponse);
+  return Fetch(ClientAPi + `${id}/`, requestOptions).then(handleResponse);
 }
 
 function handleResponse(response) {
