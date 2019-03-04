@@ -48,6 +48,7 @@ export const createCompany = postData => {
 
 export function getAllCompany() {
   var auth = "Token " + Cookies.get("token");
+  var user = localStorage.getItem("userId");
   const requestOptions = {
     method: "GET",
     headers: {
@@ -56,13 +57,14 @@ export function getAllCompany() {
     }
   };
 
-  return Fetch(ComapanyAPI, requestOptions)
+  return Fetch(ComapanyAPI + `${user}/`, requestOptions)
     .then(handleResponse)
     .then(companies => companies);
 }
 
-export function update(data, id) {
+export function update(data) {
   var auth = "Token " + Cookies.get("token");
+  var user = localStorage.getItem("userId");
   const requestOptions = {
     method: "PATCH",
     headers: {
@@ -72,7 +74,7 @@ export function update(data, id) {
     body: JSON.stringify(data)
   };
 
-  return fetch(ComapanyAPI + `${id}/`, requestOptions).then(handleResponse);
+  return fetch(ComapanyAPI + `${user}/`, requestOptions).then(handleResponse);
 }
 
 export function getCompanyById(id) {
@@ -138,7 +140,7 @@ function handleResponse(response) {
       const error = data || data.message || response.statusText;
       return Promise.reject(error);
     }
-    console.log(data);
+    // console.log(data);
     return data;
   });
 }

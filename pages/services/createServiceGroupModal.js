@@ -45,7 +45,7 @@ class CreateServiceGroupModal extends Component {
                     <select
                       name="appointment_color"
                       onChange={this.props.handleChange}
-                      placeholder="Select Your Appointment Color"
+                      placeholder="Select your appointment color"
                     >
                       <option value="">--- Select a color ---</option>
                       <option value="silver">Silver</option>
@@ -62,7 +62,7 @@ class CreateServiceGroupModal extends Component {
                       <option value="purple">Purple</option>
                     </select>
                     {submitted && !appointment_color && (
-                      <div className="error">Appointment Color is required</div>
+                      <div className="error">Appointment color is required</div>
                     )}
                   </div>
                 </div>
@@ -73,11 +73,11 @@ class CreateServiceGroupModal extends Component {
                       type="text"
                       name="name"
                       onChange={this.props.handleChange}
-                      placeholder="Enter Name"
+                      placeholder="Enter group name"
                     />
                     {submitted && !name && (
                       <div className="error">
-                        Service Group Name is required
+                        Service group name is required
                       </div>
                     )}
                   </div>
@@ -88,7 +88,7 @@ class CreateServiceGroupModal extends Component {
                     <textarea
                       name="description"
                       onChange={this.props.handleChange}
-                      placeholder="Enter Description"
+                      placeholder="Enter description"
                     />
                     {submitted && !description && (
                       <div className="error">Description is required</div>

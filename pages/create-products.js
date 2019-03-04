@@ -87,7 +87,8 @@ class CreateProduct extends Component {
         barcode: "",
         sku: "",
         quantity: "",
-        retail_price: ""
+        retail_price: "",
+        submitted: false
       }
     };
   }
@@ -126,7 +127,11 @@ class CreateProduct extends Component {
   handleVariantCreateSubmit = e => {
     e.preventDefault();
     const { name, barcode, sku, quantity, retail_price } = this.state.variant;
-    this.setState({ submitted: true });
+    this.setState({
+      variant: {
+        submitted: true
+      }
+    });
     const data = {
       name: name,
       barcode: barcode,
@@ -135,6 +140,11 @@ class CreateProduct extends Component {
       retail_price: retail_price
     };
     if (name && barcode && sku && quantity && retail_price) {
+      this.setState({
+        variant: {
+          creating: true
+        }
+      });
       this.props.createVariantRequest(data, this.state.id);
     }
   };
@@ -160,7 +170,11 @@ class CreateProduct extends Component {
   handleVariantUpdateSubmit = e => {
     e.preventDefault();
     const { variant } = this.state;
-    this.setState({ submitted: true });
+    this.setState({
+      variant: {
+        submitted: true
+      }
+    });
     const data = {
       name: variant.name,
       barcode: variant.barcode,
@@ -358,7 +372,7 @@ class CreateProduct extends Component {
                                 className="dropdown-item"
                                 onClick={() => this.getProductDetails(x)}
                               >
-                                View Details
+                                Add Variant
                               </a>
 
                               <a

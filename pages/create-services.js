@@ -60,6 +60,7 @@ class CreateService extends Component {
       duration: "",
       staff: [],
       description: "",
+      price: "",
       service: "",
       selected: false,
       submitted: false,
@@ -85,16 +86,17 @@ class CreateService extends Component {
 
   handleCreateSubmit = e => {
     e.preventDefault();
-    const { name, group, duration, staff, description } = this.state;
+    const { name, group, duration, staff, price, description } = this.state;
     this.setState({ submitted: true });
     const data = {
       name: name,
       group: group,
       staff: staff.length !== 0 ? staff.split() : [],
       duration: duration,
+      price: parseInt(price),
       description: description
     };
-    if (name && group && duration && description) {
+    if (name && group && duration && price && description) {
       this.props.createServiceRequest(data);
       this.setState({ openCreateService: false });
     }
@@ -102,16 +104,17 @@ class CreateService extends Component {
 
   handleUpdateSubmit = e => {
     e.preventDefault();
-    const { name, group, duration, staff, description } = this.state;
+    const { name, group, duration, staff, price, description } = this.state;
     this.setState({ submitted: true });
     const data = {
       name: name,
       group: group,
       staff: staff.length !== 0 ? staff.split() : [],
       duration: duration,
+      price: parseInt(price),
       description: description
     };
-    if (name && group && duration && description) {
+    if (name && group && duration && price && description) {
       this.props.updateServiceRequest(data, this.state.id);
       this.setState({ openUpdateService: false });
     }
@@ -179,6 +182,7 @@ class CreateService extends Component {
       name: service.name,
       group: service.group,
       duration: service.duration,
+      price: service.price,
       description: service.description,
       openUpdateService: true
     });
@@ -254,6 +258,7 @@ class CreateService extends Component {
                     <th>Service Name</th>
                     <th>Group</th>
                     <th>Duration</th>
+                    <th>Retail Price</th>
                     <th>Staff</th>
                     <th>Description</th>
                     <th />
@@ -275,6 +280,7 @@ class CreateService extends Component {
                       <td>
                         {x.duration} {"minutes"}
                       </td>
+                      <td>{x.price}</td>
                       <td>{x.staff}</td>
                       <td>{x.description}</td>
                       <td className="more-options dropdown-toggle">

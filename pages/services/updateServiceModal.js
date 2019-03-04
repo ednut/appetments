@@ -29,6 +29,7 @@ class UpdateServiceModal extends Component {
       description,
       group,
       staff,
+      price,
       duration,
       submitted,
       openUpdateService
@@ -41,7 +42,7 @@ class UpdateServiceModal extends Component {
           <FormInput>
             <form onSubmit={this.props.handleSubmit}>
               <div className="row">
-                <div className="col-md-6">
+                <div className="col-md-12">
                   <div className="form-wrap">
                     <label htmlFor="">Group</label>
                     <select
@@ -103,6 +104,21 @@ class UpdateServiceModal extends Component {
                 </div>
                 <div className="col-md-6">
                   <div className="form-wrap">
+                    <label htmlFor="">Retail Price</label>
+                    <input
+                      type="number"
+                      name="price"
+                      value={price}
+                      onChange={this.props.handleChange}
+                      placeholder="Enter retail price"
+                    />
+                    {submitted && !price && (
+                      <div className="error">Price is required</div>
+                    )}
+                  </div>
+                </div>
+                <div className="col-md-6">
+                  <div className="form-wrap">
                     <label htmlFor="">Staff</label>
                     <select
                       name="staff"
@@ -128,7 +144,7 @@ class UpdateServiceModal extends Component {
                       name="description"
                       value={description}
                       onChange={this.props.handleChange}
-                      placeholder="Enter Description"
+                      placeholder="Enter description"
                     />
                     {submitted && !description && (
                       <div className="error">Description is required</div>

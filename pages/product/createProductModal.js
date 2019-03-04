@@ -49,7 +49,7 @@ class CreateProductModal extends Component {
                       type="text"
                       onChange={this.props.handleChange}
                       name="name"
-                      placeholder="Enter barcode"
+                      placeholder="Enter product name"
                     />
                     {submitted && !name && (
                       <div className="error">Product name is required</div>
@@ -78,7 +78,7 @@ class CreateProductModal extends Component {
 
                 <div className="col-md-6">
                   <div className="form-wrap">
-                    <label htmlFor="">barcode</label>
+                    <label htmlFor="">Barcode</label>
                     <input
                       type="text"
                       onChange={this.props.handleChange}
@@ -98,10 +98,10 @@ class CreateProductModal extends Component {
                       type="text"
                       onChange={this.props.handleChange}
                       name="sku"
-                      placeholder="Enter barcode"
+                      placeholder="Enter SKU"
                     />
                     {submitted && !sku && (
-                      <div className="error">Sku is required</div>
+                      <div className="error">SKU is required</div>
                     )}
                   </div>
                 </div>
@@ -112,11 +112,11 @@ class CreateProductModal extends Component {
                     <textarea
                       name="description"
                       onChange={this.props.handleChange}
-                      placeholder="Product Description"
+                      placeholder="Enter product description"
                     />
                     {submitted && !description && (
                       <div className="error">
-                        Product Description is required
+                        Product description is required
                       </div>
                     )}
                   </div>

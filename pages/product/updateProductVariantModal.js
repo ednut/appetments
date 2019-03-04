@@ -61,7 +61,7 @@ class UpdateProductVariantModal extends Component {
                   <div className="form-wrap">
                     <label htmlFor="">Barcode</label>
                     <input
-                      type="number"
+                      type="text"
                       onChange={this.props.handleChange}
                       name="barcode"
                       value={barcode}
@@ -95,7 +95,7 @@ class UpdateProductVariantModal extends Component {
                       onChange={this.props.handleChange}
                       name="quantity"
                       value={quantity}
-                      placeholder="Enter Quantity"
+                      placeholder="Enter quantity"
                     />
                     {submitted && !quantity && (
                       <div className="error">Quantity is required</div>
@@ -110,10 +110,10 @@ class UpdateProductVariantModal extends Component {
                       onChange={this.props.handleChange}
                       name="retail_price"
                       value={retail_price}
-                      placeholder="Enter Retail Price"
+                      placeholder="Enter retail price"
                     />
                     {submitted && !retail_price && (
-                      <div className="error">Retail Price is required</div>
+                      <div className="error">Retail price is required</div>
                     )}
                   </div>
                 </div>

@@ -45,7 +45,7 @@ class UpdateStaffModal extends Component {
                       onChange={this.props.handleChange}
                       name="first_name"
                       value={first_name}
-                      placeholder="Enter Your First Name"
+                      placeholder="Enter your first name"
                     />
                     {submitted && !first_name && (
                       <div className="error">First name is required</div>
@@ -60,7 +60,7 @@ class UpdateStaffModal extends Component {
                       name="last_name"
                       value={last_name}
                       onChange={this.props.handleChange}
-                      placeholder="Enter Your Last Name"
+                      placeholder="Enter your last name"
                     />
                     {submitted && !last_name && (
                       <div className="error">Last name is required</div>

@@ -60,7 +60,7 @@ class Staff extends Component {
             </li>
           </ul>
         </StaffNav>
-        <div style={{ position: relative }}>{this.props.children}</div>
+        <div style={{ position: "relative" }}>{this.props.children}</div>
       </AdminContainer>
     );
   }

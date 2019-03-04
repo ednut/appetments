@@ -16,7 +16,7 @@ import UpdateStaffModal from "./staff/updateStaffModal";
 import NoData from "../components/NoData";
 import TableWrapper from "../components/styles/TableWrap";
 
-const ContentWrap = styled.div`
+const StaffContentWrap = styled.div`
   position: relative;
   .action-wrap {
     margin-bottom: ${height.gutterHeight};
@@ -141,7 +141,7 @@ class StaffMembers extends Component {
     if (this.props.staffs !== undefined) {
       return (
         <Staff>
-          <ContentWrap>
+          <StaffContentWrap>
             {this.props.loading === true ? <SpinerWrap /> : null}
 
             <CreateStaffModal
@@ -226,15 +226,15 @@ class StaffMembers extends Component {
             {this.props.staffs.length === 0 ? (
               <NoData message="No Staff Created Yet" />
             ) : null}
-          </ContentWrap>
+          </StaffContentWrap>
         </Staff>
       );
     } else {
       return (
         <Staff>
-          <ContentWrap>
+          <StaffContentWrap>
             <SpinerWrap />
-          </ContentWrap>
+          </StaffContentWrap>
         </Staff>
       );
     }

@@ -46,7 +46,7 @@ class CreateStaffModal extends Component {
                       type="text"
                       onChange={this.props.handleChange}
                       name="first_name"
-                      placeholder="Enter Your First Name"
+                      placeholder="Enter your first name"
                     />
                     {submitted && !first_name && (
                       <div className="error">First name is required</div>
@@ -60,7 +60,7 @@ class CreateStaffModal extends Component {
                       type="text"
                       name="last_name"
                       onChange={this.props.handleChange}
-                      placeholder="Enter Your Last Name"
+                      placeholder="Enter your last name"
                     />
                     {submitted && !last_name && (
                       <div className="error">Last name is required</div>
@@ -74,10 +74,10 @@ class CreateStaffModal extends Component {
                       type="email"
                       name="email"
                       onChange={this.props.handleChange}
-                      placeholder="Enter Your email"
+                      placeholder="Enter your email"
                     />
                     {submitted && !email && (
-                      <div className="error">email is required</div>
+                      <div className="error">Email is required</div>
                     )}
                   </div>
                 </div>
@@ -88,10 +88,10 @@ class CreateStaffModal extends Component {
                       type="password"
                       name="password"
                       onChange={this.props.handleChange}
-                      placeholder="Enter Your password"
+                      placeholder="Enter your password"
                     />
                     {submitted && !password && (
-                      <div className="error">password is required</div>
+                      <div className="error">Password is required</div>
                     )}
                   </div>
                 </div>

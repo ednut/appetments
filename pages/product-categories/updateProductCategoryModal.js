@@ -44,7 +44,7 @@ class UpdateProductCategoryModal extends Component {
                       onChange={this.props.handleChange}
                       value={category_name}
                       name="category_name"
-                      placeholder="Enter Your Category Name"
+                      placeholder="Enter your category name"
                     />
                     {submitted && !category_name && (
                       <div className="error">Category name is required</div>

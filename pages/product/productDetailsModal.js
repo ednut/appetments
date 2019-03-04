@@ -47,6 +47,11 @@ const ModalWrap = styled.div`
     .bder-left {
       border-left: 1px solid #efefef;
     }
+    .form-title {
+      font-weight: 600;
+      font-size: 1.7rem;
+      margin-bottom: 2rem;
+    }
   }
   .variants {
     margin-top: 2rem;
@@ -62,7 +67,14 @@ const ModalWrap = styled.div`
 
 class CreateProductVariantModal extends Component {
   render() {
-    const { submitted } = this.props.modalState.variant;
+    const {
+      name,
+      barcode,
+      sku,
+      quantity,
+      retail_price,
+      submitted
+    } = this.props.modalState.variant;
     if (this.props.product) {
       return (
         <Modal
@@ -149,6 +161,7 @@ class CreateProductVariantModal extends Component {
                     </div>
                   </div>
                   <div className="col-md-5 bder-left">
+                    <div className="form-title">Add Product Variant</div>
                     <FormInput>
                       <form onSubmit={this.props.handleSubmit}>
                         <div className="row">
@@ -162,24 +175,24 @@ class CreateProductVariantModal extends Component {
                                 // ref="fullName"
                                 placeholder="Enter name"
                               />
-                              {submitted && !name && (
+                              {/* {submitted && !name && (
                                 <div className="error">Name is required</div>
-                              )}
+                              )} */}
                             </div>
                           </div>
                           <div className="col-md-6">
                             <div className="form-wrap">
                               <label htmlFor="">Barcode</label>
                               <input
-                                type="number"
+                                type="text"
                                 onChange={this.props.handleChange}
                                 name="barcode"
                                 // ref={input => (this.barcode = input)}
                                 placeholder="Enter barcode"
                               />
-                              {submitted && !barcode && (
+                              {/* {submitted && !barcode && (
                                 <div className="error">Barcode is required</div>
-                              )}
+                              )} */}
                             </div>
                           </div>
                           <div className="col-md-6">
@@ -192,9 +205,9 @@ class CreateProductVariantModal extends Component {
                                 // ref={input => (this.sku = input)}
                                 placeholder="Enter SKU"
                               />
-                              {submitted && !sku && (
+                              {/* {submitted && !sku && (
                                 <div className="error">SKU is required</div>
-                              )}
+                              )} */}
                             </div>
                           </div>
                           <div className="col-md-6">
@@ -205,13 +218,13 @@ class CreateProductVariantModal extends Component {
                                 onChange={this.props.handleChange}
                                 name="quantity"
                                 // ref={input => (this.quality = input)}
-                                placeholder="Enter Quantity"
+                                placeholder="Enter quantity"
                               />
-                              {submitted && !quantity && (
+                              {/* {submitted && !quantity && (
                                 <div className="error">
                                   Quantity is required
                                 </div>
-                              )}
+                              )} */}
                             </div>
                           </div>
                           <div className="col-md-6">
@@ -222,13 +235,13 @@ class CreateProductVariantModal extends Component {
                                 name="retail_price"
                                 onChange={this.props.handleChange}
                                 // ref={input => (this.retail_price = input)}
-                                placeholder="Enter Retail Price"
+                                placeholder="Enter retail price"
                               />
-                              {submitted && !retail_price && (
+                              {/* {submitted && !retail_price && (
                                 <div className="error">
                                   Retail Price is required
                                 </div>
-                              )}
+                              )} */}
                             </div>
                           </div>
                         </div>
@@ -241,9 +254,7 @@ class CreateProductVariantModal extends Component {
                             className="full"
                           >
                             {" "}
-                            {this.props.loading
-                              ? "Loading...."
-                              : "Create Product Variant"}
+                            {this.props.loading ? "Loading...." : "Add"}
                           </Button>
                         </footer>
                       </form>

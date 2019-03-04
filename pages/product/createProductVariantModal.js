@@ -49,7 +49,6 @@ class CreateProductVariantModal extends Component {
                       type="text"
                       onChange={this.props.handleChange}
                       name="name"
-                      // ref="fullName"
                       placeholder="Enter name"
                     />
                     {submitted && !name && (
@@ -61,10 +60,9 @@ class CreateProductVariantModal extends Component {
                   <div className="form-wrap">
                     <label htmlFor="">Barcode</label>
                     <input
-                      type="number"
+                      type="text"
                       onChange={this.props.handleChange}
                       name="barcode"
-                      // ref={input => (this.barcode = input)}
                       placeholder="Enter barcode"
                     />
                     {submitted && !barcode && (
@@ -79,7 +77,6 @@ class CreateProductVariantModal extends Component {
                       type="name"
                       onChange={this.props.handleChange}
                       name="sku"
-                      // ref={input => (this.sku = input)}
                       placeholder="Enter SKU"
                     />
                     {submitted && !sku && (
@@ -94,8 +91,7 @@ class CreateProductVariantModal extends Component {
                       type="number"
                       onChange={this.props.handleChange}
                       name="quantity"
-                      // ref={input => (this.quality = input)}
-                      placeholder="Enter Quantity"
+                      placeholder="Enter quantity"
                     />
                     {submitted && !quantity && (
                       <div className="error">Quantity is required</div>
@@ -109,11 +105,10 @@ class CreateProductVariantModal extends Component {
                       type="number"
                       name="retail_price"
                       onChange={this.props.handleChange}
-                      // ref={input => (this.retail_price = input)}
-                      placeholder="Enter Retail Price"
+                      placeholder="Enter retail price"
                     />
                     {submitted && !retail_price && (
-                      <div className="error">Retail Price is required</div>
+                      <div className="error">Retail price is required</div>
                     )}
                   </div>
                 </div>

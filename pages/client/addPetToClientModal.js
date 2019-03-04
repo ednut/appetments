@@ -39,6 +39,7 @@ class AddPetToClient extends Component {
                     <input
                       type="text"
                       name="name"
+                      placeholder="Enter your name"
                       onChange={this.props.handleChange}
                     />
                     {submitted && !name && (

@@ -47,7 +47,7 @@ class UpdateClientModal extends Component {
                       onChange={this.props.handleChange}
                       name="first_name"
                       value={first_name}
-                      placeholder="Enter Your First Name"
+                      placeholder="Enter your first name"
                     />
                     {submitted && !first_name && (
                       <div className="error">First name is required</div>
@@ -62,7 +62,7 @@ class UpdateClientModal extends Component {
                       onChange={this.props.handleChange}
                       name="last_name"
                       value={last_name}
-                      placeholder="Enter Your Last Name"
+                      placeholder="Enter your last name"
                     />
                     {submitted && !last_name && (
                       <div className="error">Last name is required</div>
@@ -77,22 +77,22 @@ class UpdateClientModal extends Component {
                       name="email"
                       value={email}
                       onChange={this.props.handleChange}
-                      placeholder="Enter Your email"
+                      placeholder="Enter your email"
                     />
                     {submitted && !email && (
-                      <div className="error">email is required</div>
+                      <div className="error">Email is required</div>
                     )}
                   </div>
                 </div>
                 <div className="col-md-6">
                   <div className="form-wrap">
-                    <label htmlFor="">Phone number</label>
+                    <label htmlFor="">Phone Number</label>
                     <input
                       type="text"
                       name="phone_number"
                       value={phone_number}
                       onChange={this.props.handleChange}
-                      placeholder="Enter Your Phone number"
+                      placeholder="Enter your phone number"
                     />
                     {submitted && !phone_number && (
                       <div className="error">Phone number is required</div>

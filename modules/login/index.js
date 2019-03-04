@@ -46,6 +46,7 @@ export function loginRequest(postData) {
           payload: user
         });
         console.log(user);
+        localStorage.setItem("userId", JSON.stringify(user.id));
         dispatch({ type: LOGIN_LOADING, payload: false });
         Router.push("/dashboard");
         Cookies.set("token", user.auth_token, { expires: 1 });

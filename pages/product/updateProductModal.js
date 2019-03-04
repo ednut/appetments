@@ -48,7 +48,7 @@ class UpdateProductModal extends Component {
                       onChange={this.props.handleChange}
                       name="name"
                       value={name}
-                      placeholder="Enter barcode"
+                      placeholder="Enter product name"
                     />
                     {submitted && !name && (
                       <div className="error">Product name is required</div>
@@ -81,7 +81,7 @@ class UpdateProductModal extends Component {
 
                 <div className="col-md-6">
                   <div className="form-wrap">
-                    <label htmlFor="">barcode</label>
+                    <label htmlFor="">Barcode</label>
                     <input
                       type="text"
                       onChange={this.props.handleChange}
@@ -103,7 +103,7 @@ class UpdateProductModal extends Component {
                       onChange={this.props.handleChange}
                       name="sku"
                       value={sku}
-                      placeholder="Enter barcode"
+                      placeholder="Enter SKU"
                     />
                     {submitted && !sku && (
                       <div className="error">Sku is required</div>
@@ -118,11 +118,11 @@ class UpdateProductModal extends Component {
                       name="description"
                       value={description}
                       onChange={this.props.handleChange}
-                      placeholder="Product Description"
+                      placeholder="Product description"
                     />
                     {submitted && !description && (
                       <div className="error">
-                        Product Description is required
+                        Product description is required
                       </div>
                     )}
                   </div>

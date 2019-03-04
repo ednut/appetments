@@ -29,6 +29,7 @@ class CreateServiceModal extends Component {
       description,
       group,
       staff,
+      price,
       duration,
       submitted,
       openCreateService
@@ -41,7 +42,7 @@ class CreateServiceModal extends Component {
           <FormInput>
             <form onSubmit={this.props.handleSubmit}>
               <div className="row">
-                <div className="col-md-6">
+                <div className="col-md-12">
                   <div className="form-wrap">
                     <label htmlFor="">Group</label>
                     <select name="group" onChange={this.props.handleChange}>
@@ -85,10 +86,24 @@ class CreateServiceModal extends Component {
                       type="text"
                       name="name"
                       onChange={this.props.handleChange}
-                      placeholder="Enter Name"
+                      placeholder="Enter service name"
                     />
                     {submitted && !name && (
-                      <div className="error">Service Name is required</div>
+                      <div className="error">Service name is required</div>
+                    )}
+                  </div>
+                </div>
+                <div className="col-md-6">
+                  <div className="form-wrap">
+                    <label htmlFor="">Retail Price</label>
+                    <input
+                      type="number"
+                      name="price"
+                      onChange={this.props.handleChange}
+                      placeholder="Enter retail price"
+                    />
+                    {submitted && !price && (
+                      <div className="error">Price is required</div>
                     )}
                   </div>
                 </div>
@@ -113,7 +128,7 @@ class CreateServiceModal extends Component {
                     <textarea
                       name="description"
                       onChange={this.props.handleChange}
-                      placeholder="Enter Description"
+                      placeholder="Enter description"
                     />
                     {submitted && !description && (
                       <div className="error">Description is required</div>

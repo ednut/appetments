@@ -1,5 +1,17 @@
-import { COMPANY_SUCCESS, COMPANY_ERROR, COMPANY_LOADING } from "../types";
-import { Company } from "../../services/userService";
+import {
+  COMPANY_ERROR,
+  COMPANY_LOADING,
+  GET_COMPANY,
+  COMPANY_UPDATED_SUCCESSFULLY
+} from "../types";
+import {
+  createCompany,
+  getAllCompany,
+  update,
+  getCompanyById,
+  addCloseDateToCompany,
+  removeCloseDateFromCompany
+} from "../../services/userService";
 import Router from "next/router";
 import { success, error } from "../alert";
 
@@ -14,10 +26,15 @@ export default function(state = initialState, action) {
         ...state,
         loading: action.payload
       };
-    case COMPANY_SUCCESS:
+    case GET_COMPANY:
       return {
         ...state,
-        user: action.payload
+        companies: action.payload
+      };
+    case COMPANY_UPDATED_SUCCESSFULLY:
+      return {
+        ...state,
+        update: action.payload
       };
     case COMPANY_ERROR:
       return {
@@ -31,19 +48,41 @@ export default function(state = initialState, action) {
 
 // Action
 
-export function createCompany(postData) {
+export function updateCompanyModule(data, id) {
   return dispatch => {
     dispatch({ type: COMPANY_LOADING, payload: true });
-    createCompany(postData)
-      .then(user => {
+    update(data, id)
+      .then(company => {
         dispatch({
-          type: COMPANY_SUCCESS,
-          payload: user
+          type: COMPANY_UPDATED_SUCCESSFULLY,
+          payload: true
         });
-        console.log(user);
-        dispatch(success("Company created successfully"));
+        dispatch(success("Company Updated Successfully"));
         dispatch({ type: COMPANY_LOADING, payload: false });
-        Router.push("/dashboard");
+      })
+      .catch(err => {
+        let e = err[Object.keys(err)[0]];
+        dispatch(error(e));
+        dispatch({ type: COMPANY_LOADING, payload: false });
+        dispatch({ type: COMPANY_ERROR, payload: err });
+      });
+  };
+}
+
+export function getAllCompanyModule() {
+  return dispatch => {
+    dispatch({ type: COMPANY_LOADING, payload: true });
+    getAllCompany()
+      .then(companies => {
+        dispatch({
+          type: GET_COMPANY,
+          payload: companies
+        });
+        dispatch({
+          type: COMPANY_UPDATED_SUCCESSFULLY,
+          payload: false
+        });
+        dispatch({ type: COMPANY_LOADING, payload: false });
       })
       .catch(err => {
         let e = err[Object.keys(err)[0]];

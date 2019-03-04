@@ -43,7 +43,7 @@ class CreateProductCategoryModal extends Component {
                       type="text"
                       onChange={this.props.handleChange}
                       name="category_name"
-                      placeholder="Enter category name"
+                      placeholder="Enter your category name"
                     />
                     {submitted && !category_name && (
                       <div className="error">Category name is required</div>

@@ -50,7 +50,7 @@ class UpdateLocationModal extends Component {
                       onChange={this.props.handleChange}
                       value={location_name}
                       name="location_name"
-                      placeholder="Enter Your First Name"
+                      placeholder="Enter your location name"
                     />
                     {submitted && !location_name && (
                       <div className="error">Location name is required</div>
@@ -65,7 +65,7 @@ class UpdateLocationModal extends Component {
                       name="contact_number"
                       value={contact_number}
                       onChange={this.props.handleChange}
-                      placeholder="Enter Your Last Name"
+                      placeholder="Enter your contact number"
                     />
                     {submitted && !contact_number && (
                       <div className="error">Contact number is required</div>
@@ -80,10 +80,10 @@ class UpdateLocationModal extends Component {
                       name="contact_email"
                       value={contact_email}
                       onChange={this.props.handleChange}
-                      placeholder="Enter Your email"
+                      placeholder="Enter your contact email"
                     />
                     {submitted && !contact_email && (
-                      <div className="error">email is required</div>
+                      <div className="error">Email is required</div>
                     )}
                   </div>
                 </div>
@@ -94,10 +94,10 @@ class UpdateLocationModal extends Component {
                       name="address"
                       value={address}
                       onChange={this.props.handleChange}
-                      placeholder="Enter Your address"
+                      placeholder="Enter your address"
                     />
                     {submitted && !address && (
-                      <div className="error">address is required</div>
+                      <div className="error">Address is required</div>
                     )}
                   </div>
                 </div>
@@ -109,10 +109,10 @@ class UpdateLocationModal extends Component {
                       name="zip_code"
                       value={zip_code}
                       onChange={this.props.handleChange}
-                      placeholder="Enter Your zip code"
+                      placeholder="Enter your zip code"
                     />
                     {submitted && !zip_code && (
-                      <div className="error">zip code is required</div>
+                      <div className="error">Zip code is required</div>
                     )}
                   </div>
                 </div>
@@ -124,10 +124,10 @@ class UpdateLocationModal extends Component {
                       name="city"
                       value={city}
                       onChange={this.props.handleChange}
-                      placeholder="Enter Your city"
+                      placeholder="Enter your city"
                     />
                     {submitted && !city && (
-                      <div className="error">city is required</div>
+                      <div className="error">City is required</div>
                     )}
                   </div>
                 </div>
@@ -139,10 +139,10 @@ class UpdateLocationModal extends Component {
                       name="state"
                       value={state}
                       onChange={this.props.handleChange}
-                      placeholder="Enter Your state"
+                      placeholder="Enter your state"
                     />
                     {submitted && !state && (
-                      <div className="error">state is required</div>
+                      <div className="error">State is required</div>
                     )}
                   </div>
                 </div>
