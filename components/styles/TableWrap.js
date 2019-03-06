@@ -23,6 +23,14 @@ const TableWrapper = styled.section`
     tbody {
       tr {
         border-top: 1px solid #dee2e6;
+        &.deactive td {
+          opacity: 0.3;
+          cursor: not-allowed;
+          &.more-options {
+            opacity: 1;
+            cursor: pointer;
+          }
+        }
         td {
           padding: 1rem;
           vertical-align: top;
@@ -47,6 +55,9 @@ const TableWrapper = styled.section`
             .dropdown-item.delete {
               color: #920025;
             }
+            .dropdown-item.activated {
+              color: #447d42;
+            }
           }
           .red {
             color: #920025;
@@ -58,6 +69,22 @@ const TableWrapper = styled.section`
             padding: 0.2rem 0.8rem;
             border-radius: 0.5rem;
             background: #efefef;
+            .name {
+              display: inline-block;
+              cursor: pointer;
+            }
+            .icon {
+              display: inline-block;
+              width: 2rem;
+              text-align: right;
+              font-size: 1.2rem;
+              cursor: pointer;
+              &:hover {
+                i {
+                  color: #920025;
+                }
+              }
+            }
           }
         }
       }

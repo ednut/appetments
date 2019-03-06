@@ -18,6 +18,11 @@ const ModalWrap = styled.div`
     font-weight: 200;
     border-bottom: 1px solid ${color.borderColor};
   }
+  .cancel {
+    display: block;
+    float: right;
+    cursor: pointer;
+  }
   footer {
     height: 5rem;
     width: 100%;
@@ -137,7 +142,12 @@ class CreateProductVariantModal extends Component {
                                           <i className="fas fa-ellipsis-h" />
                                         </span>
                                         <div className="dropdown-menu">
-                                          <a className="dropdown-item">Edit</a>
+                                          <a
+                                            className="dropdown-item"
+                                            onClick={() => this.props.update(x)}
+                                          >
+                                            Edit
+                                          </a>
                                           <a
                                             className="dropdown-item delete"
                                             onClick={() =>
@@ -161,104 +171,186 @@ class CreateProductVariantModal extends Component {
                     </div>
                   </div>
                   <div className="col-md-5 bder-left">
-                    <div className="form-title">Add Product Variant</div>
-                    <FormInput>
-                      <form onSubmit={this.props.handleSubmit}>
-                        <div className="row">
-                          <div className="col-md-12">
-                            <div className="form-wrap">
-                              <label htmlFor="">Name</label>
-                              <input
-                                type="text"
-                                onChange={this.props.handleChange}
-                                name="name"
-                                // ref="fullName"
-                                placeholder="Enter name"
-                              />
-                              {/* {submitted && !name && (
+                    {this.props.modalState.isCreateVariant ? (
+                      <React.Fragment>
+                        <div className="form-title">Add Product Variant</div>
+                        <FormInput>
+                          <form onSubmit={this.props.handleSubmit}>
+                            <div className="row">
+                              <div className="col-md-12">
+                                <div className="form-wrap">
+                                  <label htmlFor="">Name</label>
+                                  <input
+                                    type="text"
+                                    onChange={this.props.handleChange}
+                                    name="name"
+                                    // ref="fullName"
+                                    placeholder="Enter name"
+                                  />
+                                  {/* {submitted && !name && (
                                 <div className="error">Name is required</div>
                               )} */}
-                            </div>
-                          </div>
-                          <div className="col-md-6">
-                            <div className="form-wrap">
-                              <label htmlFor="">Barcode</label>
-                              <input
-                                type="text"
-                                onChange={this.props.handleChange}
-                                name="barcode"
-                                // ref={input => (this.barcode = input)}
-                                placeholder="Enter barcode"
-                              />
-                              {/* {submitted && !barcode && (
+                                </div>
+                              </div>
+                              <div className="col-md-6">
+                                <div className="form-wrap">
+                                  <label htmlFor="">Barcode</label>
+                                  <input
+                                    type="text"
+                                    onChange={this.props.handleChange}
+                                    name="barcode"
+                                    // ref={input => (this.barcode = input)}
+                                    placeholder="Enter barcode"
+                                  />
+                                  {/* {submitted && !barcode && (
                                 <div className="error">Barcode is required</div>
                               )} */}
-                            </div>
-                          </div>
-                          <div className="col-md-6">
-                            <div className="form-wrap">
-                              <label htmlFor="">SKU</label>
-                              <input
-                                type="name"
-                                onChange={this.props.handleChange}
-                                name="sku"
-                                // ref={input => (this.sku = input)}
-                                placeholder="Enter SKU"
-                              />
-                              {/* {submitted && !sku && (
+                                </div>
+                              </div>
+                              <div className="col-md-6">
+                                <div className="form-wrap">
+                                  <label htmlFor="">SKU</label>
+                                  <input
+                                    type="name"
+                                    onChange={this.props.handleChange}
+                                    name="sku"
+                                    // ref={input => (this.sku = input)}
+                                    placeholder="Enter SKU"
+                                  />
+                                  {/* {submitted && !sku && (
                                 <div className="error">SKU is required</div>
                               )} */}
-                            </div>
-                          </div>
-                          <div className="col-md-6">
-                            <div className="form-wrap">
-                              <label htmlFor="">Quantity</label>
-                              <input
-                                type="number"
-                                onChange={this.props.handleChange}
-                                name="quantity"
-                                // ref={input => (this.quality = input)}
-                                placeholder="Enter quantity"
-                              />
-                              {/* {submitted && !quantity && (
+                                </div>
+                              </div>
+                              <div className="col-md-6">
+                                <div className="form-wrap">
+                                  <label htmlFor="">Quantity</label>
+                                  <input
+                                    type="number"
+                                    onChange={this.props.handleChange}
+                                    name="quantity"
+                                    // ref={input => (this.quality = input)}
+                                    placeholder="Enter quantity"
+                                  />
+                                  {/* {submitted && !quantity && (
                                 <div className="error">
                                   Quantity is required
                                 </div>
                               )} */}
-                            </div>
-                          </div>
-                          <div className="col-md-6">
-                            <div className="form-wrap">
-                              <label htmlFor="">Retail Price</label>
-                              <input
-                                type="number"
-                                name="retail_price"
-                                onChange={this.props.handleChange}
-                                // ref={input => (this.retail_price = input)}
-                                placeholder="Enter retail price"
-                              />
-                              {/* {submitted && !retail_price && (
+                                </div>
+                              </div>
+                              <div className="col-md-6">
+                                <div className="form-wrap">
+                                  <label htmlFor="">Retail Price</label>
+                                  <input
+                                    type="number"
+                                    name="retail_price"
+                                    onChange={this.props.handleChange}
+                                    // ref={input => (this.retail_price = input)}
+                                    placeholder="Enter retail price"
+                                  />
+                                  {/* {submitted && !retail_price && (
                                 <div className="error">
                                   Retail Price is required
                                 </div>
                               )} */}
+                                </div>
+                              </div>
                             </div>
-                          </div>
-                        </div>
-
-                        <footer>
-                          <Button
-                            buttonColor={color.brandColor}
-                            textColor={color.whiteColor}
-                            type="submit"
-                            className="full"
+                            <footer>
+                              <Button
+                                buttonColor={color.brandColor}
+                                textColor={color.whiteColor}
+                                type="submit"
+                                className="full"
+                              >
+                                {" "}
+                                {this.props.loading ? "Loading...." : "Add"}
+                              </Button>
+                            </footer>
+                          </form>
+                        </FormInput>
+                      </React.Fragment>
+                    ) : null}
+                    {this.props.modalState.isUpdateVariant ? (
+                      <React.Fragment>
+                        <div className="form-title">
+                          Edit Product Variant{" "}
+                          <span
+                            onClick={this.props.closeEdit}
+                            className="cancel"
                           >
-                            {" "}
-                            {this.props.loading ? "Loading...." : "Add"}
-                          </Button>
-                        </footer>
-                      </form>
-                    </FormInput>
+                            <i className="fas fa-times" />
+                          </span>
+                        </div>
+                        <FormInput>
+                          <form onSubmit={this.props.handleUpdateSubmit}>
+                            <div className="row">
+                              <div className="col-md-12">
+                                <div className="form-wrap">
+                                  <label htmlFor="">Name</label>
+                                  <input
+                                    type="text"
+                                    onChange={this.props.handleChange}
+                                    name="name"
+                                    value={this.props.modalState.name}
+                                    placeholder="Enter name"
+                                  />
+                                  {/* {submitted && !name && (
+                                <div className="error">Name is required</div>
+                              )} */}
+                                </div>
+                              </div>
+                              <div className="col-md-6">
+                                <div className="form-wrap">
+                                  <label htmlFor="">Quantity</label>
+                                  <input
+                                    type="number"
+                                    onChange={this.props.handleChange}
+                                    name="quantity"
+                                    value={this.props.modalState.quantity}
+                                    placeholder="Enter quantity"
+                                  />
+                                  {/* {submitted && !quantity && (
+                                <div className="error">
+                                  Quantity is required
+                                </div>
+                              )} */}
+                                </div>
+                              </div>
+                              <div className="col-md-6">
+                                <div className="form-wrap">
+                                  <label htmlFor="">Retail Price</label>
+                                  <input
+                                    type="number"
+                                    name="retail_price"
+                                    onChange={this.props.handleChange}
+                                    value={this.props.modalState.retail_price}
+                                    placeholder="Enter retail price"
+                                  />
+                                  {/* {submitted && !retail_price && (
+                                <div className="error">
+                                  Retail Price is required
+                                </div>
+                              )} */}
+                                </div>
+                              </div>
+                            </div>
+                            <footer>
+                              <Button
+                                buttonColor={color.brandColor}
+                                textColor={color.whiteColor}
+                                type="submit"
+                                className="full"
+                              >
+                                {" "}
+                                {this.props.loading ? "Loading...." : "Edit"}
+                              </Button>
+                            </footer>
+                          </form>
+                        </FormInput>
+                      </React.Fragment>
+                    ) : null}
                   </div>
                 </div>
               </div>

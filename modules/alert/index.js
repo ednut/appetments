@@ -45,5 +45,8 @@ export function error(message) {
       type: ALERT_ERROR,
       payload: { errType: "error", message: message }
     });
+    setTimeout(() => {
+      dispatch({ type: ALERT_CLEAR });
+    }, 3000);
   };
 }

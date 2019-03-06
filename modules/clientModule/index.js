@@ -7,7 +7,9 @@ import {
   addPetToClient,
   getPetById,
   updateClient,
-  _deleteClient
+  updatePetToClient,
+  _deleteClient,
+  _deletePet
 } from "./clientServices";
 
 import { success, error } from "../alert";
@@ -208,6 +210,27 @@ export function deactivateClientRequest(id) {
   };
 }
 
+export function updatePetsRequest(data, id) {
+  return dispatch => {
+    dispatch({ type: LOADING_CLIENT, payload: true });
+    updatePetToClient(data, id)
+      .then(client => {
+        dispatch({
+          type: CLIENT_CREATED,
+          payload: true
+        });
+        dispatch(success("Pet updated successfully"));
+        dispatch({ type: LOADING_CLIENT, payload: false });
+      })
+      .catch(err => {
+        let e = err[Object.keys(err)[0]];
+        dispatch(error(e));
+        dispatch({ type: LOADING_CLIENT, payload: false });
+        dispatch({ type: CLIENT_ERROR, payload: err });
+      });
+  };
+}
+
 export function addPetToClientRequest(data, id) {
   return dispatch => {
     dispatch({ type: LOADING_CLIENT, payload: true });
@@ -239,6 +262,27 @@ export function getPetByIdRequest(id) {
           payload: pet
         });
         // dispatch(success("Pet added successfully"));
+        dispatch({ type: LOADING_CLIENT, payload: false });
+      })
+      .catch(err => {
+        let e = err[Object.keys(err)[0]];
+        dispatch(error(e));
+        dispatch({ type: LOADING_CLIENT, payload: false });
+        dispatch({ type: CLIENT_ERROR, payload: err });
+      });
+  };
+}
+
+export function deletePetRequest(id) {
+  return dispatch => {
+    dispatch({ type: LOADING_CLIENT, payload: true });
+    _deletePet(id)
+      .then(client => {
+        dispatch({
+          type: CLIENT_CREATED,
+          payload: true
+        });
+        dispatch(success("Pet deleted successfully"));
         dispatch({ type: LOADING_CLIENT, payload: false });
       })
       .catch(err => {

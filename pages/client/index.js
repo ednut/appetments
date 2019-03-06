@@ -7,8 +7,11 @@ import {
   updateClientRequest,
   deleteClientRequest,
   deactivateClientRequest,
+  activateClientRequest,
   addPetToClientRequest,
-  getPetByIdRequest
+  getPetByIdRequest,
+  updatePetsRequest,
+  deletePetRequest
 } from "../../modules/clientModule";
 import SpinerWrap from "../../components/Spinner";
 import AdminContainer from "../../components/AdminContainer";
@@ -16,6 +19,7 @@ import Button from "../../components/styles/Button";
 import CreateClientModal from "./createClientModal";
 import UpdateClientModal from "./updateClientModal";
 import AddPetToClient from "./addPetToClientModal";
+import UpdatePetToClient from "./updatePetToClientModal";
 import styled from "styled-components";
 import { color, height } from "../../components/styles/constant";
 import TableWrapper from "../../components/styles/TableWrap";
@@ -65,7 +69,8 @@ class Client extends Component {
       submitted: false,
       openCreateClient: false,
       openUpdateClient: false,
-      openPetService: false
+      openPetService: false,
+      openUpdatePet: false
     };
   }
   componentDidMount() {
@@ -124,6 +129,20 @@ class Client extends Component {
     }
   };
 
+  handlePetUpdateSubmit = e => {
+    e.preventDefault();
+    const { name, pet_type } = this.state;
+    this.setState({ submitted: true });
+    const data = {
+      name: name,
+      pet_type: pet_type
+    };
+    if ((name, pet_type)) {
+      this.props.updatePetsRequest(data, this.state.id);
+      this.setState({ openUpdatePet: false });
+    }
+  };
+
   handleChange = e => {
     this.setState({
       [e.target.name]: e.target.value
@@ -154,6 +173,10 @@ class Client extends Component {
     this.setState({ openPetService: false });
   };
 
+  onCloseUpdatePetModal = () => {
+    this.setState({ openUpdatePet: false });
+  };
+
   addingPetToClient = x => {
     this.setState({
       name: x.name,
@@ -174,12 +197,33 @@ class Client extends Component {
     });
   };
 
+  updatePet = pet => {
+    console.log(pet);
+    this.setState({
+      id: pet.id,
+      name: pet.name,
+      pet_type: pet.pet_type,
+      openUpdatePet: true
+    });
+  };
+
   deleteClient = id => {
     this.props.deleteClientRequest(id);
   };
 
+  deletePet = id => {
+    this.props.deletePetRequest(id);
+  };
+
+  clientDeactivation = id => {
+    this.props.deactivateClientRequest(id);
+  };
+
+  clientActivation = id => {
+    this.props.activateClientRequest(id);
+  };
+
   render() {
-    console.log(this.props.client);
     if (this.props.clients !== undefined) {
       return (
         <AdminContainer>
@@ -212,6 +256,15 @@ class Client extends Component {
               title={"Add Pet to Client"}
             />
 
+            <UpdatePetToClient
+              modalState={this.state}
+              onCloseModal={this.onCloseUpdatePetModal}
+              handleChange={this.handleChange}
+              handleSubmit={this.handlePetUpdateSubmit}
+              loading={this.props.loading}
+              title={"Edit Pet"}
+            />
+
             <div className="action-wrap">
               <button onClick={this.onOpenCreateModal}>
                 <i className="material-icons"> add </i>
@@ -231,7 +284,10 @@ class Client extends Component {
                 </thead>
                 <tbody>
                   {this.props.clients.map(x => (
-                    <tr key={x.id}>
+                    <tr
+                      className={x.is_active !== true ? "deactive" : "active"}
+                      key={x.id}
+                    >
                       <td>{x.first_name}</td>
                       <td>{x.last_name}</td>
                       <td>{x.email}</td>
@@ -240,7 +296,21 @@ class Client extends Component {
                         {x.pets && x.pets.length > 0 ? (
                           x.pets.map(pet => (
                             <span key={pet.id} className="multi">
-                              {pet.name}
+                              <span
+                                className="name"
+                                id={pet.id}
+                                onClick={() => {
+                                  this.updatePet(pet);
+                                }}
+                              >
+                                {pet.name}
+                              </span>
+                              <span
+                                className="icon"
+                                onClick={() => this.deletePet(pet.id)}
+                              >
+                                <i className="fas fa-times" />
+                              </span>
                             </span>
                           ))
                         ) : (
@@ -277,6 +347,21 @@ class Client extends Component {
                             >
                               Edit
                             </a>
+                            {x.is_active ? (
+                              <a
+                                onClick={() => this.clientDeactivation(x.id)}
+                                className="dropdown-item delete"
+                              >
+                                Deactivate
+                              </a>
+                            ) : (
+                              <a
+                                onClick={() => this.clientActivation(x.id)}
+                                className="dropdown-item activated"
+                              >
+                                Activate
+                              </a>
+                            )}
                             <a
                               onClick={() => this.deleteClient(x.id)}
                               className="dropdown-item delete"
@@ -325,7 +410,10 @@ export default connect(
     updateClientRequest,
     deleteClientRequest,
     deactivateClientRequest,
+    activateClientRequest,
     addPetToClientRequest,
-    getPetByIdRequest
+    getPetByIdRequest,
+    deletePetRequest,
+    updatePetsRequest
   }
 )(Client);

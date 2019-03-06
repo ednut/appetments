@@ -157,7 +157,7 @@ class AdminContainer extends Component {
                   <span className="icon">
                     <i className="material-icons"> playlist_add_check </i>
                   </span>
-                  <span className="text">Product</span>
+                  <span className="text">Inventory</span>
                 </a>
               </Link>
             </li>

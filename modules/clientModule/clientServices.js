@@ -69,8 +69,7 @@ export function deactivateClient(id) {
     headers: {
       Authorization: auth,
       "Content-Type": "application/json"
-    },
-    body: JSON.stringify(data)
+    }
   };
 
   return Fetch(ClientAPi + `${id}/deactivate/`, requestOptions)
@@ -82,6 +81,22 @@ export function addPetToClient(data, id) {
   var auth = "Token " + Cookies.get("token");
   const requestOptions = {
     method: "POST",
+    headers: {
+      Authorization: auth,
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(data)
+  };
+
+  return Fetch(ClientAPi + `${id}/pets/`, requestOptions)
+    .then(handleResponse)
+    .then(client => client);
+}
+
+export function updatePetToClient(data, id) {
+  var auth = "Token " + Cookies.get("token");
+  const requestOptions = {
+    method: "PATCH",
     headers: {
       Authorization: auth,
       "Content-Type": "application/json"
@@ -135,6 +150,21 @@ export function _deleteClient(id) {
   };
 
   return Fetch(ClientAPi + `${id}/`, requestOptions).then(handleResponse);
+}
+
+export function _deletePet(id) {
+  var auth = "Token " + Cookies.get("token");
+  const requestOptions = {
+    method: "DELETE",
+    headers: {
+      Authorization: auth,
+      "Content-Type": "application/json"
+    }
+  };
+
+  return Fetch(ClientAPi + `${id}/pets/`, requestOptions)
+    .then(handleResponse)
+    .then(client => client);
 }
 
 function handleResponse(response) {

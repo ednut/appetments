@@ -169,7 +169,7 @@ class CreateProduct extends Component {
 
   handleVariantUpdateSubmit = e => {
     e.preventDefault();
-    const { variant } = this.state;
+    const { name, barcode, sku, quantity, retail_price } = this.state.variant;
     this.setState({
       variant: {
         submitted: true
@@ -179,11 +179,14 @@ class CreateProduct extends Component {
       name: variant.name,
       barcode: variant.barcode,
       sku: variant.sku,
-      quantity: variant.quantity,
       retail_price: variant.retail_price
+    };
+    const qty = {
+      quantity: variant.quantity
     };
     if (name && barcode && sku && quantity && retail_price) {
       this.props.updateVariantRequest(data, this.state.id);
+      this.props.adjustInventoryRequest(qty, this.state.id);
       this.setState({ openUpdateProductVariant: false });
     }
   };
@@ -201,6 +204,7 @@ class CreateProduct extends Component {
         [e.target.name]: e.target.value
       }
     };
+    console.log({ [e.target.name]: e.target.value });
     this.setState({ variant: variant });
   };
 
@@ -244,6 +248,13 @@ class CreateProduct extends Component {
     this.setState({ openUpdateProductVariant: false });
   };
 
+  closeEditVariant = () => {
+    this.setState({
+      isCreateVariant: true,
+      isUpdateVariant: false
+    });
+  };
+
   updateProduct = product => {
     this.setState({
       id: product.id,
@@ -259,8 +270,24 @@ class CreateProduct extends Component {
 
   getProductDetails = x => {
     this.props.getProductsByIdRequest(x.id);
-    console.log(this.props.product);
-    this.setState({ id: x.id, openProductDetails: true });
+    this.setState({
+      id: x.id,
+      isCreateVariant: true,
+      isUpdateVariant: false,
+      openProductDetails: true
+    });
+  };
+
+  updateProductVariant = variant => {
+    let x = {
+      id: variant.id,
+      name: variant.name,
+      quantity: variant.quantity,
+      retail_price: variant.retail_price,
+      isCreateVariant: false,
+      isUpdateVariant: true
+    };
+    this.setState(x);
   };
 
   deleteProductVariant = id => {
@@ -302,20 +329,14 @@ class CreateProduct extends Component {
                 modalState={this.state}
                 onCloseModal={this.onCloseDetailsModal}
                 handleSubmit={this.handleVariantCreateSubmit}
+                handleUpdateSubmit={this.handleVariantUpdateSubmit}
                 handleChange={this.handleVariantChange}
                 product={this.props.product}
+                update={this.updateProductVariant}
+                closeEdit={this.closeEditVariant}
                 delete={this.deleteProductVariant}
                 loading={this.props.loading}
                 title={"Product Details"}
-              />
-
-              <UpdateProductVariantModal
-                modalState={this.state}
-                onCloseModal={this.onCloseUpdateVariantModal}
-                handleChange={this.handleVariantChange}
-                handleSubmit={this.handleVariantUpdateSubmit}
-                loading={this.props.loading}
-                title={"Update Product Variant"}
               />
 
               <div className="action-wrap">
