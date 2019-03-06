@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import Modal from "react-responsive-modal";
-import Select from "react-select";
 import FormInput from "../../components/styles/FormInput";
 import Button from "../../components/styles/Button";
 import { color } from "../../components/styles/constant";
