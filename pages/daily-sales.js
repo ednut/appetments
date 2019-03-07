@@ -126,7 +126,7 @@ const generateTime = () => {
 
 const dailySales = () => (
   <Sales>
-    {/* <FilterSection>
+    <FilterSection>
       <div className="row">
         <div className=" offset-md-8 col-md-4">
           <form>
@@ -152,7 +152,7 @@ const dailySales = () => (
           </form>
         </div>
       </div>
-    </FilterSection> */}
+    </FilterSection>
     <SalesWrapper>
       <div className="date-section">
         <div className="date">Daily Sales: {generateDate()}</div>
