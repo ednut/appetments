@@ -6,6 +6,7 @@ import companyReducer from "./modules/company";
 import alertReducer from "./modules/alert";
 import authentication from "./services/authentication";
 import staffReducer from "./modules/staffModule";
+import orderReducer from "./modules/orderModule";
 import locationReducer from "./modules/locationModule";
 import productReducer from "./modules/productModule";
 import serviceGroupReducer from "./modules/serviceGroupModule";
@@ -25,5 +26,6 @@ export const rootReducer = combineReducers({
   serviceGroupReducer: serviceGroupReducer,
   serviceReducer: serviceReducer,
   productVariantReducer: productVariantReducer,
-  clientReducer: clientReducer
+  clientReducer: clientReducer,
+  orderReducer: orderReducer
 });

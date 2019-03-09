@@ -188,7 +188,7 @@ class UpdateCompanyModal extends Component {
                       <option value="07:00:00">07:00</option>
                       <option value="08:00:00">08:00</option>
                       <option value="09:00:00">09:00</option>
-                      <option value="10:10:00">10:00</option>
+                      <option value="10:00:00">10:00</option>
                       <option value="11:00:00">11:00</option>
                       <option value="12:00:00">12:00</option>
                       <option value="13:00:00">13:00</option>
@@ -228,7 +228,7 @@ class UpdateCompanyModal extends Component {
                       <option value="07:00:00">07:00</option>
                       <option value="08:00:00">08:00</option>
                       <option value="09:00:00">09:00</option>
-                      <option value="10:10:00">10:00</option>
+                      <option value="10:00:00">10:00</option>
                       <option value="11:00:00">11:00</option>
                       <option value="12:00:00">12:00</option>
                       <option value="13:00:00">13:00</option>

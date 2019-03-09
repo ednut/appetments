@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const CalenderWrap = styled.button`
+const CalenderWrap = styled.div`
   width: 100%;
   border: none;
   background: transparent;

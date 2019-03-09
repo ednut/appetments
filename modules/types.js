@@ -77,3 +77,9 @@ export const CLIENT_DEACTIVATED = "CLIENT_DEACTIVATED";
 export const GET_PET = "GET_PET";
 export const PET_REMOVED = "PET_REMOVED";
 export const PET_ADDING_ERROR = "PET_ADDING_ERROR";
+
+export const CREATE_ORDER = "GET_ORDER";
+export const GET_ALL_ORDERS = "GET_ALL_ORDERS";
+export const DELETE_ORDER = "DELETE_ORDER";
+export const ORDER_ERROR = "ORDER_ERROR";
+export const ORDER_LOADING = "ORDER_LOADING";
