@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Button from "../../components/styles/Button";
 import SpinerWrap from "../../components/Spinner";
 import FormInput from "../../components/styles/FormInput";
+import Link from "../../components/Link";
 import { shadowStyle, color, height } from "../../components/styles/constant";
 import Spinner from "../../components/Spinner";
 import TableWrapper from "../../components/styles/TableWrap";
@@ -45,11 +46,11 @@ const PopupWrap = styled.section`
     display: flex;
     height: 100%;
     margin: auto;
-    width: 80%;
+    width: 100%;
     .form-section {
-      width: 55%;
+      width: 60%;
       height: 100%;
-      padding: 2rem;
+      padding: 4rem 11rem 0 20rem;
       overflow: auto;
       .date-title {
         font-size: 25px;
@@ -58,8 +59,7 @@ const PopupWrap = styled.section`
       }
     }
     .client-section {
-      width: 45%;
-      padding: 2rem 2rem 2rem 4rem;
+      width: 40%;
       height: 100%;
       overflow: auto;
       border-left: 1px solid ${color.borderColor};
@@ -68,42 +68,90 @@ const PopupWrap = styled.section`
         font-weight: 300;
         margin-bottom: 2rem;
       }
-      .client-wrap {
-        width: 80%;
-        border: 1px solid #f7f7f8;
-        padding: 15px;
-        border-radius: 3px;
-        background: #fff;
-        box-shadow: 0 2px 5px 0 rgba(164, 173, 186, 0.25);
-        display: flex;
-        margin-bottom: 1rem;
+    }
+  }
+  .search-wrap {
+    background: rgba(251, 251, 251, 0);
+    padding: 2rem 5rem;
+    margin-bottom: 5rem;
+    border-bottom: 1px solid ${color.borderColor};
+    .input-wrap {
+      background: #fff;
+      display: flex;
+      border: 1px solid ${color.borderColor};
+      height: 4.5rem;
+      span.icon {
+        display: inline-block;
+        width: 10%;
+        text-align: center;
+        padding-top: 1.1rem;
         cursor: pointer;
-        &:hover {
-          background-color: #fbfbfb;
-        }
-        .avata {
-          width: 5rem;
-          height: 5rem;
-          border-radius: 50%;
-          text-align: center;
-          font-size: 30px;
-          background-color: #eef0f2;
-          border: none;
-          margin-right: 3rem;
-          text-transform: uppercase;
-        }
-        .client-content {
-        }
-        .name {
-          display: block;
-          font-weight: 600;
-          font-size: 17px;
-        }
-        .email {
-          display: block;
-          color: #777;
+        i {
+          color: #999;
         }
       }
+      input {
+        display: inline-block;
+        width: 90%;
+        border: none;
+        background: transparent;
+        padding: 0 2rem;
+        outline: none;
+      }
+    }
+  }
+  .result-wrap {
+    padding: 0 5rem;
+    .client-wrap {
+      width: 100%;
+      border: 1px solid #f7f7f8;
+      padding: 15px;
+      border-radius: 3px;
+      background: #fff;
+      box-shadow: 0 2px 5px 0 rgba(164, 173, 186, 0.25);
+      display: flex;
+      margin-bottom: 1rem;
+      cursor: pointer;
+      &:hover {
+        background-color: #fbfbfb;
+      }
+      .avata {
+        width: 5rem;
+        height: 5rem;
+        border-radius: 50%;
+        text-align: center;
+        font-size: 30px;
+        background-color: #eef0f2;
+        border: none;
+        margin-right: 3rem;
+        text-transform: uppercase;
+      }
+      .client-content {
+      }
+      .name {
+        display: block;
+        font-weight: 600;
+        font-size: 17px;
+      }
+      .email {
+        display: block;
+        color: #777;
+      }
+    }
+  }
+  .no-result-wrap {
+    padding: 0 5rem;
+    text-align: center;
+    .icon {
+      i {
+        font-size: 10rem;
+        padding-bottom: 1rem;
+        color: #67768c;
+      }
+    }
+    .msg {
+      color: #67768c;
+      font-size: 1.6rem;
     }
   }
   .product-accordion {
@@ -162,6 +210,31 @@ const PopupWrap = styled.section`
 `;
 
 class LargePopup extends Component {
+  state = {
+    displayedContacts: this.props.clients && this.props.clients
+  };
+
+  searchHandler = event => {
+    let searcjQery = event.target.value.toLowerCase(),
+      displayedContacts =
+        this.props.clients &&
+        this.props.clients.filter(el => {
+          let fullName = `${el.first_name}${el.last_name}`;
+          let searchValue = fullName.toLowerCase();
+
+          return searchValue.indexOf(searcjQery) !== -1;
+        });
+    this.setState({
+      displayedContacts: displayedContacts
+    });
+  };
+
+  getClients = () => {
+    this.setState({
+      displayedContacts: this.props.clients && this.props.clients
+    });
+  };
+
   render() {
     const {
       picked_date,
@@ -173,6 +246,8 @@ class LargePopup extends Component {
       submitted,
       openLargePopup
     } = this.props.modalState;
+    let contacts = this.state.displayedContacts;
+    console.log(this.props.service && this.props.service);
     if (openLargePopup) {
       if (this.props.clients !== undefined) {
         return (
@@ -321,20 +396,67 @@ class LargePopup extends Component {
                       : null}
                   </div>
                 </div>
+
                 <div className="client-section">
-                  <div className="client-title">Select a client</div>
-                  {this.props.clients &&
-                    this.props.clients.map(x => (
-                      <div key={x.id} className="client-wrap">
-                        <div className="avata">{x.first_name.charAt(0)}</div>
-                        <div className="client-content">
-                          <span className="name">
-                            {x.first_name} {x.last_name}
-                          </span>
-                          <span className="email">{x.email}</span>
+                  <div className="search-wrap">
+                    <div className="input-wrap">
+                      <span className="icon">
+                        <i className="material-icons"> search </i>
+                      </span>
+                      <input
+                        type="text"
+                        onFocus={this.getClients}
+                        onChange={this.searchHandler}
+                        placeholder="Search client"
+                      />
+                    </div>
+                  </div>
+                  <div className="result-wrap">
+                    {contacts &&
+                      contacts.map(x => (
+                        <div
+                          key={x.id}
+                          className="client-wrap"
+                          onClick={() => console.log(x)}
+                        >
+                          <div className="avata">{x.first_name.charAt(0)}</div>
+                          <div className="client-content">
+                            <span className="name">
+                              {x.first_name} {x.last_name}
+                            </span>
+                            <span className="email">{x.email}</span>
+                          </div>
+                        </div>
+                      ))}
+                  </div>
+
+                  <div className="no-result-wrap">
+                    {this.state.displayedContacts === undefined ? (
+                      <div>
+                        <div className="icon">
+                          <i className="material-icons"> search </i>
+                        </div>
+                        <div className="msg">
+                          Use the search to add a client.
                         </div>
                       </div>
-                    ))}
+                    ) : null}
+
+                    {this.state.displayedContacts &&
+                    this.state.displayedContacts.length === 0 ? (
+                      <div>
+                        <div className="icon">
+                          <i className="material-icons"> pet </i>
+                        </div>
+                        <div className="msg">
+                          Match not found,{" "}
+                          <Link href="/client">
+                            <a>add new client</a>
+                          </Link>
+                        </div>
+                      </div>
+                    ) : null}
+                  </div>
                 </div>
               </div>
             </div>

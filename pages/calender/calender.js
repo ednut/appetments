@@ -153,10 +153,6 @@ class ScheduleCalender extends Component {
     this.setState(order);
   };
 
-  handleSelect = () => {
-    console.log("handle calender select");
-  };
-
   onOpenLargePopup = obj => {
     if (obj !== undefined) {
       let selectedTime = moment(obj.start).format("dddd, MMMM Do YYYY");
@@ -175,6 +171,7 @@ class ScheduleCalender extends Component {
     this.setState({ openLargePopup: true });
     this.props.getAllClientsRequest();
     this.props.getAllProductsRequest();
+    this.props.getAllServiceRequest();
   };
 
   onCloseLargePopup = () => {
@@ -246,6 +243,7 @@ class ScheduleCalender extends Component {
             close={this.onCloseLargePopup}
             clients={this.props.clients && this.props.clients}
             product={this.props.products && this.props.products}
+            service={this.props.services && this.props.services}
             title="Appointment"
           />
 
