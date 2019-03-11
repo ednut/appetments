@@ -50,7 +50,7 @@ class Signup extends Component {
         <div className="caption">Create an account</div>
         <div className="login-wrap">
           <FormInput>
-            <form onSubmit={this.handleSubmit}>
+            <form method="post" onSubmit={this.handleSubmit}>
               <div className="row">
                 <div className="col-md-6">
                   <div className="form-wrap">

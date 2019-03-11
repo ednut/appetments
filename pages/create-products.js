@@ -393,7 +393,7 @@ class CreateProduct extends Component {
                                 className="dropdown-item"
                                 onClick={() => this.getProductDetails(x)}
                               >
-                                Add Variant
+                                Manage Variant
                               </a>
 
                               <a

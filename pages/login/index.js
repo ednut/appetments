@@ -54,7 +54,7 @@ class Login extends Component {
         <div className="caption">Login to your account</div>
         <div className="login-wrap">
           <FormInput>
-            <form onSubmit={this.handleSubmit}>
+            <form method="post" onSubmit={this.handleSubmit}>
               <div className="form-wrap">
                 <label htmlFor="">Email</label>
                 <input
