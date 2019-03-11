@@ -3,7 +3,7 @@
 import React, { Component } from "react";
 import Wrap from "../../components/FormWrap";
 import { connect } from "react-redux";
-import { createCompany } from "../../modules/company";
+import { createCompanyRequest } from "../../modules/company";
 import FormInput from "../../components/styles/FormInput";
 import Button from "../../components/styles/Button";
 import { color } from "../../components/styles/constant";
@@ -26,7 +26,7 @@ class Register extends Component {
     };
     if (company_name) {
       console.log(data);
-      this.props.createCompany(data);
+      this.props.createCompanyRequest(data);
     }
     e.currentTarget.reset();
   };
@@ -84,5 +84,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { createCompany }
+  { createCompanyRequest }
 )(Register);

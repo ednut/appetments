@@ -48,6 +48,29 @@ export default function(state = initialState, action) {
 
 // Action
 
+export function createCompanyRequest(postData) {
+  return dispatch => {
+    dispatch({ type: COMPANY_LOADING, payload: true });
+    createCompany(postData)
+      .then(user => {
+        dispatch({
+          type: COMPANY_SUCCESS,
+          payload: user
+        });
+        console.log(user);
+        dispatch(success("Company created successfully"));
+        dispatch({ type: COMPANY_LOADING, payload: false });
+        Router.push("/dashboard");
+      })
+      .catch(err => {
+        let e = err[Object.keys(err)[0]];
+        dispatch(error(e));
+        dispatch({ type: COMPANY_LOADING, payload: false });
+        dispatch({ type: COMPANY_ERROR, payload: err });
+      });
+  };
+}
+
 export function updateCompanyModule(data, id) {
   return dispatch => {
     dispatch({ type: COMPANY_LOADING, payload: true });

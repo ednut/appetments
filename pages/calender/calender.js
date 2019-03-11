@@ -94,6 +94,9 @@ class ScheduleCalender extends Component {
   componentDidMount() {
     this.props.getAllOrdersRequest();
     this.props.getAllCompanyModule();
+    this.props.getAllClientsRequest();
+    this.props.getAllProductsRequest();
+    this.props.getAllServiceRequest();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -169,9 +172,6 @@ class ScheduleCalender extends Component {
     }
 
     this.setState({ openLargePopup: true });
-    this.props.getAllClientsRequest();
-    this.props.getAllProductsRequest();
-    this.props.getAllServiceRequest();
   };
 
   onCloseLargePopup = () => {

@@ -70,6 +70,40 @@ const PopupWrap = styled.section`
       }
     }
   }
+  .selected-client {
+    background: rgba(251, 251, 251, 0);
+    padding: 2rem 5rem;
+    margin-bottom: 5rem;
+    border-bottom: 1px solid ${color.borderColor};
+    .client-wrap {
+      width: 100%;
+      border: 1px solid #f7f7f8;
+      padding: 1.5rem 4rem 1.5rem 1.5rem;
+      border-radius: 3px;
+      background: #fff;
+      box-shadow: 0 2px 5px 0 rgba(164, 173, 186, 0.25);
+      margin-bottom: 1rem;
+      position: relative;
+      i {
+        display: inline-block;
+        position: absolute;
+        right: 1rem;
+        top: 2.8rem;
+        cursor: pointer;
+      }
+      .client-content {
+      }
+      .name {
+        display: block;
+        font-weight: 600;
+        font-size: 17px;
+      }
+      .email {
+        display: block;
+        color: #777;
+      }
+    }
+  }
   .search-wrap {
     background: rgba(251, 251, 251, 0);
     padding: 2rem 5rem;
@@ -211,7 +245,9 @@ const PopupWrap = styled.section`
 
 class LargePopup extends Component {
   state = {
-    displayedContacts: this.props.clients && this.props.clients
+    displayedContacts: this.props.clients && this.props.clients,
+    selected_client: {},
+    show_service: false
   };
 
   searchHandler = event => {
@@ -235,6 +271,20 @@ class LargePopup extends Component {
     });
   };
 
+  selectClient = x => {
+    console.log(x);
+    this.setState({
+      selected_client: x,
+      show_service: true
+    });
+  };
+
+  cancelClient = () => {
+    this.setState({
+      show_service: false
+    });
+  };
+
   render() {
     const {
       picked_date,
@@ -247,6 +297,7 @@ class LargePopup extends Component {
       openLargePopup
     } = this.props.modalState;
     let contacts = this.state.displayedContacts;
+    let selectedClient = this.state.selected_client;
     console.log(this.props.service && this.props.service);
     if (openLargePopup) {
       if (this.props.clients !== undefined) {
@@ -397,67 +448,188 @@ class LargePopup extends Component {
                   </div>
                 </div>
 
-                <div className="client-section">
-                  <div className="search-wrap">
-                    <div className="input-wrap">
-                      <span className="icon">
-                        <i className="material-icons"> search </i>
-                      </span>
-                      <input
-                        type="text"
-                        onFocus={this.getClients}
-                        onChange={this.searchHandler}
-                        placeholder="Search client"
-                      />
+                {!this.state.show_service && (
+                  <div className="client-section">
+                    <div className="search-wrap">
+                      <div className="input-wrap">
+                        <span className="icon">
+                          <i className="material-icons"> search </i>
+                        </span>
+                        <input
+                          type="text"
+                          onFocus={this.getClients}
+                          onChange={this.searchHandler}
+                          placeholder="Search client"
+                        />
+                      </div>
                     </div>
-                  </div>
-                  <div className="result-wrap">
-                    {contacts &&
-                      contacts.map(x => (
-                        <div
-                          key={x.id}
-                          className="client-wrap"
-                          onClick={() => console.log(x)}
-                        >
-                          <div className="avata">{x.first_name.charAt(0)}</div>
-                          <div className="client-content">
-                            <span className="name">
-                              {x.first_name} {x.last_name}
-                            </span>
-                            <span className="email">{x.email}</span>
+                    <div className="result-wrap">
+                      {contacts &&
+                        contacts.map(x => (
+                          <div
+                            key={x.id}
+                            className="client-wrap"
+                            onClick={() => this.selectClient(x)}
+                          >
+                            <div className="avata">
+                              {x.first_name.charAt(0)}
+                            </div>
+                            <div className="client-content">
+                              <span className="name">
+                                {x.first_name} {x.last_name}
+                              </span>
+                              <span className="email">{x.email}</span>
+                            </div>
+                          </div>
+                        ))}
+                    </div>
+
+                    <div className="no-result-wrap">
+                      {this.state.displayedContacts === undefined ? (
+                        <div>
+                          <div className="icon">
+                            <i className="material-icons"> search </i>
+                          </div>
+                          <div className="msg">
+                            Use the search to add a client.
                           </div>
                         </div>
-                      ))}
-                  </div>
+                      ) : null}
 
-                  <div className="no-result-wrap">
-                    {this.state.displayedContacts === undefined ? (
-                      <div>
-                        <div className="icon">
-                          <i className="material-icons"> search </i>
+                      {this.state.displayedContacts &&
+                      this.state.displayedContacts.length === 0 ? (
+                        <div>
+                          <div className="icon">
+                            <i className="material-icons"> pet </i>
+                          </div>
+                          <div className="msg">
+                            Match not found,{" "}
+                            <Link href="/client">
+                              <a>add new client</a>
+                            </Link>
+                          </div>
                         </div>
-                        <div className="msg">
-                          Use the search to add a client.
+                      ) : null}
+                    </div>
+                  </div>
+                )}
+
+                {this.state.show_service && (
+                  <div className="client-section">
+                    <div className="selected-client">
+                      <div className="client-wrap">
+                        <div className="client-content">
+                          <span className="name">
+                            {selectedClient.first_name}{" "}
+                            {selectedClient.last_name}
+                          </span>
+                          <span className="email">{selectedClient.email}</span>
+                          <i
+                            onClick={this.cancelClient}
+                            className="material-icons"
+                          >
+                            {" "}
+                            close{" "}
+                          </i>
                         </div>
                       </div>
-                    ) : null}
-
-                    {this.state.displayedContacts &&
-                    this.state.displayedContacts.length === 0 ? (
-                      <div>
-                        <div className="icon">
-                          <i className="material-icons"> pet </i>
-                        </div>
-                        <div className="msg">
-                          Match not found,{" "}
-                          <Link href="/client">
-                            <a>add new client</a>
-                          </Link>
+                    </div>
+                    <FormInput>
+                      <div className="col-md-10 m-auto">
+                        <div className="row">
+                          <div className="col-md-12">
+                            <div className="form-wrap">
+                              <label htmlFor="">Service</label>
+                              <select name="service">
+                                <option value="">-- Select a service --</option>
+                                {this.props.service &&
+                                  this.props.service.map(x => (
+                                    <option
+                                      key={x.id}
+                                      onChange={() => null}
+                                      value=""
+                                    >
+                                      {x.name}
+                                    </option>
+                                  ))}
+                              </select>
+                            </div>
+                          </div>
+                          <div className="col-md-6">
+                            <div className="form-wrap">
+                              <label htmlFor="">Pet</label>
+                              <select name="pet">
+                                <option value="">-- Select a pet --</option>
+                                {selectedClient.pets.map(pet => (
+                                  <option key={pet.id} value="">
+                                    {pet.name}
+                                  </option>
+                                ))}
+                              </select>
+                            </div>
+                          </div>
+                          <div className="col-md-6">
+                            <div className="form-wrap">
+                              <label htmlFor="">Price</label>
+                              <input
+                                name="price"
+                                type="number"
+                                onChange={() => console.log("")}
+                                value={this.props.service.price}
+                                placeholder="Service price"
+                              />
+                            </div>
+                          </div>
+                          <div className="col-md-6">
+                            <div className="form-wrap">
+                              <label htmlFor="">Start Time</label>
+                              <select name="start_time">
+                                <option>--- Select Option ---</option>
+                                <option value="00:00:00">00:00</option>
+                                <option value="01:00:00">01:00</option>
+                                <option value="02:00:00">02:00</option>
+                                <option value="03:00:00">03:00</option>
+                                <option value="04:00:00">04:00</option>
+                                <option value="05:00:00">05:00</option>
+                                <option value="06:00:00">06:00</option>
+                                <option value="07:00:00">07:00</option>
+                                <option value="08:00:00">08:00</option>
+                                <option value="09:00:00">09:00</option>
+                                <option value="10:00:00">10:00</option>
+                                <option value="11:00:00">11:00</option>
+                                <option value="12:00:00">12:00</option>
+                                <option value="13:00:00">13:00</option>
+                                <option value="14:00:00">14:00</option>
+                                <option value="15:00:00">15:00</option>
+                                <option value="16:00:00">16:00</option>
+                                <option value="17:00:00">17:00</option>
+                                <option value="18:00:00">18:00</option>
+                                <option value="19:00:00">19:00</option>
+                                <option value="20:00:00">20:00</option>
+                                <option value="21:00:00">21:00</option>
+                                <option value="22:00:00">22:00</option>
+                                <option value="23:00:00">23:00</option>
+                                <option value="24:00:00">24:00</option>
+                              </select>
+                            </div>
+                          </div>
+                          <div className="col-md-6">
+                            <div className="form-wrap">
+                              <label htmlFor="">Duration(min)</label>
+                              <input
+                                name="duration"
+                                type="number"
+                                onChange={() => console.log("")}
+                                value={this.props.service.duration}
+                                placeholder="Service Duration"
+                              />
+                            </div>
+                          </div>
                         </div>
                       </div>
-                    ) : null}
+                    </FormInput>
                   </div>
-                </div>
+                )}
               </div>
             </div>
             <div className="footer">
