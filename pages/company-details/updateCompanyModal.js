@@ -50,7 +50,7 @@ class UpdateCompanyModal extends Component {
                     <input
                       type="text"
                       name="company_name"
-                      value={company_name}
+                      value={company_name || ""}
                       onChange={this.props.handleChange}
                       placeholder="Enter your company name"
                     />
@@ -65,7 +65,7 @@ class UpdateCompanyModal extends Component {
                     <input
                       type="text"
                       name="website"
-                      value={website}
+                      value={website || ""}
                       onChange={this.props.handleChange}
                       placeholder="Enter your website"
                     />
@@ -80,7 +80,7 @@ class UpdateCompanyModal extends Component {
                     <input
                       type="text"
                       name="contact_number"
-                      value={contact_number}
+                      value={contact_number || ""}
                       onChange={this.props.handleChange}
                       placeholder="Enter your contact number"
                     />
@@ -94,7 +94,7 @@ class UpdateCompanyModal extends Component {
                     <label htmlFor="">Description</label>
                     <textarea
                       name="description"
-                      value={description}
+                      value={description || ""}
                       onChange={this.props.handleChange}
                       placeholder="Enter description"
                     />
@@ -108,7 +108,7 @@ class UpdateCompanyModal extends Component {
                     <label htmlFor="">Hours Bookable In Advance</label>
                     <select
                       name="hours_bookable_in_advance"
-                      value={hours_bookable_in_advance}
+                      value={hours_bookable_in_advance || ""}
                       onChange={this.props.handleChange}
                     >
                       <option>--- Select Option ---</option>
@@ -130,7 +130,7 @@ class UpdateCompanyModal extends Component {
                     <label htmlFor="">Max Day Bookable In Advance</label>
                     <select
                       name="max_day_bookable_in_advance"
-                      value={max_day_bookable_in_advance}
+                      value={max_day_bookable_in_advance || ""}
                       onChange={this.props.handleChange}
                     >
                       <option>--- Select Option ---</option>
@@ -152,7 +152,7 @@ class UpdateCompanyModal extends Component {
                     <label htmlFor="">Cancellation Limit</label>
                     <select
                       name="cancellation_limit"
-                      value={cancellation_limit}
+                      value={cancellation_limit || ""}
                       onChange={this.props.handleChange}
                     >
                       <option>--- Select Option ---</option>
@@ -174,7 +174,7 @@ class UpdateCompanyModal extends Component {
                     <label htmlFor="">Opening Time</label>
                     <select
                       name="opening_time"
-                      value={opening_time}
+                      value={opening_time || ""}
                       onChange={this.props.handleChange}
                     >
                       <option>--- Select Option ---</option>
@@ -214,7 +214,7 @@ class UpdateCompanyModal extends Component {
                     <label htmlFor="">Closing Time</label>
                     <select
                       name="closing_time"
-                      value={closing_time}
+                      value={closing_time || ""}
                       onChange={this.props.handleChange}
                     >
                       <option>--- Select Option ---</option>

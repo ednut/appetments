@@ -29,6 +29,7 @@ class UpdateProductModal extends Component {
       barcode,
       name,
       sku,
+      retail_price,
       description,
       submitted,
       openUpdateProduct
@@ -79,7 +80,7 @@ class UpdateProductModal extends Component {
                   </div>
                 </div>
 
-                <div className="col-md-6">
+                <div className="col-md-4">
                   <div className="form-wrap">
                     <label htmlFor="">Barcode</label>
                     <input
@@ -95,7 +96,7 @@ class UpdateProductModal extends Component {
                   </div>
                 </div>
 
-                <div className="col-md-6">
+                <div className="col-md-4">
                   <div className="form-wrap">
                     <label htmlFor="">SKU</label>
                     <input
@@ -107,6 +108,22 @@ class UpdateProductModal extends Component {
                     />
                     {submitted && !sku && (
                       <div className="error">Sku is required</div>
+                    )}
+                  </div>
+                </div>
+
+                <div className="col-md-4">
+                  <div className="form-wrap">
+                    <label htmlFor="">Retail price</label>
+                    <input
+                      type="text"
+                      onChange={this.props.handleChange}
+                      name="retail_price"
+                      value={retail_price}
+                      placeholder="Enter retail price"
+                    />
+                    {submitted && !retail_price && (
+                      <div className="error">Retail price is required</div>
                     )}
                   </div>
                 </div>
@@ -137,7 +154,9 @@ class UpdateProductModal extends Component {
                   className="float-right"
                 >
                   {" "}
-                  {this.props.loading ? "Loading...." : "Create Product"}
+                  {this.props.loading
+                    ? "Loading...."
+                    : "Create Product Category"}
                 </Button>
               </footer>
             </form>

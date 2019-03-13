@@ -280,7 +280,10 @@ class CreateService extends Component {
                       <td>
                         {x.duration} {"minutes"}
                       </td>
-                      <td>{x.price}</td>
+                      <td>
+                        {"$"}
+                        {x.price}
+                      </td>
                       <td>{x.staff}</td>
                       <td>{x.description}</td>
                       <td className="more-options dropdown-toggle">

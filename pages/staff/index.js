@@ -43,7 +43,7 @@ class Staff extends Component {
                 <a>Staff Members</a>
               </Link>
             </li>
-            <li>
+            {/* <li>
               <Link activeClassName="active" href="/working-hours">
                 <a>Working Hours</a>
               </Link>
@@ -52,7 +52,7 @@ class Staff extends Component {
               <Link activeClassName="active" href="closed-date">
                 <a>Closed Date</a>
               </Link>
-            </li>
+            </li> */}
             <li>
               <Link activeClassName="active" href="permision-levels">
                 <a>Permision Levels</a>

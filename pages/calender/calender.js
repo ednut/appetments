@@ -66,6 +66,8 @@ class ScheduleCalender extends Component {
       picked_date: "",
       customer: "",
       start_time: "",
+      selected_time: "",
+      selected_day: "",
       note: "",
       services: [
         {
@@ -105,21 +107,9 @@ class ScheduleCalender extends Component {
     }
   }
 
-  handleCreateSubmit = e => {
-    e.preventDefault();
-    const { customer, start_time, status, services, products } = this.state;
-    this.setState({ submitted: true });
-    const data = {
-      customer: customer,
-      start_time: start_time,
-      status: status,
-      services: services,
-      products: products
-    };
-    if (customer && start_time && status && services && products) {
-      this.props.createOrderRequest(data);
-      this.setState({ openCreateOrder: false });
-    }
+  handleCreateSubmit = data => {
+    this.props.createOrderRequest(data);
+    this.setState({ openLargePopup: false });
   };
 
   handleUpdateSubmit = e => {
@@ -139,35 +129,53 @@ class ScheduleCalender extends Component {
     }
   };
 
-  handleChange = e => {
-    let order = {
-      ...this.state,
-      [e.target.name]: e.target.value
-      // services: {
-      //   ...this.state.services,
-      //   [e.target.name]: e.target.value
-      // },
-      // products: {
-      //   ...this.state.products,
-      //   [e.target.name]: e.target.value
-      // }
-    };
+  handleChange = obj => {
+    this.setState(obj);
+  };
 
-    this.setState(order);
+  ConvertTimeformat = (format, str) => {
+    var time = str;
+    var hours = Number(time.match(/^(\d+)/)[1]);
+    var minutes = Number(time.match(/:(\d+)/)[1]);
+    var AMPM = time.match(/\s(.*)$/)[1];
+    if (AMPM == "pm" && hours < 12) hours = hours + 12;
+    if (AMPM == "am" && hours == 12) hours = hours - 12;
+    var sHours = hours.toString();
+    var sMinutes = minutes.toString();
+    if (hours < 10) sHours = "0" + sHours;
+    if (minutes < 10) sMinutes = "0" + sMinutes;
+    return sHours + ":" + sMinutes;
   };
 
   onOpenLargePopup = obj => {
     if (obj !== undefined) {
-      let selectedTime = moment(obj.start).format("dddd, MMMM Do YYYY");
+      let t = moment(obj.start).format();
+      let x = t.split("T");
+      let pickedDate = moment(obj.start).format("dddd, MMMM Do YYYY");
+      let _global = this;
+      let cleanTime = function() {
+        let x = _global
+          .ConvertTimeformat("24", moment(obj.start).format("h:mm a"))
+          .split(":");
+        let hr = parseInt(x[0]);
+        let min = x[1];
+        return `${hr}:${min}`;
+      };
       this.setState({
         ...this.state,
-        picked_date: selectedTime
+        picked_date: pickedDate,
+        selected_day: x[0],
+        selected_time: cleanTime()
       });
     } else {
       let selectedTime = moment().format("dddd, MMMM Do YYYY");
+      let t = moment().format();
+      let x = t.split("T");
       this.setState({
         ...this.state,
-        picked_date: selectedTime
+        picked_date: selectedTime,
+        selected_day: x[0]
+        // selected_time: new Date()
       });
     }
 
@@ -194,18 +202,7 @@ class ScheduleCalender extends Component {
     this.setState({ openUpdateOrder: false });
   };
 
-  // updateOrder = order => {
-  //   this.setState({
-  //     id: order.id,
-  //     first_name: order.first_name,
-  //     last_name: order.last_name,
-  //     openUpdateOrder: true
-  //   });
-  //   this.setState({ openUpdateOrder: true });
-  // };
-
   render() {
-    // console.log(moment("2019-03-10T10:00").format("h:mm"));
     if (this.props.orders !== undefined && this.props.companies) {
       let currentYear = () => new Date().getFullYear();
       let currentMonth = () => new Date().getMonth();
@@ -218,6 +215,28 @@ class ScheduleCalender extends Component {
         let x = this.props.companies.closing_time.split(":");
         return parseInt(x[0], 10);
       };
+
+      var convert = function(date) {
+        let seperateDayAndTime = date.split("T");
+        let seperatedDay = seperateDayAndTime[0].split("-");
+        let seperatedTime = seperateDayAndTime[1].split("+")[0].split(":");
+
+        return new Date(
+          parseInt(seperatedDay[0]),
+          parseInt(seperatedDay[1]) - 1,
+          parseInt(seperatedDay[2]),
+          parseInt(seperatedTime[0]),
+          parseInt(seperatedTime[1]),
+          parseInt(seperatedTime[2])
+        );
+      };
+
+      let event = this.props.orders.map(x => ({
+        id: x.id,
+        title: x.note,
+        start: convert(x.start_time),
+        end: convert(x.end_time)
+      }));
       return (
         <React.Fragment>
           {this.props.loading === true ? <SpinerWrap /> : null}
@@ -244,6 +263,8 @@ class ScheduleCalender extends Component {
             clients={this.props.clients && this.props.clients}
             product={this.props.products && this.props.products}
             service={this.props.services && this.props.services}
+            handleAppointmentChange={this.handleChange}
+            handleAppointmentSubmit={this.handleCreateSubmit}
             title="Appointment"
           />
 
@@ -256,11 +277,12 @@ class ScheduleCalender extends Component {
           <BigCalendar
             style={{ minHeight: "70rem" }}
             localizer={localizer}
-            events={this.props.orders}
+            events={event}
             selectable
             views={["week", "day"]}
             defaultView="week"
-            step={15}
+            step={30}
+            timeslots={1}
             min={
               new Date(
                 currentYear(),

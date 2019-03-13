@@ -48,7 +48,7 @@ export const createCompany = postData => {
 
 export function getAllCompany() {
   var auth = "Token " + Cookies.get("token");
-  var user = localStorage.getItem("userId");
+  var company = localStorage.getItem("companyID");
   const requestOptions = {
     method: "GET",
     headers: {
@@ -57,14 +57,14 @@ export function getAllCompany() {
     }
   };
 
-  return Fetch(ComapanyAPI + `${user}/`, requestOptions)
+  return Fetch(ComapanyAPI + `${company}/`, requestOptions)
     .then(handleResponse)
     .then(companies => companies);
 }
 
 export function update(data) {
   var auth = "Token " + Cookies.get("token");
-  var user = localStorage.getItem("userId");
+  var company = localStorage.getItem("companyID");
   const requestOptions = {
     method: "PATCH",
     headers: {
@@ -74,7 +74,9 @@ export function update(data) {
     body: JSON.stringify(data)
   };
 
-  return fetch(ComapanyAPI + `${user}/`, requestOptions).then(handleResponse);
+  return fetch(ComapanyAPI + `${company}/`, requestOptions).then(
+    handleResponse
+  );
 }
 
 export function getCompanyById(id) {

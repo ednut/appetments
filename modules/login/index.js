@@ -47,9 +47,7 @@ export function loginRequest(postData) {
           type: LOGIN_SUCCESS,
           payload: user
         });
-        console.log(user);
         let ed = moment(user.expiry_date).format("h:mm:ss");
-        // console.log(ed);
         let convertHourstoDays = x => {
           let timeArray = x.split(":");
           let hr = timeArray[0];
@@ -59,14 +57,16 @@ export function loginRequest(postData) {
           let HrToDay = totalHr / 24;
           return HrToDay;
         };
-        // console.log(moment(convertHourstoDays(ed)).format("h:mm:ss"));
-        localStorage.setItem("userId", JSON.stringify(user.id));
         dispatch({ type: LOGIN_LOADING, payload: false });
-        Router.push("/dashboard");
+        if (user.company === null) {
+          Router.push("/register-company");
+        } else {
+          dispatch(success("Login Was Successful"));
+          Router.push("/dashboard");
+        }
         Cookies.set("token", user.auth_token, {
           expires: convertHourstoDays(ed)
         });
-        dispatch(success("Login Was Successful"));
       },
       err => {
         let e = err[Object.keys(err)[0]];

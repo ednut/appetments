@@ -72,6 +72,7 @@ class CreateProduct extends Component {
       barcode: "",
       name: "",
       sku: "",
+      retail_price: "",
       description: "",
       submitted: false,
       openCreateProduct: false,
@@ -108,7 +109,14 @@ class CreateProduct extends Component {
 
   handleCreateSubmit = e => {
     e.preventDefault();
-    const { category, barcode, name, sku, description } = this.state;
+    const {
+      category,
+      barcode,
+      name,
+      sku,
+      retail_price,
+      description
+    } = this.state;
     this.setState({ submitted: true });
     const data = {
       category: parseInt(category),
@@ -116,9 +124,10 @@ class CreateProduct extends Component {
       barcode: barcode,
       name: name,
       sku: sku,
+      retail_price: retail_price,
       description: description
     };
-    if (category && barcode && name && sku && description) {
+    if (category && barcode && name && sku && retail_price && description) {
       this.props.createProductRequest(data);
       this.setState({ openCreateProduct: false });
     }
@@ -151,7 +160,14 @@ class CreateProduct extends Component {
 
   handleUpdateSubmit = e => {
     e.preventDefault();
-    const { category, barcode, name, sku, description } = this.state;
+    const {
+      category,
+      barcode,
+      name,
+      sku,
+      retail_price,
+      description
+    } = this.state;
     this.setState({ submitted: true });
     const data = {
       company: this.state.company,
@@ -159,9 +175,10 @@ class CreateProduct extends Component {
       barcode: barcode,
       name: name,
       sku: sku,
+      retail_price: retail_price,
       description: description
     };
-    if (category && barcode && name && sku && description) {
+    if (category && barcode && name && sku && retail_price && description) {
       this.props.updateProductRequest(data, this.state.id);
       this.setState({ openUpdateProduct: false });
     }
@@ -263,6 +280,7 @@ class CreateProduct extends Component {
       barcode: product.barcode,
       name: product.name,
       sku: product.sku,
+      retail_price: product.retail_price,
       description: product.description,
       openUpdateProduct: true
     });
@@ -359,6 +377,7 @@ class CreateProduct extends Component {
                       <th>Barcode</th>
                       <th>Name</th>
                       <th>SKU</th>
+                      <th>Retail price</th>
                       <th>description</th>
                       <th />
                     </tr>
@@ -370,6 +389,7 @@ class CreateProduct extends Component {
                         <td>{x.barcode}</td>
                         <td>{x.name}</td>
                         <td>{x.sku}</td>
+                        <td>{x.retail_price}</td>
                         <td style={{ width: "35%" }}>{x.description}</td>
                         <td className="more-options dropdown-toggle">
                           <div className="dropdown">

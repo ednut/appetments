@@ -28,7 +28,7 @@ class Register extends Component {
       console.log(data);
       this.props.createCompanyRequest(data);
     }
-    e.currentTarget.reset();
+    // e.currentTarget.reset();
   };
 
   handleChange = e => {

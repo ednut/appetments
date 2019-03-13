@@ -2,6 +2,7 @@ import {
   COMPANY_ERROR,
   COMPANY_LOADING,
   GET_COMPANY,
+  COMPANY_SUCCESS,
   COMPANY_UPDATED_SUCCESSFULLY
 } from "../types";
 import {
@@ -25,6 +26,11 @@ export default function(state = initialState, action) {
       return {
         ...state,
         loading: action.payload
+      };
+    case COMPANY_SUCCESS:
+      return {
+        ...state,
+        company: action.payload
       };
     case GET_COMPANY:
       return {
@@ -52,15 +58,16 @@ export function createCompanyRequest(postData) {
   return dispatch => {
     dispatch({ type: COMPANY_LOADING, payload: true });
     createCompany(postData)
-      .then(user => {
+      .then(company => {
         dispatch({
           type: COMPANY_SUCCESS,
-          payload: user
+          payload: company
         });
-        console.log(user);
+        localStorage.setItem("companyID", JSON.stringify(company.id));
         dispatch(success("Company created successfully"));
         dispatch({ type: COMPANY_LOADING, payload: false });
         Router.push("/dashboard");
+        debugger;
       })
       .catch(err => {
         let e = err[Object.keys(err)[0]];
