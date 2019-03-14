@@ -47,6 +47,7 @@ export function loginRequest(postData) {
           type: LOGIN_SUCCESS,
           payload: user
         });
+        debugger;
         let ed = moment(user.expiry_date).format("h:mm:ss");
         let convertHourstoDays = x => {
           let timeArray = x.split(":");

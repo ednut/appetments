@@ -385,7 +385,7 @@ class CreateProduct extends Component {
                   <tbody>
                     {this.props.products.map(x => (
                       <tr key={x.id}>
-                        <td>{x.category}</td>
+                        <td>{x.category_name}</td>
                         <td>{x.barcode}</td>
                         <td>{x.name}</td>
                         <td>{x.sku}</td>

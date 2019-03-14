@@ -16,7 +16,6 @@ export default function(state = { authenticate: true }, action) {
 
 export const authUser = () => dispatch => {
   let auth = Cookies.get("token");
-  var company = localStorage.getItem("companyID");
   if (auth === undefined) {
     Router.push("/login");
     dispatch({
@@ -24,9 +23,5 @@ export const authUser = () => dispatch => {
       payload: { authenticate: false }
     });
     dispatch(error("You need to login first"));
-  }
-  if (company === null) {
-    Router.push("/register-company");
-    dispatch(error("You need to create a company"));
   }
 };

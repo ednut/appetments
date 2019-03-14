@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import BigCalendar from "react-big-calendar";
 import moment from "moment";
-
 import { connect } from "react-redux";
 import {
   getAllOrdersRequest,
@@ -17,10 +16,9 @@ import {
 import { getAllServiceRequest } from "../../modules/serviceModule";
 import { getAllProductsRequest } from "../../modules/productModule";
 import styled from "styled-components";
-import { shadowStyle, color, height } from "../../components/styles/constant";
+import { height } from "../../components/styles/constant";
+import { convertTimeformat, convert } from "../../utils/helpers";
 import SpinerWrap from "../../components/Spinner";
-import CreateOrderModal from "./createOrderModal";
-import UpdateOrderModal from "./updateOrderModal";
 import LargePopup from "./LargePopup";
 
 const localizer = BigCalendar.momentLocalizer(moment);
@@ -87,9 +85,8 @@ class ScheduleCalender extends Component {
         }
       ],
       submitted: false,
-      openCreateOrder: false,
-      openUpdateOrder: false,
-      openLargePopup: false
+      openLargePopup: false,
+      openEditLargePopup: false
     };
   }
 
@@ -113,38 +110,12 @@ class ScheduleCalender extends Component {
   };
 
   handleUpdateSubmit = e => {
-    e.preventDefault();
-    const { customer, start_time, status, services, products } = this.state;
-    this.setState({ submitted: true });
-    const data = {
-      customer: customer,
-      start_time: start_time,
-      status: status,
-      services: services,
-      products: products
-    };
-    if (customer && start_time && status && services && products) {
-      this.props.updateOrderRequest(data, this.state.id);
-      this.setState({ openUpdateOrder: false });
-    }
+    this.props.updateOrderRequest(data, this.state.id);
+    this.setState({ openEditLargePopup: false });
   };
 
   handleChange = obj => {
     this.setState(obj);
-  };
-
-  ConvertTimeformat = (format, str) => {
-    var time = str;
-    var hours = Number(time.match(/^(\d+)/)[1]);
-    var minutes = Number(time.match(/:(\d+)/)[1]);
-    var AMPM = time.match(/\s(.*)$/)[1];
-    if (AMPM == "pm" && hours < 12) hours = hours + 12;
-    if (AMPM == "am" && hours == 12) hours = hours - 12;
-    var sHours = hours.toString();
-    var sMinutes = minutes.toString();
-    if (hours < 10) sHours = "0" + sHours;
-    if (minutes < 10) sMinutes = "0" + sMinutes;
-    return sHours + ":" + sMinutes;
   };
 
   onOpenLargePopup = obj => {
@@ -152,11 +123,11 @@ class ScheduleCalender extends Component {
       let t = moment(obj.start).format();
       let x = t.split("T");
       let pickedDate = moment(obj.start).format("dddd, MMMM Do YYYY");
-      let _global = this;
       let cleanTime = function() {
-        let x = _global
-          .ConvertTimeformat("24", moment(obj.start).format("h:mm a"))
-          .split(":");
+        let x = convertTimeformat(
+          "24",
+          moment(obj.start).format("h:mm a")
+        ).split(":");
         let hr = parseInt(x[0]);
         let min = x[1];
         return `${hr}:${min}`;
@@ -186,22 +157,6 @@ class ScheduleCalender extends Component {
     this.setState({ openLargePopup: false });
   };
 
-  onOpenCreateModal = () => {
-    this.setState({ openCreateOrder: true });
-  };
-
-  onCloseCreateModal = () => {
-    this.setState({ openCreateOrder: false });
-  };
-
-  onOpenUpdateModal = () => {
-    this.setState({ openUpdateOrder: true });
-  };
-
-  onCloseUpdateModal = () => {
-    this.setState({ openUpdateOrder: false });
-  };
-
   render() {
     if (this.props.orders !== undefined && this.props.companies) {
       let currentYear = () => new Date().getFullYear();
@@ -216,21 +171,6 @@ class ScheduleCalender extends Component {
         return parseInt(x[0], 10);
       };
 
-      var convert = function(date) {
-        let seperateDayAndTime = date.split("T");
-        let seperatedDay = seperateDayAndTime[0].split("-");
-        let seperatedTime = seperateDayAndTime[1].split("+")[0].split(":");
-
-        return new Date(
-          parseInt(seperatedDay[0]),
-          parseInt(seperatedDay[1]) - 1,
-          parseInt(seperatedDay[2]),
-          parseInt(seperatedTime[0]),
-          parseInt(seperatedTime[1]),
-          parseInt(seperatedTime[2])
-        );
-      };
-
       let event = this.props.orders.map(x => ({
         id: x.id,
         title: x.note,
@@ -241,22 +181,6 @@ class ScheduleCalender extends Component {
         <React.Fragment>
           {this.props.loading === true ? <SpinerWrap /> : null}
 
-          <CreateOrderModal
-            modalState={this.state}
-            onCloseModal={this.onCloseCreateModal}
-            handleChange={this.handleChange}
-            handleSubmit={this.handleCreateSubmit}
-            loading={this.props.loading}
-            title={"Create Order"}
-          />
-          <UpdateOrderModal
-            modalState={this.state}
-            onCloseModal={this.onCloseUpdateModal}
-            handleChange={this.handleChange}
-            handleSubmit={this.handleUpdateSubmit}
-            loading={this.props.loading}
-            title={"Update Order"}
-          />
           <LargePopup
             modalState={this.state}
             close={this.onCloseLargePopup}
