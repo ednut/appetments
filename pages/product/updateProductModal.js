@@ -154,9 +154,7 @@ class UpdateProductModal extends Component {
                   className="float-right"
                 >
                   {" "}
-                  {this.props.loading
-                    ? "Loading...."
-                    : "Create Product Category"}
+                  {this.props.loading ? "Loading...." : "Update Product"}
                 </Button>
               </footer>
             </form>

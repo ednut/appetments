@@ -60,7 +60,9 @@ class CreateProductCategoryModal extends Component {
                   className="float-right"
                 >
                   {" "}
-                  {this.props.loading ? "Loading...." : "Create Product"}
+                  {this.props.loading
+                    ? "Loading...."
+                    : "Create Product Category"}
                 </Button>
               </footer>
             </form>
