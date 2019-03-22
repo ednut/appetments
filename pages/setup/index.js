@@ -72,7 +72,7 @@ class Setup extends Component {
                       </Link>
                     </li>
                     <li>
-                      <Link href="#">
+                      <Link href="/calender-settings">
                         <a>Calendar Settings</a>
                       </Link>
                     </li>

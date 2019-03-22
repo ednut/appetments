@@ -254,6 +254,58 @@ const PopupWrap = styled.section`
     padding-bottom: 0.1rem;
     margin-bottom: 0.5rem;
   }
+  .history {
+    .title {
+      font-size: 1.6rem;
+    }
+    .booked {
+      font-size: 1.4rem;
+      color: #67768c;
+      display: block;
+      padding-top: 0.5rem;
+    }
+  }
+  .other-details {
+    padding: 0rem 5rem;
+    .title {
+      font-size: 1.6rem;
+      padding-bottom: 1rem;
+    }
+  }
+  .more-options {
+    display: block;
+    margin-right: 2rem;
+    color: #333;
+    float: right;
+    font-size: 1.4rem;
+    min-width: 15rem;
+    text-align: center;
+    padding: 8px 0;
+    border-radius: 3px;
+    font-weight: 600;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: 1px solid ${color.borderColor};
+    i {
+      display: inline-block;
+      margin-left: 1rem;
+    }
+  }
+  .dropdown-menu.show {
+    width: 15rem;
+  }
+  .dropdown.more-option {
+    a {
+      font-size: 1.4rem;
+      cursor: pointer;
+    }
+    .dropdown-item:active {
+      background-color: #efefef;
+    }
+    .dropdown-item.delete {
+      color: #920025;
+    }
+  }
   .footer {
     position: absolute;
     border-top: 1px solid ${color.borderColor};

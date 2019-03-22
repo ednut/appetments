@@ -7,13 +7,28 @@ import PopupWrap from "../../components/styles/PopupWrap";
 import { color } from "../../components/styles/constant";
 import Spinner from "../../components/Spinner";
 import TableWrapper from "../../components/styles/TableWrap";
+import { convertTimeformat, convert } from "../../utils/helpers";
+import moment from "moment";
 
-class LargePopup extends Component {
+class EditPopup extends Component {
   state = {
     displayedContacts: this.props.clients && this.props.clients,
     selected_client: {},
-    customer: "",
     selected_variant: [],
+    total_price: 0,
+    customer: "",
+    start_time: "",
+    note: "",
+    products: [],
+    services: [
+      {
+        service: "",
+        pet: "",
+        price: "",
+        start_time: "",
+        duration: ""
+      }
+    ],
     show_service: false
   };
 
@@ -26,42 +41,9 @@ class LargePopup extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    let obj = {
-      total_price: 0,
-      customer: this.state.customer,
-      start_time: `${this.props.modalState.selected_day}T${
-        this.start_time.current.value
-      }`,
-      note: this.note.current.value,
-      products: this.selectedVariant,
-      services: [
-        {
-          service:
-            this.service.current !== null ? this.service.current.value : "",
-          pet: this.pet.current !== null ? this.pet.current.value : "",
-          price: this.price.current !== null ? this.price.current.value : "",
-          start_time:
-            this.start_time.current !== null
-              ? `${this.props.modalState.selected_day}T${
-                  this.start_time.current.value
-                }`
-              : "",
-          duration:
-            this.duration.current !== null ? this.duration.current.value : ""
-        }
-      ]
-    };
-    this.props.handleAppointmentSubmit(obj);
-    console.log(obj);
   };
 
-  handleChange = () => {
-    let obj = {
-      selected_time: this.start_time.current.value
-    };
-
-    this.props.handleAppointmentChange(obj);
-  };
+  handleChange = () => {};
 
   searchHandler = event => {
     let searcjQery = event.target.value.toLowerCase(),
@@ -134,17 +116,24 @@ class LargePopup extends Component {
   };
 
   render() {
-    const {
-      picked_date,
-      selected_time,
-      start_time,
-      submitted,
-      openLargePopup
-    } = this.props.modalState;
+    const { submitted, edit, openEditPopup } = this.props.modalState;
     let contacts = this.state.displayedContacts;
     let selectedClient = this.state.selected_client;
     let pickedVariant = this.state.selected_variant;
-    if (openLargePopup) {
+    let picked_date = moment(this.props.modalState.edit.start).format(
+      "dddd, MMMM Do YYYY"
+    );
+    let cleanTime = function() {
+      let x = convertTimeformat(
+        "24",
+        moment(edit.start).format("h:mm a")
+      ).split(":");
+      let hr = parseInt(x[0]);
+      let min = x[1];
+      return `${hr}:${min}`;
+    };
+    console.log("data for edit is", this.props.modalState.edit);
+    if (openEditPopup) {
       if (this.props.clients !== undefined) {
         return (
           <PopupWrap>
@@ -169,7 +158,7 @@ class LargePopup extends Component {
                               name="start_time"
                               ref={this.start_time}
                               onChange={this.handleChange}
-                              value={selected_time}
+                              value={cleanTime()}
                             >
                               <option>--- Select Option ---</option>
                               <option value="00:00">0:00</option>
@@ -235,6 +224,7 @@ class LargePopup extends Component {
                               rows="5"
                               name="note"
                               ref={this.note}
+                              value={edit.note}
                               onChange={this.handleChange}
                               placeholder="Add an appointment note (visible to staff only)"
                             />
@@ -414,7 +404,6 @@ class LargePopup extends Component {
                             </div>
                           </div>
                         </div>
-                        {console.log(this.props.service)}
                         <FormInput>
                           <div className="col-md-10 m-auto">
                             <div className="row">
@@ -519,7 +508,7 @@ class LargePopup extends Component {
                   buttonColor={color.brandColor}
                   textColor={color.whiteColor}
                 >
-                  Save Appointment
+                  Update Appointment
                 </Button>
               </div>
             </form>
@@ -534,4 +523,4 @@ class LargePopup extends Component {
   }
 }
 
-export default LargePopup;
+export default EditPopup;

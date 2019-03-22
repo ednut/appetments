@@ -13,13 +13,18 @@ import {
   getAllClientsRequest,
   getClientsByIdRequest
 } from "../../modules/clientModule";
-import { getAllServiceRequest } from "../../modules/serviceModule";
+import {
+  getAllServiceRequest,
+  getServiceByIdRequest
+} from "../../modules/serviceModule";
 import { getAllProductsRequest } from "../../modules/productModule";
 import styled from "styled-components";
 import { height } from "../../components/styles/constant";
 import { convertTimeformat, convert } from "../../utils/helpers";
 import SpinerWrap from "../../components/Spinner";
 import LargePopup from "./LargePopup";
+import EditPopup from "./EditPopup";
+import CheckoutPopup from "./CheckoutPopup";
 
 const localizer = BigCalendar.momentLocalizer(moment);
 
@@ -84,9 +89,12 @@ class ScheduleCalender extends Component {
           unit_price: ""
         }
       ],
+      checkout: {},
+      edit: {},
       submitted: false,
       openLargePopup: false,
-      openEditLargePopup: false
+      openEditPopup: false,
+      openCheckoutPopup: false
     };
   }
 
@@ -116,6 +124,10 @@ class ScheduleCalender extends Component {
 
   handleChange = obj => {
     this.setState(obj);
+  };
+
+  getService = id => {
+    this.props.getServiceByIdRequest(id);
   };
 
   onOpenLargePopup = obj => {
@@ -153,8 +165,25 @@ class ScheduleCalender extends Component {
     this.setState({ openLargePopup: true });
   };
 
+  onOpenCheckoutPopup = obj => {
+    this.setState({ checkout: obj, openCheckoutPopup: true });
+  };
+
+  onCloseCheckoutPopup = () => {
+    this.setState({ openCheckoutPopup: false });
+  };
+
   onCloseLargePopup = () => {
     this.setState({ openLargePopup: false });
+  };
+
+  onCloseEditPopup = () => {
+    this.setState({ openEditPopup: false });
+  };
+
+  onEditAppointment = obj => {
+    // console.log(obj);
+    this.setState({ edit: obj, openEditPopup: true, openCheckoutPopup: false });
   };
 
   render() {
@@ -175,7 +204,19 @@ class ScheduleCalender extends Component {
         id: x.id,
         title: x.note,
         start: convert(x.start_time),
-        end: convert(x.end_time)
+        end: convert(x.end_time),
+        company: x.company,
+        products: x.products,
+        services: x.services,
+        customer: x.customer,
+        start_time: x.start_time,
+        end_time: x.end_time,
+        total_duration: x.total_duration,
+        total_price: x.total_price,
+        status: x.status,
+        note: x.note,
+        payment_status: x.payment_status,
+        payment_reference: x.payment_reference
       }));
       return (
         <React.Fragment>
@@ -187,9 +228,32 @@ class ScheduleCalender extends Component {
             clients={this.props.clients && this.props.clients}
             product={this.props.products && this.props.products}
             service={this.props.services && this.props.services}
+            selectedService={this.props.service && this.props.service}
+            getService={this.getService}
             handleAppointmentChange={this.handleChange}
             handleAppointmentSubmit={this.handleCreateSubmit}
             title="Appointment"
+          />
+
+          <CheckoutPopup
+            modalState={this.state}
+            close={this.onCloseCheckoutPopup}
+            company={this.props.companies && this.props.companies}
+            edit={this.onEditAppointment}
+            title="View Appointment"
+          />
+
+          <EditPopup
+            modalState={this.state}
+            close={this.onCloseEditPopup}
+            clients={this.props.clients && this.props.clients}
+            product={this.props.products && this.props.products}
+            service={this.props.services && this.props.services}
+            selectedService={this.props.service && this.props.service}
+            getService={this.getService}
+            handleAppointmentChange={this.handleChange}
+            handleAppointmentSubmit={this.handleCreateSubmit}
+            title="Edit Appointment"
           />
 
           <ButtonWrap>
@@ -224,7 +288,7 @@ class ScheduleCalender extends Component {
               )
             }
             defaultDate={new Date()}
-            onSelectEvent={event => console.log(event)}
+            onSelectEvent={event => this.onOpenCheckoutPopup(event)}
             onSelectSlot={x => this.onOpenLargePopup(x)}
           />
         </React.Fragment>
@@ -240,6 +304,7 @@ const mapStateToProps = state => ({
   orders: state.orderReducer.orders,
   order: state.orderReducer.order,
   services: state.serviceReducer.services,
+  service: state.serviceReducer.individual_service,
   products: state.productReducer.products,
   clients: state.clientReducer.clients,
   loading: state.orderReducer.loading
@@ -256,6 +321,7 @@ export default connect(
     getAllClientsRequest,
     getClientsByIdRequest,
     getAllServiceRequest,
-    getAllProductsRequest
+    getAllProductsRequest,
+    getServiceByIdRequest
   }
 )(ScheduleCalender);

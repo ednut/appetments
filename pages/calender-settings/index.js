@@ -4,7 +4,7 @@ import {
   getAllCompanyModule,
   updateCompanyModule
 } from "../../modules/company";
-import UpdateCompanyModal from "./updateCompanyModal";
+import UpdateCalenderModal from "./updateCalenderModal";
 import SpinerWrap from "../../components/Spinner";
 import FormInput from "../../components/styles/FormInput";
 import styled from "styled-components";
@@ -68,16 +68,11 @@ class Company extends Component {
     super(props);
     this.state = {
       id: "",
-      company_name: "",
-      description: "",
-      website: "",
-      contact_number: "",
-      groomer: {
-        id: "",
-        first_name: "",
-        last_name: "",
-        email: ""
-      },
+      hours_bookable_in_advance: "",
+      max_day_bookable_in_advance: "",
+      cancellation_limit: "",
+      opening_time: "",
+      closing_time: "",
       submitted: false,
       openUpdateCompany: false
     };
@@ -95,13 +90,20 @@ class Company extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    const { company_name, description, website, contact_number } = this.state;
+    const {
+      hours_bookable_in_advance,
+      max_day_bookable_in_advance,
+      cancellation_limit,
+      opening_time,
+      closing_time
+    } = this.state;
     this.setState({ submitted: true });
     const data = {
-      company_name: company_name,
-      description: description,
-      website: website,
-      contact_number: contact_number
+      hours_bookable_in_advance: hours_bookable_in_advance,
+      max_day_bookable_in_advance: max_day_bookable_in_advance,
+      cancellation_limit: cancellation_limit,
+      opening_time: opening_time,
+      closing_time: closing_time
     };
     this.props.updateCompanyModule(data);
     this.setState({ openUpdateCompany: false });
@@ -120,15 +122,21 @@ class Company extends Component {
   updateInput = () => {
     let details = {
       id: this.props.companies ? this.props.companies.id : "",
-      company_name: this.props.companies
-        ? this.props.companies.company_name
+      hours_bookable_in_advance: this.props.companies
+        ? this.props.companies.hours_bookable_in_advance
         : "",
-      description: this.props.companies ? this.props.companies.description : "",
-      website: this.props.companies ? this.props.companies.website : "",
-      contact_number: this.props.companies
-        ? this.props.companies.contact_number
+      max_day_bookable_in_advance: this.props.companies
+        ? this.props.companies.max_day_bookable_in_advance
         : "",
-
+      cancellation_limit: this.props.companies
+        ? this.props.companies.cancellation_limit
+        : "",
+      opening_time: this.props.companies
+        ? this.props.companies.opening_time
+        : "",
+      closing_time: this.props.companies
+        ? this.props.companies.closing_time
+        : "",
       openUpdateCompany: true
     };
     this.setState(details);
@@ -141,13 +149,13 @@ class Company extends Component {
         <AdminContainer>
           <SettingWrap className="container">
             {this.props.loading === true ? <SpinerWrap /> : null}
-            <UpdateCompanyModal
+            <UpdateCalenderModal
               modalState={this.state}
               onCloseModal={this.onCloseModal}
               handleChange={this.handleChange}
               handleSubmit={this.handleSubmit}
               loading={this.props.loading}
-              title={"Update Company"}
+              title={"Update Calender Settings"}
             />
             <div className="action-wrap">
               <button onClick={this.updateInput}>
@@ -158,56 +166,36 @@ class Company extends Component {
             <div className="row marginBottom-2">
               <div className="col-md-10 m-auto">
                 <div className="wrapper">
-                  <div className="title">Personal Details</div>
+                  <div className="title">Booking Details</div>
                   <div className="row">
                     <div className="col-md-4">
-                      <label htmlFor="">First Name</label>
+                      <label htmlFor="">Hours bookable in advance</label>
                       <div className="cont">
-                        {this.props.companies.groomer.first_name}
+                        {this.props.companies.hours_bookable_in_advance}
                       </div>
                     </div>
                     <div className="col-md-4">
-                      <label htmlFor="">Last Name</label>
+                      <label htmlFor="">Max day bookable in advance</label>
                       <div className="cont">
-                        {this.props.companies.groomer.last_name}
+                        {this.props.companies.max_day_bookable_in_advance}
                       </div>
                     </div>
                     <div className="col-md-4">
-                      <label htmlFor="">Email</label>
+                      <label htmlFor="">Cancellation limit</label>
                       <div className="cont">
-                        {this.props.companies.groomer.email}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="row marginBottom-2">
-              <div className="col-md-10 m-auto">
-                <div className="wrapper">
-                  <div className="title">Company Details</div>
-                  <div className="row">
-                    <div className="col-md-4">
-                      <label htmlFor="">Company Name</label>
-                      <div className="cont">
-                        {this.props.companies.company_name}
+                        {this.props.companies.cancellation_limit}
                       </div>
                     </div>
                     <div className="col-md-4">
-                      <label htmlFor="">Company Website</label>
-                      <div className="cont">{this.props.companies.website}</div>
-                    </div>
-                    <div className="col-md-4">
-                      <label htmlFor="">Contact Number</label>
+                      <label htmlFor="">Opening time</label>
                       <div className="cont">
-                        {this.props.companies.contact_number}
+                        {this.props.companies.opening_time}
                       </div>
                     </div>
-                    <div className="col-md-12">
-                      <label htmlFor="">Description</label>
+                    <div className="col-md-4">
+                      <label htmlFor="">Closing time</label>
                       <div className="cont">
-                        {this.props.companies.description}
+                        {this.props.companies.closing_time}
                       </div>
                     </div>
                   </div>

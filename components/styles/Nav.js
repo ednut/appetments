@@ -2,11 +2,18 @@ import styled from "styled-components";
 import { color, height } from "./constant";
 
 const Nav = styled.header`
-  height: ${height.headerHeight};
+  ${'' /* height: ${height.headerHeight}; */}
+${'' /* for header styling */}
+  height: 10rem;
   background-color: ${color.whiteColor};
   position: relative;
   padding: 0 ${height.headerHeight};
   font-size: 1.3rem;
+${'' /*included this for full width  */}
+  width: 100%;
+  &.fixedNav {
+    position: fixed;
+  }
   ul {
     margin: 0;
     padding: 0;

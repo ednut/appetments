@@ -2,22 +2,21 @@ import styled, { css } from "styled-components";
 import { color, height } from "./constant";
 
 const button = styled.button`
-  text-transform: uppercase;
+  text-transform: ${props => (props.textTransform ? props.textTransform : "uppercase")};
   text-decoration: none;
-  padding: 0 4rem;
+  padding:  ${props => (props.padding ? props.padding : "0 4rem")};
   display: inline-block;
   border-radius: ${props => (props.radius ? props.radius : "0.3rem")};
   transition: all 0.2s;
   position: relative;
   animation: moveInBottom 1s linear;
-  font-size: 1.4rem;
-  font-weight: 600;
+  font-size: ${props => (props.fontSize ? props.fontSize : "1.4rem")};
+  font-weight: ${props => (props.fontWeight ? props.fontWeight : "600")};
   border: none;
   outline: none;
-  height: ${height.buttonHeight};
-  line-height: ${height.buttonHeight};
-  background-color: ${props =>
-    props.buttonColor ? props.buttonColor : "#ffffff"};
+  height: ${props => (props.height ? props.height : height.buttonHeight)};
+  line-height: ${props => (props.lineHeight ? props.lineHeight : height.buttonHeight)};
+  background-color: ${props => (props.buttonColor ? props.buttonColor : "#ffffff")};
   color: ${props => (props.textColor ? props.textColor : "#000000")};
   position: relative;
   cursor: pointer;

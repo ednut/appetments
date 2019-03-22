@@ -284,7 +284,13 @@ class CreateService extends Component {
                         {"$"}
                         {x.price}
                       </td>
-                      <td>{x.staff}</td>
+                      <td>
+                        {x.staff_details.map(x => (
+                          <span className="multi" key={x.id}>
+                            {x.full_name}
+                          </span>
+                        ))}
+                      </td>
                       <td>{x.description}</td>
                       <td className="more-options dropdown-toggle">
                         <div className="dropdown">

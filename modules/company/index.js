@@ -87,7 +87,7 @@ export function updateCompanyModule(data, id) {
           type: COMPANY_UPDATED_SUCCESSFULLY,
           payload: true
         });
-        dispatch(success("Company Updated Successfully"));
+        dispatch(success("Updated Successfully"));
         dispatch({ type: COMPANY_LOADING, payload: false });
       })
       .catch(err => {

@@ -36,7 +36,6 @@ class Login extends Component {
       password: password
     };
     if (username && password) {
-      console.log(data);
       this.props.loginRequest(data);
     }
   };

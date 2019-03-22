@@ -3,6 +3,31 @@ import Link from "next/link";
 import Nav from "./styles/Nav";
 import Button from "../components/styles/Button";
 import Cookies from "js-cookie";
+import styled, { css } from "styled-components";
+
+
+
+
+
+const IconHolder = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: ${props => (props.width ? props.width : "50px")};
+  height: ${props => (props.height ? props.height : "50px")};
+  background-size: cover;
+  flex-grow: 0;
+  flex-shrink: 0;
+  margin: ${props => (props.margin ? props.margin : "0px 0px")};
+  border-radius: ${props => (props.borderRadius ? props.borderRadius : "0px")};
+  background-repeat: no-repeat;
+  background-color: ${props => (props.backgroundColor ? props.backgroundColor : "transparent")};
+  background-position: center;
+  background-image: ${props => (props.src ? `url(${props.src})` : "none")};
+  background-size: contain;
+`;
+
+
+
 
 const Header = props => (
   <Nav>
@@ -13,10 +38,7 @@ const Header = props => (
             <li>
               <Link href="/">
                 <a>
-                  Appetments
-                  <span className="icon">
-                    <i className="fas fa-circle" />
-                  </span>
+                  <IconHolder src={"/static/images/company_logo.png"} width={"150px"} />
                 </a>
               </Link>
             </li>

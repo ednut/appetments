@@ -2,6 +2,7 @@ import {
   createService,
   getAllService,
   updateService,
+  getServiceById,
   addStaff,
   removeStaff,
   _delete
@@ -11,7 +12,7 @@ import { success, error } from "../alert";
 import {
   GET_SERVICE,
   GET_ALL_SERVICE,
-  DELETE_SERVICE,
+  SERVICE,
   SERVICE_ERROR,
   SERVICE_LOADING,
   STAFF_ADDED,
@@ -33,6 +34,11 @@ export default function(state = initialState, action) {
       return {
         ...state,
         service: action.payload
+      };
+    case SERVICE:
+      return {
+        ...state,
+        individual_service: action.payload
       };
     case GET_ALL_SERVICE:
       return {
@@ -194,6 +200,27 @@ export function deleteServiceRequest(id) {
           payload: true
         });
         dispatch(success("Service deleted successfully"));
+        dispatch({ type: SERVICE_LOADING, payload: false });
+      })
+      .catch(err => {
+        let e = err[Object.keys(err)[0]];
+        dispatch(error(e));
+        dispatch({ type: SERVICE_LOADING, payload: false });
+        dispatch({ type: SERVICE_ERROR, payload: err });
+      });
+  };
+}
+
+export function getServiceByIdRequest(id) {
+  return dispatch => {
+    dispatch({ type: SERVICE_LOADING, payload: true });
+    getServiceById(id)
+      .then(service => {
+        dispatch({
+          type: SERVICE,
+          payload: service
+        });
+        dispatch(success("Service loaded successfully"));
         dispatch({ type: SERVICE_LOADING, payload: false });
       })
       .catch(err => {
