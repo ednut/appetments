@@ -13,23 +13,10 @@ import moment from "moment";
 class EditPopup extends Component {
   state = {
     displayedContacts: this.props.clients && this.props.clients,
-    selected_client: {},
+    selected_client: [],
     selected_variant: [],
-    total_price: 0,
-    customer: "",
-    start_time: "",
-    note: "",
-    products: [],
-    services: [
-      {
-        service: "",
-        pet: "",
-        price: "",
-        start_time: "",
-        duration: ""
-      }
-    ],
-    show_service: false
+    edited_value: {},
+    show_service: true
   };
 
   start_time = React.createRef();
@@ -41,9 +28,42 @@ class EditPopup extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
+    console.log(this.state.edited_value);
+    this.props.handleAppointmentSubmit(
+      this.state.edited_value,
+      this.props.modalState.edit.id
+    );
   };
 
-  handleChange = () => {};
+  handleChange = () => {
+    let x = moment(this.props.modalState.edit.start_time)
+      .format()
+      .split("T");
+    let hr = this.start_time.current.value.split(":");
+    let hour = (0 + hr[0]).slice(-2);
+    let min = hr[1];
+    let obj = {
+      customer: this.props.modalState.edit.customer,
+      start_time: x[0] + "T" + hour + ":" + min + ":00+01:00",
+      note: this.note.current.value,
+      products: this.props.modalState.edit.products,
+      services: [
+        {
+          service:
+            this.service.current !== null ? this.service.current.value : "",
+          pet: this.pet.current !== null ? this.pet.current.value : "",
+          price: this.price.current !== null ? this.price.current.value : "",
+          start_time: x[0] + "T" + hour + ":" + min + ":00+01:00",
+          duration:
+            this.duration.current !== null ? this.duration.current.value : ""
+        }
+      ]
+    };
+    this.setState({
+      edited_value: obj,
+      start_time: this.start_time.current.value
+    });
+  };
 
   searchHandler = event => {
     let searcjQery = event.target.value.toLowerCase(),
@@ -80,8 +100,28 @@ class EditPopup extends Component {
     });
   };
 
-  selectedVariant = [...new Set(this.selectedVariant)];
-  variantReview = [...new Set(this.selectedVariant)];
+  selectedVariant = [
+    this.props.modalState.edit.products,
+    ...new Set(this.selectedVariant)
+  ];
+  variantReview = [
+    this.props.modalState.edit.products,
+    ...new Set(this.selectedVariant)
+  ];
+
+  addedProduct = [];
+  existingProduct = () => {
+    this.props.modalState.edit.products.map(x =>
+      this.addedProduct.push({
+        name: x.product_details.name,
+        product: x.product,
+        variant: x.variant,
+        quantity: x.quantity,
+        unit_price: x.unit_price
+      })
+    );
+  };
+
   addProduct = obj => {
     let newObj = {
       product: obj.product,
@@ -116,9 +156,18 @@ class EditPopup extends Component {
   };
 
   render() {
+    this.props.modalState.edit.products !== undefined
+      ? this.existingProduct()
+      : null;
     const { submitted, edit, openEditPopup } = this.props.modalState;
     let contacts = this.state.displayedContacts;
-    let selectedClient = this.state.selected_client;
+    let selectedClient =
+      this.state.selected_client.length === 0
+        ? this.props.clients &&
+          this.props.clients.filter(
+            x => x.id === this.props.modalState.edit.customer
+          )
+        : this.state.selected_client;
     let pickedVariant = this.state.selected_variant;
     let picked_date = moment(this.props.modalState.edit.start).format(
       "dddd, MMMM Do YYYY"
@@ -132,7 +181,7 @@ class EditPopup extends Component {
       let min = x[1];
       return `${hr}:${min}`;
     };
-    console.log("data for edit is", this.props.modalState.edit);
+    // console.log("data for edit:", edit);
     if (openEditPopup) {
       if (this.props.clients !== undefined) {
         return (
@@ -158,7 +207,7 @@ class EditPopup extends Component {
                               name="start_time"
                               ref={this.start_time}
                               onChange={this.handleChange}
-                              value={cleanTime()}
+                              defaultValue={cleanTime()}
                             >
                               <option>--- Select Option ---</option>
                               <option value="00:00">0:00</option>
@@ -224,7 +273,7 @@ class EditPopup extends Component {
                               rows="5"
                               name="note"
                               ref={this.note}
-                              value={edit.note}
+                              defaultValue={edit.note}
                               onChange={this.handleChange}
                               placeholder="Add an appointment note (visible to staff only)"
                             />
@@ -388,11 +437,18 @@ class EditPopup extends Component {
                           <div className="client-wrap">
                             <div className="client-content">
                               <span className="name">
-                                {selectedClient.first_name}{" "}
-                                {selectedClient.last_name}
+                                {Array.isArray(selectedClient) === true
+                                  ? `${selectedClient[0].first_name} ${
+                                      selectedClient[0].last_name
+                                    }`
+                                  : `${selectedClient.first_name} ${
+                                      selectedClient.last_name
+                                    }`}
                               </span>
                               <span className="email">
-                                {selectedClient.email}
+                                {Array.isArray(selectedClient) === true
+                                  ? `${selectedClient[0].email}`
+                                  : `${selectedClient.email}`}
                               </span>
                               <i
                                 onClick={this.cancelClient}
@@ -410,7 +466,12 @@ class EditPopup extends Component {
                               <div className="col-md-6">
                                 <div className="form-wrap">
                                   <label htmlFor="">Service</label>
-                                  <select name="service">
+                                  <select
+                                    name="service"
+                                    defaultValue={
+                                      edit.services[0].service_details.id
+                                    }
+                                  >
                                     <option value="">
                                       -- Select a service --
                                     </option>
@@ -428,21 +489,36 @@ class EditPopup extends Component {
                                   </select>
                                 </div>
                               </div>
+                              {Array.isArray(selectedClient) === true}
                               <div className="col-md-6">
                                 <div className="form-wrap">
                                   <label htmlFor="">Pet</label>
-                                  <select name="pet">
+                                  <select
+                                    name="pet"
+                                    defaultValue={edit.services[0].pet}
+                                  >
                                     <option value="">-- Select a pet --</option>
-                                    {selectedClient.pets.map(pet => (
-                                      <option
-                                        key={pet.id}
-                                        onChange={this.handleChange}
-                                        value={pet.id}
-                                        ref={this.pet}
-                                      >
-                                        {pet.name}
-                                      </option>
-                                    ))}
+                                    {Array.isArray(selectedClient) === true
+                                      ? selectedClient[0].pets.map(pet => (
+                                          <option
+                                            key={pet.id}
+                                            onChange={this.handleChange}
+                                            value={pet.id}
+                                            ref={this.pet}
+                                          >
+                                            {pet.name}
+                                          </option>
+                                        ))
+                                      : selectedClient.pets.map(pet => (
+                                          <option
+                                            key={pet.id}
+                                            onChange={this.handleChange}
+                                            defaultValue={pet.id}
+                                            ref={this.pet}
+                                          >
+                                            {pet.name}
+                                          </option>
+                                        ))}
                                   </select>
                                 </div>
                               </div>
@@ -453,6 +529,7 @@ class EditPopup extends Component {
                                     name="price"
                                     type="number"
                                     onChange={this.handleChange}
+                                    defaultValue={edit.services[0].price}
                                     ref={this.price}
                                     placeholder="Service price"
                                   />
@@ -465,6 +542,7 @@ class EditPopup extends Component {
                                     name="duration"
                                     type="number"
                                     onChange={this.handleChange}
+                                    defaultValue={edit.services[0].duration}
                                     ref={this.duration}
                                     placeholder="Service Duration"
                                   />
@@ -476,29 +554,24 @@ class EditPopup extends Component {
                       </div>
                     )}
 
-                    {pickedVariant.length > 0 && (
-                      <div className="selected-variant-wrap">
-                        <div className="title">Selected Product</div>
-                        {pickedVariant.map(x => (
-                          <div
-                            key={performance.now()}
-                            className="selected-variant"
-                          >
-                            <span>
-                              <span className="name">
-                                {x.name} ({x.unit_price})
-                              </span>
-                              <span
-                                className="remove"
-                                onClick={() => this.removeProduct(x)}
-                              >
-                                <i className="material-icons"> close </i>
-                              </span>
+                    <div className="selected-variant-wrap">
+                      <div className="title">Selected Product</div>
+                      {this.props.modalState.edit.products.map(x => (
+                        <div key={x.id} className="selected-variant">
+                          <span>
+                            <span className="name">
+                              {x.product_details.name} (${x.unit_price})
                             </span>
-                          </div>
-                        ))}
-                      </div>
-                    )}
+                            <span
+                              className="remove"
+                              onClick={() => this.removeProduct(x)}
+                            >
+                              <i className="material-icons"> close </i>
+                            </span>
+                          </span>
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 </div>
               </div>

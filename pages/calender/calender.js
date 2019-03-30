@@ -117,8 +117,8 @@ class ScheduleCalender extends Component {
     this.setState({ openLargePopup: false });
   };
 
-  handleUpdateSubmit = e => {
-    this.props.updateOrderRequest(data, this.state.id);
+  handleUpdateSubmit = (data, id) => {
+    this.props.updateOrderRequest(data, id);
     this.setState({ openEditLargePopup: false });
   };
 
@@ -182,7 +182,7 @@ class ScheduleCalender extends Component {
   };
 
   onEditAppointment = obj => {
-    // console.log(obj);
+    console.log(obj);
     this.setState({ edit: obj, openEditPopup: true, openCheckoutPopup: false });
   };
 
@@ -221,7 +221,6 @@ class ScheduleCalender extends Component {
       return (
         <React.Fragment>
           {this.props.loading === true ? <SpinerWrap /> : null}
-
           <LargePopup
             modalState={this.state}
             close={this.onCloseLargePopup}
@@ -238,6 +237,7 @@ class ScheduleCalender extends Component {
           <CheckoutPopup
             modalState={this.state}
             close={this.onCloseCheckoutPopup}
+            clients={this.props.clients && this.props.clients}
             company={this.props.companies && this.props.companies}
             edit={this.onEditAppointment}
             title="View Appointment"
@@ -252,7 +252,7 @@ class ScheduleCalender extends Component {
             selectedService={this.props.service && this.props.service}
             getService={this.getService}
             handleAppointmentChange={this.handleChange}
-            handleAppointmentSubmit={this.handleCreateSubmit}
+            handleAppointmentSubmit={this.handleUpdateSubmit}
             title="Edit Appointment"
           />
 

@@ -59,6 +59,12 @@ class CheckoutPopup extends Component {
 
   render() {
     const { checkout, openCheckoutPopup } = this.props.modalState;
+    let selectedClient = this.props.clients
+      ? this.props.clients.filter(
+          x => x.id === this.props.modalState.checkout.customer
+        )
+      : [];
+    // console.log(selectedClient);
     if (openCheckoutPopup) {
       let pickedDate = moment(checkout.start).format("dddd, MMMM Do YYYY");
       return (
@@ -117,12 +123,15 @@ class CheckoutPopup extends Component {
                 <div>
                   <div className="selected-client">
                     <div className="client-wrap">
-                      <div className="client-content">
-                        <span className="name">Babatunde Adegbite</span>
-                        <span className="email">
-                          babatundeadegbite@gmail.com
-                        </span>
-                      </div>
+                      {selectedClient &&
+                        selectedClient.map(x => (
+                          <div key={x.id} className="client-content">
+                            <span className="name">
+                              {x.first_name} {x.last_name}
+                            </span>
+                            <span className="email">{x.email}</span>
+                          </div>
+                        ))}
                     </div>
                   </div>
                   <div className="other-details">
