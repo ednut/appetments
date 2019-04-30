@@ -58,12 +58,8 @@ export function loginRequest(postData) {
           return HrToDay;
         };
         dispatch({ type: LOGIN_LOADING, payload: false });
-        if (user.company === null) {
-          Router.push("/register-company");
-        } else {
-          dispatch(success("Login Was Successful"));
-          Router.push("/dashboard");
-        }
+        dispatch(success("Login Was Successful"));
+        Router.push("/dashboard");
         Cookies.set("token", user.auth_token, {
           expires: convertHourstoDays(ed)
         });

@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 export function slugify(text) {
   return text
     .toString()
@@ -36,4 +38,9 @@ export function convert(date) {
     parseInt(seperatedTime[1]),
     parseInt(seperatedTime[2])
   );
+}
+
+
+export function formatDate (date, format = 'MMMM YYYY, D dddd') {
+    return moment.utc(date).local().format(format);
 }

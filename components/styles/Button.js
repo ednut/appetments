@@ -2,9 +2,10 @@ import styled, { css } from "styled-components";
 import { color, height } from "./constant";
 
 const button = styled.button`
-  text-transform: ${props => (props.textTransform ? props.textTransform : "uppercase")};
+  text-transform: ${props =>
+    props.textTransform ? props.textTransform : "uppercase"};
   text-decoration: none;
-  padding:  ${props => (props.padding ? props.padding : "0 4rem")};
+  padding: ${props => (props.padding ? props.padding : "0.6rem 1.7rem")};
   display: inline-block;
   border-radius: ${props => (props.radius ? props.radius : "0.3rem")};
   transition: all 0.2s;
@@ -14,20 +15,25 @@ const button = styled.button`
   font-weight: ${props => (props.fontWeight ? props.fontWeight : "600")};
   border: none;
   outline: none;
-  height: ${props => (props.height ? props.height : height.buttonHeight)};
-  line-height: ${props => (props.lineHeight ? props.lineHeight : height.buttonHeight)};
-  background-color: ${props => (props.buttonColor ? props.buttonColor : "#ffffff")};
+  height: ${props => (props.height ? props.height : "auto")};
+  line-height: ${props => (props.lineHeight ? props.lineHeight : "30px")};
+  background-color: ${props =>
+    props.buttonColor ? props.buttonColor : "#ffffff"};
   color: ${props => (props.textColor ? props.textColor : "#000000")};
   position: relative;
+  text-align: center;
+  vertical-align: middle;
   cursor: pointer;
   &:hover {
-    transform: translateY(-0.3rem);
-    box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.2);
+    transform: none;
+    box-shadow: none;
+    background-color: ${props =>
+      props.buttonHover ? props.buttonHover : "none"};
     ${props =>
-      props.noHover &&
+      props.hover &&
       css`
-        transform: none;
-        box-shadow: none;
+        transform: translateY(-0.3rem);
+        box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.2);
       `};
   }
   &:focus {

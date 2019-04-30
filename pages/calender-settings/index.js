@@ -11,6 +11,7 @@ import styled from "styled-components";
 import { color, shadowStyle } from "../../components/styles/constant";
 import AdminContainer from "../../components/AdminContainer";
 import Button from "../../components/styles/Button";
+import { Row, Col, Card } from "antd";
 
 const SettingWrap = styled.div`
   .title {
@@ -43,7 +44,7 @@ const SettingWrap = styled.div`
     height: 6rem;
     border-radius: 50%;
     border: none;
-    background-color: #083e8d;
+    background-color: #17977c;
     color: #fff;
     animation: moveInBottom 1s linear;
     transition: all 0.2s;
@@ -163,9 +164,9 @@ class Company extends Component {
               </button>
             </div>
 
-            <div className="row marginBottom-2">
-              <div className="col-md-10 m-auto">
-                <div className="wrapper">
+            <Row className="marginBottom-2">
+              <Col span={16} offset={4}>
+                <Card>
                   <div className="title">Booking Details</div>
                   <div className="row">
                     <div className="col-md-4">
@@ -199,9 +200,9 @@ class Company extends Component {
                       </div>
                     </div>
                   </div>
-                </div>
-              </div>
-            </div>
+                </Card>
+              </Col>
+            </Row>
           </SettingWrap>
         </AdminContainer>
       );

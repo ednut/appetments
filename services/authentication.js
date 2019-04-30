@@ -1,6 +1,6 @@
 import Cookies from "js-cookie";
 import Router from "next/router";
-import { error } from "../modules/alert";
+import { message } from "antd";
 
 export default function(state = { authenticate: true }, action) {
   switch (action.type) {
@@ -22,6 +22,6 @@ export const authUser = () => dispatch => {
       type: "NOT_AUTHENTICATED",
       payload: { authenticate: false }
     });
-    dispatch(error("You need to login first"));
+    dispatch(message.error("You need to login first"));
   }
 };

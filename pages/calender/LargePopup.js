@@ -7,6 +7,9 @@ import PopupWrap from "../../components/styles/PopupWrap";
 import { color } from "../../components/styles/constant";
 import Spinner from "../../components/Spinner";
 import TableWrapper from "../../components/styles/TableWrap";
+import DatePicker from "react-datepicker";
+
+import "react-datepicker/dist/react-datepicker.css";
 
 class LargePopup extends Component {
   state = {
@@ -14,7 +17,16 @@ class LargePopup extends Component {
     selected_client: {},
     customer: "",
     selected_variant: [],
-    show_service: false
+    show_service: false,
+    startDate: ""
+  };
+
+  componentDidMount() {
+    console.log(this.props.modalState);
+  }
+
+  change = e => {
+    this.props.updateDate(e);
   };
 
   start_time = React.createRef();
@@ -134,6 +146,7 @@ class LargePopup extends Component {
   };
 
   render() {
+    console.log(this.state.startDate);
     const {
       picked_date,
       selected_time,
@@ -159,7 +172,14 @@ class LargePopup extends Component {
               <div className="container-wrap">
                 <div className="pop-content">
                   <div className="form-section">
-                    <div className="date-title">{picked_date}</div>
+                    {/* <div className="date-title">{picked_date}</div> */}
+                    <div className="date-title">
+                      <DatePicker
+                        selected={picked_date}
+                        onChange={this.change}
+                        dateFormat="MMMM d, yyyy h:mm aa"
+                      />
+                    </div>
                     <FormInput>
                       <div className="row">
                         <div className="col-md-12">
@@ -469,16 +489,30 @@ class LargePopup extends Component {
                                   />
                                 </div>
                               </div>
+
                               <div className="col-md-6">
                                 <div className="form-wrap">
-                                  <label htmlFor="">Duration(min)</label>
-                                  <input
+                                  <label htmlFor="">Duration</label>
+                                  <select
                                     name="duration"
-                                    type="number"
                                     onChange={this.handleChange}
                                     ref={this.duration}
-                                    placeholder="Service Duration"
-                                  />
+                                  >
+                                    <option>---- Select Duration ----</option>
+                                    <option value="15">15 minutes</option>
+                                    <option value="30">30 minutes</option>
+                                    <option value="45">45 minutes</option>
+                                    <option value="60">60 minutes</option>
+                                    <option value="75">75 minutes</option>
+                                    <option value="90">90 minutes</option>
+                                    <option value="105">105 minutes</option>
+                                    <option value="120">120 minutes</option>
+                                  </select>
+                                  {submitted && !duration && (
+                                    <div className="error">
+                                      Duration is required
+                                    </div>
+                                  )}
                                 </div>
                               </div>
                             </div>

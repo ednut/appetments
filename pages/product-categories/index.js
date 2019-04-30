@@ -14,7 +14,7 @@ import CreateProductCategoryModal from "./createProductCategoryModal";
 import UpdateProductCategoryModal from "./updateProductCategoryModal";
 import styled from "styled-components";
 import { color, height } from "../../components/styles/constant";
-import TableWrapper from "../../components/styles/TableWrap";
+import { Table, Divider, Tag } from "antd";
 
 const ContentWrap = styled.div`
   .action-wrap {
@@ -26,7 +26,7 @@ const ContentWrap = styled.div`
     height: 6rem;
     border-radius: 50%;
     border: none;
-    background-color: #083e8d;
+    background-color: #17977c;
     color: #fff;
     animation: moveInBottom 1s linear;
     transition: all 0.2s;
@@ -132,104 +132,112 @@ class ProductCategory extends Component {
 
   render() {
     if (this.props.productCategories !== undefined) {
+      const columns = [
+        {
+          title: "Category Name",
+          dataIndex: "category_name",
+          key: "category_name"
+        },
+        {
+          title: "Action",
+          key: "action",
+          dataIndex: "action",
+          render: (x, record) => (
+            <span>
+              <a
+                onClick={() => {
+                  this.updateProductCategory(x);
+                }}
+                href="javascript:;"
+              >
+                Edit
+              </a>
+              <Divider type="vertical" />
+              <a
+                onClick={() => this.deleteProductCategory(x.id)}
+                href="javascript:;"
+              >
+                Delete
+              </a>
+            </span>
+          )
+        }
+      ];
+
+      const data = this.props.productCategories.map(function(x) {
+        return {
+          key: x.id,
+          category_name: x.category_name,
+          action: x
+        };
+      });
+      const rowSelection = {
+        onChange: (selectedRowKeys, selectedRows) => {
+          console.log(
+            `selectedRowKeys: ${selectedRowKeys}`,
+            "selectedRows: ",
+            selectedRows
+          );
+        },
+        getCheckboxProps: record => ({
+          disabled: record.name === "Disabled User", // Column configuration not to be checked
+          name: record.name
+        })
+      };
+
       return (
-        <AdminContainer>
-          <Product>
-            <ContentWrap>
-              {this.props.loading === true ? <SpinerWrap /> : null}
+        <Product>
+          <ContentWrap>
+            {this.props.loading === true ? <SpinerWrap /> : null}
 
-              <CreateProductCategoryModal
-                modalState={this.state}
-                onCloseModal={this.onCloseCreateModal}
-                handleChange={this.handleChange}
-                handleSubmit={this.handleCreateSubmit}
-                loading={this.props.loading}
-                title={"Create Product Category"}
-              />
-              <UpdateProductCategoryModal
-                modalState={this.state}
-                onCloseModal={this.onCloseUpdateModal}
-                handleChange={this.handleChange}
-                handleSubmit={this.handleUpdateSubmit}
-                loading={this.props.loading}
-                title={"Update Product Category"}
-              />
+            <CreateProductCategoryModal
+              modalState={this.state}
+              onCloseModal={this.onCloseCreateModal}
+              handleChange={this.handleChange}
+              handleSubmit={this.handleCreateSubmit}
+              loading={this.props.loading}
+              title={"Create Product Category"}
+            />
+            <UpdateProductCategoryModal
+              modalState={this.state}
+              onCloseModal={this.onCloseUpdateModal}
+              handleChange={this.handleChange}
+              handleSubmit={this.handleUpdateSubmit}
+              loading={this.props.loading}
+              title={"Update Product Category"}
+            />
 
-              <div className="action-wrap">
-                {/* <Button
+            <div className="action-wrap">
+              {/* <Button
                   buttonColor={color.brandColor}
                   textColor={color.whiteColor}
                   onClick={this.onOpenCreateModal}
                 >
                   Add New Product Category
                 </Button> */}
-                <button onClick={this.onOpenCreateModal}>
-                  <i className="material-icons"> add </i>
-                </button>
-              </div>
-              <TableWrapper>
-                <table>
-                  <thead>
-                    <tr>
-                      <th>Category Name</th>
-                      <th />
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {this.props.productCategories.map(x => (
-                      <tr key={x.id}>
-                        <td>{x.category_name}</td>
-
-                        <td className="more-options dropdown-toggle">
-                          <div className="dropdown">
-                            <span
-                              className="icon-more"
-                              data-toggle="dropdown"
-                              aria-haspopup="true"
-                              aria-expanded="false"
-                            >
-                              <i className="fas fa-ellipsis-h" />
-                            </span>
-                            <div className="dropdown-menu">
-                              <a
-                                onClick={() => {
-                                  this.updateProductCategory(x);
-                                }}
-                                className="dropdown-item"
-                              >
-                                Edit
-                              </a>
-                              <a
-                                onClick={() => this.deleteProductCategory(x.id)}
-                                className="dropdown-item delete"
-                              >
-                                Delete
-                              </a>
-                            </div>
-                          </div>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </TableWrapper>
-              {this.props.productCategories &&
-              this.props.productCategories.length < 0
-                ? "No data"
-                : null}
-            </ContentWrap>
-          </Product>
-        </AdminContainer>
+              <button onClick={this.onOpenCreateModal}>
+                <i className="material-icons"> add </i>
+              </button>
+            </div>
+            <Table
+              rowSelection={rowSelection}
+              columns={columns}
+              dataSource={data}
+            />
+            {this.props.productCategories &&
+            this.props.productCategories.length < 0
+              ? "No data"
+              : null}
+          </ContentWrap>
+        </Product>
       );
     } else {
       return (
-        <AdminContainer>
-          <Product>
-            <ContentWrap>
-              <SpinerWrap />
-            </ContentWrap>
-          </Product>
-        </AdminContainer>
+        <Product>
+          <ContentWrap>
+            <SpinerWrap />
+          </ContentWrap>
+        </Product>
       );
     }
   }

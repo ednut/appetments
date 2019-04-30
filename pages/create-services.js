@@ -18,7 +18,7 @@ import CreateServiceModal from "./services/createServiceModal";
 import UpdateServiceModal from "./services/updateServiceModal";
 import AddStaffToService from "./services/addStaffToServiceModal";
 import NoData from "../components/NoData";
-import TableWrapper from "../components/styles/TableWrap";
+import { Table, Divider, Tag } from "antd";
 
 const ContentWrap = styled.div`
   .action-wrap {
@@ -30,7 +30,7 @@ const ContentWrap = styled.div`
     height: 6rem;
     border-radius: 50%;
     border: none;
-    background-color: #083e8d;
+    background-color: #17977c;
     color: #fff;
     animation: moveInBottom 1s linear;
     transition: all 0.2s;
@@ -140,19 +140,6 @@ class CreateService extends Component {
     });
   };
 
-  // checkedItems = [];
-  // handleBulkActions = obj => {
-  //   this.checkedItems.push(obj.id);
-  //   console.log(this.checkedItems);
-  //   for (let i = 1; i < this.checkedItems.length; i++) {
-  //     if (this.checkedItems[i] === obj.id) {
-  //       this.checkedItems.splice(i, 1);
-  //     }
-  //   }
-  //   console.log(this.checkedItems);
-  //   debugger;
-  // };
-
   onOpenStaffModal = () => {
     this.setState({ openStaffService: true });
   };
@@ -205,6 +192,150 @@ class CreateService extends Component {
 
   render() {
     if (this.props.services !== undefined) {
+      const columns = [
+        {
+          title: "Service Name",
+          dataIndex: "service_name",
+          key: "service_name"
+        },
+        {
+          title: "Group",
+          dataIndex: "group",
+          key: "group"
+        },
+        {
+          title: "Duration",
+          dataIndex: "duration",
+          key: "duration",
+          render: x => (
+            <span>
+              {x}
+              {" minutes"}
+            </span>
+          )
+        },
+        {
+          title: "Retail Price",
+          dataIndex: "retail_price",
+          key: "retail_price",
+          render: x => (
+            <span>
+              {"$"}
+              {x}
+            </span>
+          )
+        },
+        {
+          title: "Staff",
+          key: "staff",
+          dataIndex: "staff",
+          render: staffs => (
+            <span>
+              {staffs.map(x => {
+                return (
+                  <Tag key={x}>
+                    {x !== "No Staff Created" ? (
+                      <span
+                      // onClick={() => {
+                      //   this.updateStaff(x);
+                      // }}
+                      >
+                        {x}
+                      </span>
+                    ) : (
+                      <span>{x}</span>
+                    )}
+
+                    {x !== "No Staff Created" ? (
+                      <span
+                        // onClick={() => this.deletePet(x.id)}
+                        className="icon"
+                        style={{ marginLeft: "8px" }}
+                      >
+                        <i className="fas fa-times" />
+                      </span>
+                    ) : null}
+                  </Tag>
+                );
+              })}
+            </span>
+          )
+        },
+        {
+          title: "Description",
+          dataIndex: "description",
+          key: "description"
+        },
+        {
+          title: "Action",
+          key: "action",
+          dataIndex: "action",
+          render: (x, record) => (
+            <span>
+              <a
+                onClick={() => {
+                  this.addingStaffToService(x);
+                }}
+                href="javascript:;"
+              >
+                Add Staff
+              </a>
+              <Divider type="vertical" />
+              <a
+                onClick={() => {
+                  this.updateService(x);
+                }}
+                href="javascript:;"
+              >
+                Edit
+              </a>
+
+              <Divider type="vertical" />
+              <a onClick={() => this.deleteService(x.id)} href="javascript:;">
+                Delete
+              </a>
+            </span>
+          )
+        }
+      ];
+
+      const data = this.props.services.map(function(x) {
+        return {
+          key: x.id,
+          service_name: x.name,
+          group: x.group,
+          duration: x.duration,
+          retail_price: x.price,
+          description: x.description,
+          staff:
+            x.staff_details.map(function(staff) {
+              let arr = [];
+              arr.push(staff.full_name);
+              return arr;
+            }).length > 0
+              ? x.staff_details.map(function(staff) {
+                  let arr = [];
+                  arr.push(staff.full_name);
+                  return arr;
+                })
+              : ["No Staff Created"],
+          action: x
+        };
+      });
+      const rowSelection = {
+        onChange: (selectedRowKeys, selectedRows) => {
+          console.log(
+            `selectedRowKeys: ${selectedRowKeys}`,
+            "selectedRows: ",
+            selectedRows
+          );
+        },
+        getCheckboxProps: record => ({
+          disabled: record.name === "Disabled User", // Column configuration not to be checked
+          name: record.name
+        })
+      };
+
       return (
         <Services>
           <ContentWrap>
@@ -250,89 +381,11 @@ class CreateService extends Component {
                 <i className="material-icons"> add </i>
               </button>
             </div>
-            <TableWrapper>
-              <table>
-                <thead>
-                  <tr>
-                    {/* <th /> */}
-                    <th>Service Name</th>
-                    <th>Group</th>
-                    <th>Duration</th>
-                    <th>Retail Price</th>
-                    <th>Staff</th>
-                    <th>Description</th>
-                    <th />
-                  </tr>
-                </thead>
-                <tbody>
-                  {this.props.services.map(x => (
-                    <tr key={x.id}>
-                      {/* <td>
-                      <input
-                        type="checkbox"
-                        onChange={() => this.handleBulkActions(x)}
-                        name="selected"
-                        id={x.id}
-                      />
-                    </td> */}
-                      <td>{x.name}</td>
-                      <td>{x.group}</td>
-                      <td>
-                        {x.duration} {"minutes"}
-                      </td>
-                      <td>
-                        {"$"}
-                        {x.price}
-                      </td>
-                      <td>
-                        {x.staff_details.map(x => (
-                          <span className="multi" key={x.id}>
-                            {x.full_name}
-                          </span>
-                        ))}
-                      </td>
-                      <td>{x.description}</td>
-                      <td className="more-options dropdown-toggle">
-                        <div className="dropdown">
-                          <span
-                            className="icon-more"
-                            data-toggle="dropdown"
-                            aria-haspopup="true"
-                            aria-expanded="false"
-                          >
-                            <i className="fas fa-ellipsis-h" />
-                          </span>
-                          <div className="dropdown-menu">
-                            <a
-                              onClick={() => {
-                                this.addingStaffToService(x);
-                              }}
-                              className="dropdown-item"
-                            >
-                              Add Staff
-                            </a>
-                            <a
-                              onClick={() => {
-                                this.updateService(x);
-                              }}
-                              className="dropdown-item"
-                            >
-                              Edit
-                            </a>
-                            <a
-                              onClick={() => this.deleteService(x.id)}
-                              className="dropdown-item delete"
-                            >
-                              Delete
-                            </a>
-                          </div>
-                        </div>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </TableWrapper>
+            <Table
+              rowSelection={rowSelection}
+              columns={columns}
+              dataSource={data}
+            />
             {this.props.services.length === 0 ? (
               <NoData message="No Service Created Yet." />
             ) : null}

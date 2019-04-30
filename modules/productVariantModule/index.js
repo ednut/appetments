@@ -8,7 +8,7 @@ import {
   _delete
 } from "./productVariantServices";
 
-import { success, error } from "../alert";
+import { message } from "antd";
 import {
   GET_ALL_PRODUCT_VARIANTS,
   PRODUCT_VARIANT_ERROR,
@@ -57,13 +57,12 @@ export function createVariantRequest(data, id) {
           type: RERENDER,
           payload: true
         });
-        console.log(variant);
-        dispatch(success("variant created successfully"));
+        dispatch(message.success("variant created successfully"));
         dispatch({ type: PRODUCT_VARIANT_LOADING, payload: false });
       })
       .catch(err => {
         let e = err[Object.keys(err)[0]];
-        dispatch(error(e));
+        dispatch(message.error(e));
         dispatch({ type: PRODUCT_VARIANT_LOADING, payload: false });
         dispatch({ type: PRODUCT_VARIANT_ERROR, payload: err });
       });
@@ -84,7 +83,7 @@ export function getAllVariantsRequest(id) {
       })
       .catch(err => {
         let e = err[Object.keys(err)[0]];
-        dispatch(error(e));
+        dispatch(message.error(e));
         dispatch({ type: PRODUCT_VARIANT_LOADING, payload: false });
         dispatch({ type: PRODUCT_VARIANT_ERROR, payload: err });
       });
@@ -100,12 +99,12 @@ export function updateVariantRequest(data, id) {
           type: RERENDER,
           payload: true
         });
-        dispatch(success("variant updated successfully"));
+        dispatch(message.success("variant updated successfully"));
         dispatch({ type: PRODUCT_VARIANT_LOADING, payload: false });
       })
       .catch(err => {
         let e = err[Object.keys(err)[0]];
-        dispatch(error(e));
+        dispatch(message.error(e));
         dispatch({ type: PRODUCT_VARIANT_LOADING, payload: false });
         dispatch({ type: PRODUCT_VARIANT_ERROR, payload: err });
       });
@@ -121,12 +120,12 @@ export function activateVariantRequest(data, id) {
           type: RERENDER,
           payload: true
         });
-        dispatch(success("variant activated successfully"));
+        dispatch(message.success("variant activated successfully"));
         dispatch({ type: PRODUCT_VARIANT_LOADING, payload: false });
       })
       .catch(err => {
         let e = err[Object.keys(err)[0]];
-        dispatch(error(e));
+        dispatch(message.error(e));
         dispatch({ type: PRODUCT_VARIANT_LOADING, payload: false });
         dispatch({ type: PRODUCT_VARIANT_ERROR, payload: err });
       });
@@ -142,12 +141,12 @@ export function deactivateVariantRequest(data, id) {
           type: RERENDER,
           payload: true
         });
-        dispatch(success("variant activated successfully"));
+        dispatch(message.success("variant activated successfully"));
         dispatch({ type: PRODUCT_VARIANT_LOADING, payload: false });
       })
       .catch(err => {
         let e = err[Object.keys(err)[0]];
-        dispatch(error(e));
+        dispatch(message.error(e));
         dispatch({ type: PRODUCT_VARIANT_LOADING, payload: false });
         dispatch({ type: PRODUCT_VARIANT_ERROR, payload: err });
       });
@@ -163,12 +162,12 @@ export function adjustInventoryRequest(data, id) {
           type: RERENDER,
           payload: true
         });
-        dispatch(success("variant activated successfully"));
+        dispatch(message.success("variant activated successfully"));
         dispatch({ type: PRODUCT_VARIANT_LOADING, payload: false });
       })
       .catch(err => {
         let e = err[Object.keys(err)[0]];
-        dispatch(error(e));
+        dispatch(message.error(e));
         dispatch({ type: PRODUCT_VARIANT_LOADING, payload: false });
         dispatch({ type: PRODUCT_VARIANT_ERROR, payload: err });
       });
@@ -184,12 +183,12 @@ export function deleteVariantRequest(id) {
           type: RERENDER,
           payload: true
         });
-        dispatch(success("variant deleted successfully"));
+        dispatch(message.success("variant deleted successfully"));
         dispatch({ type: PRODUCT_VARIANT_LOADING, payload: false });
       })
       .catch(err => {
         let e = err[Object.keys(err)[0]];
-        dispatch(error(e));
+        dispatch(message.error(e));
         dispatch({ type: PRODUCT_VARIANT_LOADING, payload: false });
         dispatch({ type: PRODUCT_VARIANT_ERROR, payload: err });
       });

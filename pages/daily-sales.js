@@ -2,6 +2,7 @@ import React from "react";
 import Sales from "./sales";
 import styled from "styled-components";
 import { color, height } from "../components/styles/constant";
+import { Row, Col } from "antd";
 
 const FilterSection = styled.div`
   width: 100%;
@@ -127,8 +128,8 @@ const generateTime = () => {
 const dailySales = () => (
   <Sales>
     <FilterSection>
-      <div className="row">
-        <div className=" offset-md-8 col-md-4">
+      <Row>
+        <Col span={16} offset={8}>
           <form>
             <select name="" id="">
               <option value="">Export</option>
@@ -150,8 +151,8 @@ const dailySales = () => (
               </span>
             </div>
           </form>
-        </div>
-      </div>
+        </Col>
+      </Row>
     </FilterSection>
     <SalesWrapper>
       <div className="date-section">
@@ -161,8 +162,8 @@ const dailySales = () => (
           {(generateTime() < 10 ? "0" : "") + generateTime()}
         </div>
       </div>
-      <div className="row">
-        <div className="col-md-6">
+      <Row>
+        <Col span={12}>
           <div className="title">Transaction Summary</div>
           <table className="table">
             <thead>
@@ -214,8 +215,8 @@ const dailySales = () => (
               </tr>
             </tfoot>
           </table>
-        </div>
-        <div className="col-md-6">
+        </Col>
+        <Col span={12}>
           <div className="title">Cash Movement Summary</div>
           <table className="table">
             <thead>
@@ -265,8 +266,8 @@ const dailySales = () => (
               </tr>
             </tfoot>
           </table>
-        </div>
-      </div>
+        </Col>
+      </Row>
     </SalesWrapper>
   </Sales>
 );

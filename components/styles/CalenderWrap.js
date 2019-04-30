@@ -79,15 +79,21 @@ const CalenderWrap = styled.div`
     text-overflow: ellipsis;
     white-space: nowrap;
     padding: 0 3px;
-    text-align: center;
+    ${'' /* text-align: center; */}
     vertical-align: middle;
     font-weight: bold;
     font-size: 90%;
     min-height: 0;
     border-bottom: 1px solid #ddd;
+    margin-right: 0.7rem;
+    display: flex;
+    align-items: flex-end;
+    padding-bottom: 10px;
+    background-color: transparent;
   }
   .rbc-header + .rbc-header {
-    border-left: 1px solid #ddd;
+    ${'' /* border-left: 1px solid #ddd; */}
+    margin-right: 0.7rem;
   }
   .rbc-rtl .rbc-header + .rbc-header {
     border-left-width: 0;
@@ -98,6 +104,7 @@ const CalenderWrap = styled.div`
   .rbc-header > a:visited {
     color: inherit;
     text-decoration: none;
+    font-weight: 400;
   }
   .rbc-row-content {
     position: relative;
@@ -108,7 +115,11 @@ const CalenderWrap = styled.div`
     z-index: 4;
   }
   .rbc-today {
-    background-color: #eaf6ff;
+    ${'' /* background-color: #eaf6ff; */}
+    background-color: #fff8e9;
+  }
+  .rbc-header > .rbc-today {
+    background-color: transparent !important;
   }
   .rbc-toolbar {
     display: -webkit-flex;
@@ -123,7 +134,7 @@ const CalenderWrap = styled.div`
     -webkit-align-items: center;
     -ms-flex-align: center;
     align-items: center;
-    margin-bottom: 10px;
+    margin-bottom: 3rem;
     font-size: 16px;
   }
   .rbc-toolbar .rbc-toolbar-label {
@@ -355,9 +366,11 @@ const CalenderWrap = styled.div`
     -webkit-flex: 1 0 0%;
     -ms-flex: 1 0 0%;
     flex: 1 0 0%;
+    margin-right: 0.7rem;
   }
   .rbc-day-bg + .rbc-day-bg {
-    border-left: 1px solid #ddd;
+    ${'' /* border-left: 1px solid #ddd; */}
+    ${'' /* margin-right: 2rem; */}
   }
   .rbc-rtl .rbc-day-bg + .rbc-day-bg {
     border-left-width: 0;
@@ -455,8 +468,9 @@ const CalenderWrap = styled.div`
     flex: 1;
   }
   .rbc-timeslot-group {
-    border-bottom: 1px solid #ddd;
-    min-height: 40px;
+    ${'' /* border-bottom: 1px solid #ddd; */}
+    ${'' /* margin-right: 2rem; */}
+    min-height: 70px;
     display: -webkit-flex;
     display: -ms-flexbox;
     display: flex;
@@ -475,13 +489,15 @@ const CalenderWrap = styled.div`
   }
   .rbc-day-slot {
     position: relative;
+    margin-right: 0.7rem;
   }
   .rbc-day-slot .rbc-events-container {
     bottom: 0;
     left: 0;
     position: absolute;
     right: 0;
-    margin-right: 10px;
+    ${'' /* margin-right: 10px; */}
+    ${'' /* margin-right: 2rem; */}
     top: 0;
   }
   .rbc-day-slot .rbc-events-container.rbc-is-rtl {
@@ -580,6 +596,7 @@ const CalenderWrap = styled.div`
     z-index: 10;
     position: absolute;
     background-color: rgba(0, 0, 0, 0.5);
+    ${'' /* background-color: #cce7ff; */}
     color: white;
     font-size: 75%;
     width: 100%;
@@ -599,7 +616,7 @@ const CalenderWrap = styled.div`
     -ms-flex: 1;
     flex: 1;
     width: 100%;
-    border: 1px solid #ddd;
+  border-top: 1px solid #ddd;
     min-height: 0;
   }
   .rbc-time-view .rbc-time-gutter {
@@ -620,7 +637,11 @@ const CalenderWrap = styled.div`
   }
   .rbc-time-view .rbc-row {
     box-sizing: border-box;
-    min-height: 20px;
+    min-height: 45px;
+  }
+  .rbc-time-view .rbc-row:last-child {
+
+    border-bottom: 1px solid #ddd;
   }
   .rbc-time-header {
     display: -webkit-flex;
@@ -660,7 +681,7 @@ const CalenderWrap = styled.div`
     -webkit-flex-direction: column;
     -ms-flex-direction: column;
     flex-direction: column;
-    border-left: 1px solid #ddd;
+    ${'' /* border-left: 1px solid #ddd; */}
   }
   .rbc-rtl .rbc-time-header-content {
     border-left-width: 0;
@@ -677,7 +698,7 @@ const CalenderWrap = styled.div`
     -ms-flex-align: start;
     align-items: flex-start;
     width: 100%;
-    border-top: 2px solid #ddd;
+    ${'' /* border-top: 2px solid #ddd; */}
     overflow-y: auto;
     position: relative;
   }
@@ -687,7 +708,8 @@ const CalenderWrap = styled.div`
     flex: none;
   }
   .rbc-time-content > * + * > * {
-    border-left: 1px solid #ddd;
+    ${'' /* border-left: 1px solid #ddd; */}
+    border-bottom: 1px solid #ddd;
   }
   .rbc-rtl .rbc-time-content > * + * > * {
     border-left-width: 0;

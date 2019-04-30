@@ -15,6 +15,7 @@ import CreateStaffModal from "./staff/createStaffModal";
 import UpdateStaffModal from "./staff/updateStaffModal";
 import NoData from "../components/NoData";
 import TableWrapper from "../components/styles/TableWrap";
+import { Table, Divider } from "antd";
 
 const StaffContentWrap = styled.div`
   position: relative;
@@ -27,7 +28,7 @@ const StaffContentWrap = styled.div`
     height: 6rem;
     border-radius: 50%;
     border: none;
-    background-color: #083e8d;
+    background-color: #17977c;
     color: #fff;
     animation: moveInBottom 1s linear;
     transition: all 0.2s;
@@ -139,6 +140,69 @@ class StaffMembers extends Component {
 
   render() {
     if (this.props.staffs !== undefined) {
+      const columns = [
+        {
+          title: "First Name",
+          dataIndex: "first_name",
+          key: "first_name"
+        },
+        {
+          title: "Last Name",
+          dataIndex: "last_name",
+          key: "last_name"
+        },
+        {
+          title: "Email",
+          dataIndex: "email",
+          key: "email"
+        },
+        {
+          title: "Action",
+          key: "action",
+          dataIndex: "action",
+          render: (x, record) => (
+            <span>
+              <a
+                onClick={() => {
+                  this.updateStaff(x);
+                }}
+                href="javascript:;"
+              >
+                Edit
+              </a>
+
+              <Divider type="vertical" />
+              <a onClick={() => this.deleteStaff(x.id)} href="javascript:;">
+                Delete
+              </a>
+            </span>
+          )
+        }
+      ];
+
+      const data = this.props.staffs.map(function(x) {
+        return {
+          key: x.id,
+          first_name: x.first_name,
+          last_name: x.last_name,
+          email: x.email,
+          action: x
+        };
+      });
+      const rowSelection = {
+        onChange: (selectedRowKeys, selectedRows) => {
+          console.log(
+            `selectedRowKeys: ${selectedRowKeys}`,
+            "selectedRows: ",
+            selectedRows
+          );
+        },
+        getCheckboxProps: record => ({
+          disabled: record.name === "Disabled User", // Column configuration not to be checked
+          name: record.name
+        })
+      };
+
       return (
         <Staff>
           <StaffContentWrap>
@@ -174,55 +238,11 @@ class StaffMembers extends Component {
                 <i className="material-icons"> add </i>
               </button>
             </div>
-            <TableWrapper>
-              <table>
-                <thead>
-                  <tr>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>Email</th>
-                    <th />
-                  </tr>
-                </thead>
-                <tbody>
-                  {this.props.staffs.map(x => (
-                    <tr key={x.id}>
-                      <td>{x.first_name}</td>
-                      <td>{x.last_name}</td>
-                      <td>{x.email}</td>
-                      <td className="more-options dropdown-toggle">
-                        <div className="dropdown">
-                          <span
-                            className="icon-more"
-                            data-toggle="dropdown"
-                            aria-haspopup="true"
-                            aria-expanded="false"
-                          >
-                            <i className="fas fa-ellipsis-h" />
-                          </span>
-                          <div className="dropdown-menu">
-                            <a
-                              onClick={() => {
-                                this.updateStaff(x);
-                              }}
-                              className="dropdown-item"
-                            >
-                              Edit
-                            </a>
-                            <a
-                              onClick={() => this.deleteStaff(x.id)}
-                              className="dropdown-item delete"
-                            >
-                              Delete
-                            </a>
-                          </div>
-                        </div>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </TableWrapper>
+            <Table
+              rowSelection={rowSelection}
+              columns={columns}
+              dataSource={data}
+            />
             {this.props.staffs.length === 0 ? (
               <NoData message="No Staff Created Yet" />
             ) : null}

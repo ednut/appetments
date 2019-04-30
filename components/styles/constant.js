@@ -1,6 +1,6 @@
 export const color = {
-  brandColor: "#083e8d",
-  // brandColor: "#33D0A2",
+  // brandColor: "#083e8d",
+  brandColor: "#17977c",
   bodyBackground: "#F3F4F8",
   whiteColor: "#ffffff",
   blackColor: "#000000",

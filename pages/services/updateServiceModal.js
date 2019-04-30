@@ -4,6 +4,8 @@ import FormInput from "../../components/styles/FormInput";
 import Button from "../../components/styles/Button";
 import { shadowStyle, color, height } from "../../components/styles/constant";
 import styled from "styled-components";
+import { Row, Col } from "antd";
+import FormWrap from "../../components/styles/FormWrap";
 
 const ModalWrap = styled.div`
   width: 55rem;
@@ -19,6 +21,9 @@ const ModalWrap = styled.div`
   footer {
     height: 5rem;
     width: 100%;
+    button {
+      float: right;
+    }
   }
 `;
 
@@ -41,9 +46,9 @@ class UpdateServiceModal extends Component {
           <div className="title">{this.props.title}</div>
           <FormInput>
             <form onSubmit={this.props.handleSubmit}>
-              <div className="row">
-                <div className="col-md-12">
-                  <div className="form-wrap">
+              <Row gutter={16}>
+                <Col span={24}>
+                  <FormWrap>
                     <label htmlFor="">Group</label>
                     <select
                       name="group"
@@ -62,10 +67,10 @@ class UpdateServiceModal extends Component {
                     {submitted && !group && (
                       <div className="error">Group is required</div>
                     )}
-                  </div>
-                </div>
-                <div className="col-md-6">
-                  <div className="form-wrap">
+                  </FormWrap>
+                </Col>
+                <Col span={12}>
+                  <FormWrap>
                     <label htmlFor="">Duration</label>
                     <select
                       name="duration"
@@ -85,10 +90,10 @@ class UpdateServiceModal extends Component {
                     {submitted && !duration && (
                       <div className="error">Duration is required</div>
                     )}
-                  </div>
-                </div>
-                <div className="col-md-6">
-                  <div className="form-wrap">
+                  </FormWrap>
+                </Col>
+                <Col span={12}>
+                  <FormWrap>
                     <label htmlFor="">Service Name</label>
                     <input
                       type="text"
@@ -100,10 +105,10 @@ class UpdateServiceModal extends Component {
                     {submitted && !name && (
                       <div className="error">Service Name is required</div>
                     )}
-                  </div>
-                </div>
-                <div className="col-md-6">
-                  <div className="form-wrap">
+                  </FormWrap>
+                </Col>
+                <Col span={12}>
+                  <FormWrap>
                     <label htmlFor="">Retail Price</label>
                     <input
                       type="number"
@@ -115,10 +120,10 @@ class UpdateServiceModal extends Component {
                     {submitted && !price && (
                       <div className="error">Price is required</div>
                     )}
-                  </div>
-                </div>
-                <div className="col-md-6">
-                  <div className="form-wrap">
+                  </FormWrap>
+                </Col>
+                <Col span={12}>
+                  <FormWrap>
                     <label htmlFor="">Staff</label>
                     <select
                       name="staff"
@@ -135,10 +140,10 @@ class UpdateServiceModal extends Component {
                           ))
                         : null}
                     </select>
-                  </div>
-                </div>
-                <div className="col-md-12">
-                  <div className="form-wrap">
+                  </FormWrap>
+                </Col>
+                <Col span={24}>
+                  <FormWrap>
                     <label htmlFor="">Description</label>
                     <textarea
                       name="description"
@@ -149,9 +154,9 @@ class UpdateServiceModal extends Component {
                     {submitted && !description && (
                       <div className="error">Description is required</div>
                     )}
-                  </div>
-                </div>
-              </div>
+                  </FormWrap>
+                </Col>
+              </Row>
 
               <footer>
                 <Button

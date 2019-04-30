@@ -5,6 +5,8 @@ import FormInput from "../../components/styles/FormInput";
 import Button from "../../components/styles/Button";
 import { color } from "../../components/styles/constant";
 import styled from "styled-components";
+import { Row, Col } from "antd";
+import FormWrap from "../../components/styles/FormWrap";
 
 const ModalWrap = styled.div`
   width: 55rem;
@@ -20,6 +22,9 @@ const ModalWrap = styled.div`
   footer {
     height: 5rem;
     width: 100%;
+    button {
+      float: right;
+    }
   }
 `;
 
@@ -40,12 +45,12 @@ class AddStaffToService extends Component {
           <div className="title">{this.props.title}</div>
           <FormInput>
             <form onSubmit={this.props.handleSubmit}>
-              <div className="row">
-                <div className="col-md-12">
-                  <div className="form-wrap">
+              <Row>
+                <Col span={24}>
+                  <FormWrap>
                     <label htmlFor="">Staff</label>
                     <select name="staff" onChange={this.props.handleChange}>
-                      <option value="">---- Select Staff ----</option>
+                      <option value="" />
                       {this.props.staff
                         ? this.props.staff.map(x => (
                             <option key={x.id} value={`${x.id}`}>
@@ -62,9 +67,9 @@ class AddStaffToService extends Component {
                     {submitted && !staff && (
                       <div className="error">Staff is required</div>
                     )}
-                  </div>
-                </div>
-              </div>
+                  </FormWrap>
+                </Col>
+              </Row>
 
               <footer>
                 <Button

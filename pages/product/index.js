@@ -33,25 +33,7 @@ const ProductNav = styled.div`
 
 class Product extends Component {
   render() {
-    return (
-      <AdminContainer>
-        <ProductNav>
-          <ul>
-            <li>
-              <Link activeClassName="active" href="/product-categories">
-                <a>Product Categories</a>
-              </Link>
-            </li>
-            <li>
-              <Link activeClassName="active" href="/create-products">
-                <a>Products</a>
-              </Link>
-            </li>
-          </ul>
-        </ProductNav>
-        {this.props.children}
-      </AdminContainer>
-    );
+    return <AdminContainer>{this.props.children}</AdminContainer>;
   }
 }
 

@@ -8,7 +8,7 @@ import {
   _delete
 } from "./serviceServices";
 
-import { success, error } from "../alert";
+import { message } from "antd";
 import {
   GET_SERVICE,
   GET_ALL_SERVICE,
@@ -81,12 +81,12 @@ export function createServiceRequest(data) {
           payload: true
         });
         console.log(service);
-        dispatch(success("Service created successfully"));
+        dispatch(message.success("Service created successfully"));
         dispatch({ type: SERVICE_LOADING, payload: false });
       })
       .catch(err => {
         let e = err[Object.keys(err)[0]];
-        dispatch(error(e));
+        dispatch(message.error(e));
         dispatch({ type: SERVICE_LOADING, payload: false });
         dispatch({ type: SERVICE_ERROR, payload: err });
       });
@@ -118,7 +118,7 @@ export function getAllServiceRequest() {
       })
       .catch(err => {
         let e = err[Object.keys(err)[0]];
-        dispatch(error(e));
+        dispatch(message.error(e));
         dispatch({ type: SERVICE_LOADING, payload: false });
         dispatch({ type: SERVICE_ERROR, payload: err });
       });
@@ -134,12 +134,12 @@ export function updateServiceRequest(data, id) {
           type: GET_SERVICE,
           payload: true
         });
-        dispatch(success("Service updated successfully"));
+        dispatch(message.success("Service updated successfully"));
         dispatch({ type: SERVICE_LOADING, payload: false });
       })
       .catch(err => {
         let e = err[Object.keys(err)[0]];
-        dispatch(error(e));
+        dispatch(message.error(e));
         dispatch({ type: SERVICE_LOADING, payload: false });
         dispatch({ type: SERVICE_ERROR, payload: err });
       });
@@ -156,12 +156,12 @@ export function addStaffRequest(data) {
           payload: true
         });
         console.log(staff);
-        dispatch(success("Staff Added successfully"));
+        dispatch(message.success("Staff Added successfully"));
         dispatch({ type: SERVICE_LOADING, payload: false });
       })
       .catch(err => {
         let e = err[Object.keys(err)[0]];
-        dispatch(error(e));
+        dispatch(message.error(e));
         dispatch({ type: SERVICE_LOADING, payload: false });
         dispatch({ type: STAFF_ADDING_ERROR, payload: err });
       });
@@ -177,13 +177,12 @@ export function removeStaffRequest(data) {
           type: STAFF_REMOVED,
           payload: true
         });
-        console.log(staff);
-        dispatch(success("Staff Removed successfully"));
+        dispatch(message.success("Staff Removed successfully"));
         dispatch({ type: SERVICE_LOADING, payload: false });
       })
       .catch(err => {
         let e = err[Object.keys(err)[0]];
-        dispatch(error(e));
+        dispatch(message.error(e));
         dispatch({ type: SERVICE_LOADING, payload: false });
         dispatch({ type: STAFF_ADDING_ERROR, payload: err });
       });
@@ -199,12 +198,12 @@ export function deleteServiceRequest(id) {
           type: GET_SERVICE,
           payload: true
         });
-        dispatch(success("Service deleted successfully"));
+        dispatch(message.success("Service deleted successfully"));
         dispatch({ type: SERVICE_LOADING, payload: false });
       })
       .catch(err => {
         let e = err[Object.keys(err)[0]];
-        dispatch(error(e));
+        dispatch(message.error(e));
         dispatch({ type: SERVICE_LOADING, payload: false });
         dispatch({ type: SERVICE_ERROR, payload: err });
       });
@@ -220,12 +219,12 @@ export function getServiceByIdRequest(id) {
           type: SERVICE,
           payload: service
         });
-        dispatch(success("Service loaded successfully"));
+        dispatch(message.success("Service loaded successfully"));
         dispatch({ type: SERVICE_LOADING, payload: false });
       })
       .catch(err => {
         let e = err[Object.keys(err)[0]];
-        dispatch(error(e));
+        dispatch(message.error(e));
         dispatch({ type: SERVICE_LOADING, payload: false });
         dispatch({ type: SERVICE_ERROR, payload: err });
       });

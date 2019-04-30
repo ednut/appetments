@@ -1,3 +1,4 @@
+export const Users = "https://azultech.net/users/";
 export const SignupAPI = "https://azultech.net/users/";
 export const LoginAPI = "https://azultech.net/login/";
 export const ComapanyAPI = "https://azultech.net/company/";
@@ -12,3 +13,5 @@ export const RemoveStaffAPI = "https://azultech.net/services/remove-staff/";
 export const ProductVariantAPi = "https://azultech.net/product-variants/";
 export const ClientAPi = "https://azultech.net/customers/";
 export const OrderAPi = "https://azultech.net/orders/";
+export const PetAPI = "https://azultech.net/pets/";
+export const PetCategoriesAPI = "https://azultech.net/pet-categories/";

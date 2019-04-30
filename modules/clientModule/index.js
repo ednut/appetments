@@ -12,7 +12,7 @@ import {
   _deletePet
 } from "./clientServices";
 
-import { success, error } from "../alert";
+import { message } from "antd";
 import {
   CLIENT_CREATED,
   GET_CLIENT,
@@ -72,12 +72,12 @@ export function createClientRequest(data) {
           type: CLIENT_CREATED,
           payload: true
         });
-        dispatch(success("Client created successfully"));
+        dispatch(message.success("Client created successfully"));
         dispatch({ type: LOADING_CLIENT, payload: false });
       })
       .catch(err => {
         let e = err[Object.keys(err)[0]];
-        dispatch(error(e));
+        dispatch(message.error(e));
         dispatch({ type: LOADING_CLIENT, payload: false });
         dispatch({ type: CLIENT_ERROR, payload: err });
       });
@@ -98,7 +98,7 @@ export function getAllClientsRequest() {
       })
       .catch(err => {
         let e = err[Object.keys(err)[0]];
-        dispatch(error(e));
+        dispatch(message.error(e));
         dispatch({ type: LOADING_CLIENT, payload: false });
         dispatch({ type: CLIENT_ERROR, payload: err });
       });
@@ -119,7 +119,7 @@ export function getClientsByIdRequest(id) {
       })
       .catch(err => {
         let e = err[Object.keys(err)[0]];
-        dispatch(error(e));
+        dispatch(message.error(e));
         dispatch({ type: LOADING_CLIENT, payload: false });
         dispatch({ type: CLIENT_ERROR, payload: err });
       });
@@ -135,12 +135,12 @@ export function updateClientRequest(data, id) {
           type: CLIENT_CREATED,
           payload: true
         });
-        dispatch(success("Client updated successfully"));
+        dispatch(message.success("Client updated successfully"));
         dispatch({ type: LOADING_CLIENT, payload: false });
       })
       .catch(err => {
         let e = err[Object.keys(err)[0]];
-        dispatch(error(e));
+        dispatch(message.error(e));
         dispatch({ type: LOADING_CLIENT, payload: false });
         dispatch({ type: CLIENT_ERROR, payload: err });
       });
@@ -156,12 +156,12 @@ export function deleteClientRequest(id) {
           type: CLIENT_CREATED,
           payload: true
         });
-        dispatch(success("Client deleted successfully"));
+        dispatch(message.success("Client deleted successfully"));
         dispatch({ type: LOADING_CLIENT, payload: false });
       })
       .catch(err => {
         let e = err[Object.keys(err)[0]];
-        dispatch(error(e));
+        dispatch(message.error(e));
         dispatch({ type: LOADING_CLIENT, payload: false });
         dispatch({ type: CLIENT_ERROR, payload: err });
       });
@@ -177,12 +177,12 @@ export function activateClientRequest(id) {
           type: CLIENT_CREATED,
           payload: true
         });
-        dispatch(success("Client activated successfully"));
+        dispatch(message.success("Client activated successfully"));
         dispatch({ type: LOADING_CLIENT, payload: false });
       })
       .catch(err => {
         let e = err[Object.keys(err)[0]];
-        dispatch(error(e));
+        dispatch(message.error(e));
         dispatch({ type: LOADING_CLIENT, payload: false });
         dispatch({ type: CLIENT_ERROR, payload: err });
       });
@@ -198,12 +198,12 @@ export function deactivateClientRequest(id) {
           type: CLIENT_CREATED,
           payload: true
         });
-        dispatch(success("Client deactivated successfully"));
+        dispatch(message.success("Client deactivated successfully"));
         dispatch({ type: LOADING_CLIENT, payload: false });
       })
       .catch(err => {
         let e = err[Object.keys(err)[0]];
-        dispatch(error(e));
+        dispatch(message.error(e));
         dispatch({ type: LOADING_CLIENT, payload: false });
         dispatch({ type: CLIENT_ERROR, payload: err });
       });
@@ -219,12 +219,12 @@ export function updatePetsRequest(data, id) {
           type: CLIENT_CREATED,
           payload: true
         });
-        dispatch(success("Pet updated successfully"));
+        dispatch(message.success("Pet updated successfully"));
         dispatch({ type: LOADING_CLIENT, payload: false });
       })
       .catch(err => {
         let e = err[Object.keys(err)[0]];
-        dispatch(error(e));
+        dispatch(message.error(e));
         dispatch({ type: LOADING_CLIENT, payload: false });
         dispatch({ type: CLIENT_ERROR, payload: err });
       });
@@ -240,12 +240,12 @@ export function addPetToClientRequest(data, id) {
           type: CLIENT_CREATED,
           payload: true
         });
-        dispatch(success("Pet added successfully"));
+        dispatch(message.success("Pet added successfully"));
         dispatch({ type: LOADING_CLIENT, payload: false });
       })
       .catch(err => {
         let e = err[Object.keys(err)[0]];
-        dispatch(error(e));
+        dispatch(message.error(e));
         dispatch({ type: LOADING_CLIENT, payload: false });
         dispatch({ type: CLIENT_ERROR, payload: err });
       });
@@ -266,7 +266,7 @@ export function getPetByIdRequest(id) {
       })
       .catch(err => {
         let e = err[Object.keys(err)[0]];
-        dispatch(error(e));
+        dispatch(message.error(e));
         dispatch({ type: LOADING_CLIENT, payload: false });
         dispatch({ type: CLIENT_ERROR, payload: err });
       });
@@ -282,12 +282,12 @@ export function deletePetRequest(id) {
           type: CLIENT_CREATED,
           payload: true
         });
-        dispatch(success("Pet deleted successfully"));
+        dispatch(message.success("Pet deleted successfully"));
         dispatch({ type: LOADING_CLIENT, payload: false });
       })
       .catch(err => {
         let e = err[Object.keys(err)[0]];
-        dispatch(error(e));
+        dispatch(message.error(e));
         dispatch({ type: LOADING_CLIENT, payload: false });
         dispatch({ type: CLIENT_ERROR, payload: err });
       });

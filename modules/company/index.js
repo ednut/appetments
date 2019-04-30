@@ -13,8 +13,9 @@ import {
   addCloseDateToCompany,
   removeCloseDateFromCompany
 } from "../../services/userService";
+import Cookies from "js-cookie";
 import Router from "next/router";
-import { success, error } from "../alert";
+import { message } from "antd";
 
 const initialState = {};
 
@@ -63,15 +64,16 @@ export function createCompanyRequest(postData) {
           type: COMPANY_SUCCESS,
           payload: company
         });
-        localStorage.setItem("companyID", JSON.stringify(company.id));
-        dispatch(success("Company created successfully"));
+        Cookies.set("companyID", JSON.stringify(company.id), {
+          expires: 1
+        });
+        dispatch(message.success("Company created successfully"));
         dispatch({ type: COMPANY_LOADING, payload: false });
         Router.push("/dashboard");
-        debugger;
       })
       .catch(err => {
         let e = err[Object.keys(err)[0]];
-        dispatch(error(e));
+        dispatch(message.error(e));
         dispatch({ type: COMPANY_LOADING, payload: false });
         dispatch({ type: COMPANY_ERROR, payload: err });
       });
@@ -87,12 +89,12 @@ export function updateCompanyModule(data, id) {
           type: COMPANY_UPDATED_SUCCESSFULLY,
           payload: true
         });
-        dispatch(success("Updated Successfully"));
+        dispatch(message.success("Updated Successfully"));
         dispatch({ type: COMPANY_LOADING, payload: false });
       })
       .catch(err => {
         let e = err[Object.keys(err)[0]];
-        dispatch(error(e));
+        dispatch(message.error(e));
         dispatch({ type: COMPANY_LOADING, payload: false });
         dispatch({ type: COMPANY_ERROR, payload: err });
       });
@@ -116,7 +118,7 @@ export function getAllCompanyModule() {
       })
       .catch(err => {
         let e = err[Object.keys(err)[0]];
-        dispatch(error(e));
+        dispatch(message.error(e));
         dispatch({ type: COMPANY_LOADING, payload: false });
         dispatch({ type: COMPANY_ERROR, payload: err });
       });

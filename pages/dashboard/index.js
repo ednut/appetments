@@ -2,9 +2,10 @@ import React, { Component } from "react";
 import AdminContainer from "../../components/AdminContainer";
 import styled from "styled-components";
 import { shadowStyle, color, height } from "../../components/styles/constant";
+import { Row, Col } from "antd";
 
 const DashboardCard = styled.div`
-  box-shadow: ${shadowStyle.lightShadow};
+  /* box-shadow: ${shadowStyle.lightShadow}; */
   background-color: ${color.whiteColor};
   padding: 2rem;
   margin-bottom: 3rem;
@@ -47,8 +48,8 @@ class Dashboard extends Component {
   render() {
     return (
       <AdminContainer>
-        <div className="row">
-          <div className="col-md-6">
+        <Row gutter={32}>
+          <Col span={12}>
             <DashboardCard>
               <div className="title">Recent Sales</div>
               <div className="no-data">
@@ -61,9 +62,8 @@ class Dashboard extends Component {
                 </div>
               </div>
             </DashboardCard>
-          </div>
-
-          <div className="col-md-6">
+          </Col>
+          <Col span={12}>
             <DashboardCard>
               <div className="title">Upcoming Appointment</div>
               <div className="no-data">
@@ -76,9 +76,8 @@ class Dashboard extends Component {
                 </div>
               </div>
             </DashboardCard>
-          </div>
-
-          <div className="col-md-6">
+          </Col>
+          <Col span={12}>
             <DashboardCard>
               <div className="title"> Appointment Activities</div>
               <div className="no-data">
@@ -91,9 +90,8 @@ class Dashboard extends Component {
                 </div>
               </div>
             </DashboardCard>
-          </div>
-
-          <div className="col-md-6">
+          </Col>
+          <Col span={12}>
             <DashboardCard>
               <div className="title"> Today's Next Appointment</div>
               <div className="no-data">
@@ -106,9 +104,8 @@ class Dashboard extends Component {
                 </div>
               </div>
             </DashboardCard>
-          </div>
-
-          <div className="col-md-6">
+          </Col>
+          <Col span={12}>
             <DashboardCard>
               <div className="title"> Top Service</div>
               <div className="no-data">
@@ -121,9 +118,8 @@ class Dashboard extends Component {
                 </div>
               </div>
             </DashboardCard>
-          </div>
-
-          <div className="col-md-6">
+          </Col>
+          <Col span={12}>
             <DashboardCard>
               <div className="title"> Top Staff</div>
               <div className="no-data">
@@ -136,8 +132,8 @@ class Dashboard extends Component {
                 </div>
               </div>
             </DashboardCard>
-          </div>
-        </div>
+          </Col>
+        </Row>
       </AdminContainer>
     );
   }

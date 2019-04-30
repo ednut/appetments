@@ -20,6 +20,7 @@ import AddStaffToLocation from "./addStaffToLocationModal";
 import styled from "styled-components";
 import { color, height } from "../../components/styles/constant";
 import TableWrapper from "../../components/styles/TableWrap";
+import { Table, Divider, Tag } from "antd";
 
 const ContentWrap = styled.div`
   .action-wrap {
@@ -31,7 +32,7 @@ const ContentWrap = styled.div`
     height: 6rem;
     border-radius: 50%;
     border: none;
-    background-color: #083e8d;
+    background-color: #17977c;
     color: #fff;
     animation: moveInBottom 1s linear;
     transition: all 0.2s;
@@ -47,6 +48,11 @@ const ContentWrap = styled.div`
     }
     &:hover {
       transform: translateY(-0.3rem);
+    }
+  }
+  table {
+    td:nth-child(2) {
+      width: 30rem;
     }
   }
 `;
@@ -222,6 +228,140 @@ class Location extends Component {
 
   render() {
     if (this.props.locations !== undefined) {
+      const columns = [
+        {
+          title: "Location",
+          dataIndex: "location",
+          key: "location",
+          textWrap: "word-break"
+        },
+        {
+          title: "Contact Email",
+          dataIndex: "contact_email",
+          key: "contact_email"
+        },
+        {
+          title: "Staff",
+          key: "staff",
+          dataIndex: "staff",
+          render: staffs => (
+            <span>
+              {staffs.map(x => {
+                return (
+                  <Tag key={x}>
+                    {x !== "No Staff Created" ? (
+                      <span
+                        onClick={() => {
+                          this.updatePet(x);
+                        }}
+                      >
+                        {x}
+                      </span>
+                    ) : (
+                      <span>{x}</span>
+                    )}
+
+                    {x !== "No Staff Created" ? (
+                      <span
+                        onClick={() => this.deletePet(x.id)}
+                        className="icon"
+                        style={{ marginLeft: "8px" }}
+                      >
+                        <i className="fas fa-times" />
+                      </span>
+                    ) : null}
+                  </Tag>
+                );
+              })}
+            </span>
+          )
+        },
+        {
+          title: "Zip Code",
+          dataIndex: "zip_code",
+          key: "zip_code"
+        },
+        {
+          title: "City",
+          dataIndex: "city",
+          key: "city"
+        },
+        {
+          title: "State",
+          dataIndex: "state",
+          key: "state"
+        },
+        {
+          title: "Action",
+          key: "action",
+          dataIndex: "action",
+          render: (x, record) => (
+            <span>
+              <a
+                onClick={() => {
+                  this.addingStaffToLocation(x);
+                }}
+                href="javascript:;"
+              >
+                Add Staff
+              </a>
+              <Divider type="vertical" />
+              <a
+                onClick={() => {
+                  this.updateLocation(x);
+                }}
+                href="javascript:;"
+              >
+                Edit
+              </a>
+
+              <Divider type="vertical" />
+              <a onClick={() => this.deleteLocation(x.id)} href="javascript:;">
+                Delete
+              </a>
+            </span>
+          )
+        }
+      ];
+      const data = this.props.locations.map(function(x) {
+        return {
+          key: x.id,
+          location: ` ${x.location_name}
+          ${x.address}
+          ${x.contact_number}`,
+          contact_email: x.contact_email,
+          zip_code: x.zip_code,
+          city: x.city,
+          state: x.state,
+          staff:
+            x.staff.map(function(x) {
+              let arr = [];
+              arr.push(`${x.first_name} ${x.last_name}`);
+              return arr;
+            }).length > 0
+              ? x.staff.map(function(x) {
+                  let arr = [];
+                  arr.push(`${x.first_name} ${x.last_name}`);
+                  return arr;
+                })
+              : ["No Staff Created"],
+          action: x
+        };
+      });
+      const rowSelection = {
+        onChange: (selectedRowKeys, selectedRows) => {
+          console.log(
+            `selectedRowKeys: ${selectedRowKeys}`,
+            "selectedRows: ",
+            selectedRows
+          );
+        },
+        getCheckboxProps: record => ({
+          disabled: record.name === "Disabled User", // Column configuration not to be checked
+          name: record.name
+        })
+      };
+
       return (
         <AdminContainer>
           <ContentWrap>
@@ -266,91 +406,11 @@ class Location extends Component {
                 <i className="material-icons"> add </i>
               </button>
             </div>
-            <TableWrapper>
-              <table>
-                <thead>
-                  <tr>
-                    <th>Location</th>
-                    {/* <th>Contact Number</th> */}
-                    <th>Contact Email</th>
-                    <th>Staff</th>
-                    {/* <th>Address</th> */}
-                    <th>Zip Code</th>
-                    <th>City</th>
-                    <th>State</th>
-
-                    <th />
-                  </tr>
-                </thead>
-                <tbody>
-                  {this.props.locations.map(x => (
-                    <tr key={x.id}>
-                      <td style={{ width: "30%" }}>
-                        <strong>{x.location_name}</strong>
-                        <br />
-                        {x.address}
-                        <br />
-                        {x.contact_number}
-                      </td>
-                      <td>{x.contact_email}</td>
-                      <td style={{ width: "25%" }}>
-                        {x.staff.length > 0 ? (
-                          x.staff.map(staff => (
-                            <span key={staff.id} className="multi">
-                              {staff.first_name} {staff.last_name}
-                            </span>
-                          ))
-                        ) : (
-                          <span className="red">
-                            <strong>No staff assigned to location</strong>
-                          </span>
-                        )}
-                      </td>
-                      <td>{x.zip_code}</td>
-                      <td>{x.city}</td>
-                      <td>{x.state}</td>
-
-                      <td className="more-options dropdown-toggle">
-                        <div className="dropdown">
-                          <span
-                            className="icon-more"
-                            data-toggle="dropdown"
-                            aria-haspopup="true"
-                            aria-expanded="false"
-                          >
-                            <i className="fas fa-ellipsis-h" />
-                          </span>
-                          <div className="dropdown-menu">
-                            <a
-                              onClick={() => {
-                                this.addingStaffToLocation(x);
-                              }}
-                              className="dropdown-item"
-                            >
-                              Add Staff
-                            </a>
-                            <a
-                              onClick={() => {
-                                this.updateLocation(x);
-                              }}
-                              className="dropdown-item"
-                            >
-                              Edit
-                            </a>
-                            <a
-                              onClick={() => this.deleteLocation(x.id)}
-                              className="dropdown-item delete"
-                            >
-                              Delete
-                            </a>
-                          </div>
-                        </div>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </TableWrapper>
+            <Table
+              rowSelection={rowSelection}
+              columns={columns}
+              dataSource={data}
+            />
             {this.props.locations && this.props.locations.length < 0
               ? "No data"
               : null}

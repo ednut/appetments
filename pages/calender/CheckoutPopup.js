@@ -85,7 +85,8 @@ class CheckoutPopup extends Component {
                     {checkout &&
                       checkout.services.map(x => (
                         <tr key={x.id}>
-                          <td>{moment(x.start_time).format("h:mm")}</td>
+                          {console.log(x.start_time)}
+                          <td>{moment(x.start_time).format("h:mm a")}</td>
                           <td>
                             {x.service_details.name}
                             <span className="caption">{x.duration} min</span>
@@ -112,8 +113,8 @@ class CheckoutPopup extends Component {
                 <div className="history">
                   <div className="title">Appointment History</div>
                   <div className="booked">
-                    Booked by {this.props.company.groomer.first_name}{" "}
-                    {this.props.company.groomer.last_name}, on{" "}
+                    {/* Booked by {this.props.company.groomer.first_name}{" "} */}
+                    {/* {this.props.company.groomer.last_name}, on{" "} */}
                     {moment(checkout.start).format("LLLL")}
                   </div>
                 </div>

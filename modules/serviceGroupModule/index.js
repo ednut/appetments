@@ -5,7 +5,7 @@ import {
   _delete
 } from "./serviceGroupServices";
 
-import { success, error } from "../alert";
+import { message } from "antd";
 import {
   GET_SERVICE_GROUP,
   GET_ALL_SERVICE_GROUPS,
@@ -55,12 +55,12 @@ export function createServiceGroupRequest(data) {
           payload: true
         });
         console.log(serviceGroup);
-        dispatch(success("ServiceGroup created successfully"));
+        dispatch(message.success("ServiceGroup created successfully"));
         dispatch({ type: SERVICE_GROUP_LOADING, payload: false });
       })
       .catch(err => {
         let e = err[Object.keys(err)[0]];
-        dispatch(error(e));
+        dispatch(message.error(e));
         dispatch({ type: SERVICE_GROUP_LOADING, payload: false });
         dispatch({ type: SERVICE_GROUP_ERROR, payload: err });
       });
@@ -84,7 +84,7 @@ export function getAllServiceGroupsRequest() {
       })
       .catch(err => {
         let e = err[Object.keys(err)[0]];
-        dispatch(error(e));
+        dispatch(message.error(e));
         dispatch({ type: SERVICE_GROUP_LOADING, payload: false });
         dispatch({ type: SERVICE_GROUP_ERROR, payload: err });
       });
@@ -100,12 +100,12 @@ export function updateServiceGroupRequest(data, id) {
           type: GET_SERVICE_GROUP,
           payload: true
         });
-        dispatch(success("ServiceGroup updated successfully"));
+        dispatch(message.success("ServiceGroup updated successfully"));
         dispatch({ type: SERVICE_GROUP_LOADING, payload: false });
       })
       .catch(err => {
         let e = err[Object.keys(err)[0]];
-        dispatch(error(e));
+        dispatch(message.error(e));
         dispatch({ type: SERVICE_GROUP_LOADING, payload: false });
         dispatch({ type: SERVICE_GROUP_ERROR, payload: err });
       });
@@ -121,12 +121,12 @@ export function deleteServiceGroupRequest(id) {
           type: GET_SERVICE_GROUP,
           payload: true
         });
-        dispatch(success("ServiceGroup deleted successfully"));
+        dispatch(message.success("ServiceGroup deleted successfully"));
         dispatch({ type: SERVICE_GROUP_LOADING, payload: false });
       })
       .catch(err => {
         let e = err[Object.keys(err)[0]];
-        dispatch(error(e));
+        dispatch(message.error(e));
         dispatch({ type: SERVICE_GROUP_LOADING, payload: false });
         dispatch({ type: SERVICE_GROUP_ERROR, payload: err });
       });

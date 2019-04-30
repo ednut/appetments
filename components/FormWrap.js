@@ -25,6 +25,10 @@ const Wrap = styled.section`
     #f4f5f9,
     #f3f4f8
   );
+  .wrap {
+    display: flex;
+    justify-content: center;
+  }
   .logo {
     text-align: center;
     padding-top: 5rem;
@@ -53,6 +57,7 @@ const Wrap = styled.section`
     margin-top: 2rem;
     box-shadow: 0 0 0 0.1rem rgba(0, 0, 0, 0.01),
       0 0.2rem 0.3rem rgba(0, 0, 0, 0.04);
+    flex-basis: 35%;
   }
   .footer-info {
     padding: 1rem;
@@ -65,17 +70,15 @@ class FormWrap extends Component {
     return (
       <Wrap>
         <div className="container">
-          <div className="col-md-6 m-auto">
-            <div className="logo">
-              <Link href="/">
-                <a>Appetments</a>
-              </Link>
-              <span className="icon">
-                <i className="fas fa-circle" />
-              </span>
-            </div>
-            {this.props.children}
+          <div className="logo">
+            <Link href="/">
+              <a>Appetments</a>
+            </Link>
+            <span className="icon">
+              <i className="fas fa-circle" />
+            </span>
           </div>
+          {this.props.children}
         </div>
       </Wrap>
     );

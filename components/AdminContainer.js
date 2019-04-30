@@ -1,88 +1,115 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { authUser } from "../services/authentication";
-import { logout } from "../services/userService";
+import { getUserRequest } from "../modules/user";
+import SubNav from "./Menu";
 import AdminWrapper from "./styles/AdminWrapper";
 import Link from "../components/Link";
+import { Icon, Menu, Dropdown } from "antd";
 
 class AdminContainer extends Component {
+  state = {
+    displayStaff: false,
+    displayService: false,
+    displayInventory: false
+  };
+
+  showDropdownMenuStaff = event => {
+    event.preventDefault();
+    this.setState({ displayStaff: true }, () => {
+      document.addEventListener("click", this.hideDropdownMenuStaff);
+    });
+  };
+
+  hideDropdownMenuStaff = () => {
+    this.setState({ displayStaff: false }, () => {
+      document.removeEventListener("click", this.hideDropdownMenuStaff);
+    });
+  };
+
+  showDropdownMenuService = event => {
+    event.preventDefault();
+    this.setState({ displayService: true }, () => {
+      document.addEventListener("click", this.hideDropdownMenuService);
+    });
+  };
+
+  hideDropdownMenuService = () => {
+    this.setState({ displayService: false }, () => {
+      document.removeEventListener("click", this.hideDropdownMenuService);
+    });
+  };
+
+  showDropdownMenuInventory = event => {
+    event.preventDefault();
+    this.setState({ displayInventory: true }, () => {
+      document.addEventListener("click", this.hideDropdownMenuInventory);
+    });
+  };
+
+  hideDropdownMenuInventory = () => {
+    this.setState({ displayInventory: false }, () => {
+      document.removeEventListener("click", this.hideDropdownMenuInventory);
+    });
+  };
+
   componentDidMount() {
     this.props.authUser();
+    this.props.getUserRequest();
   }
 
   render() {
+    const staff = (
+      <Menu>
+        <Menu.Item key="0">
+          <Link href="/staff-members">
+            <a>Staff Members</a>
+          </Link>
+        </Menu.Item>
+        <Menu.Item key="1">
+          <Link href="#">
+            <a>Permision Levels</a>
+          </Link>
+        </Menu.Item>
+      </Menu>
+    );
+    const services = (
+      <Menu>
+        <Menu.Item key="0">
+          <Link href="/service-groups">
+            <a>Service Groups</a>
+          </Link>
+        </Menu.Item>
+        <Menu.Item key="1">
+          <Link href="/create-services">
+            <a>Services</a>
+          </Link>
+        </Menu.Item>
+      </Menu>
+    );
+
+    const inventory = (
+      <Menu>
+        <Menu.Item key="0">
+          <Link href="/product-categories">
+            <a>Product Categories</a>
+          </Link>
+        </Menu.Item>
+        <Menu.Item key="1">
+          <Link href="/create-products">
+            <a>Product</a>
+          </Link>
+        </Menu.Item>
+      </Menu>
+    );
     return (
       <AdminWrapper>
-        <header>
-          <div className="row">
-            <div className="col-md-3">
-              <div className="logo">
-                <Link href="/">
-                  <a>
-                    Appetments
-                    <span className="icon">
-                      <i className="fas fa-circle" />
-                    </span>
-                  </a>
-                </Link>
-              </div>
-            </div>
-            <div className="col-md-9">
-              <ul>
-                <li>
-                  <span>
-                    <i title="Notification" className="far fa-bell" />
-                  </span>
-                </li>
-                <li>
-                  <div className="dropdown">
-                    <span
-                      className="dropdown-toggle"
-                      id="dropdownMenuButton"
-                      data-toggle="dropdown"
-                      aria-haspopup="true"
-                      aria-expanded="false"
-                    >
-                      <i title="Profile" className="far fa-user" />
-                    </span>
-                    <div
-                      className="dropdown-menu"
-                      aria-labelledby="dropdownMenuButton"
-                    >
-                      <React.Fragment>
-                        <Link href="/settings">
-                          <span>My Settings</span>
-                        </Link>
-                        <Link href="/setup">
-                          <span>Account Setup</span>
-                        </Link>
-                        <Link href="/login">
-                          <span onClick={logout}>Logout</span>
-                        </Link>
-                      </React.Fragment>
-                    </div>
-                  </div>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </header>
-        <div className="nav">
+        <SubNav user={this.props.user} />
+        <div className="main-nav">
           <ul>
-            <li className="search">
-              <div className="search">
-                <input type="text" placeholder="Search...." />
-                <span className="icon">
-                  <i className="material-icons"> search </i>
-                </span>
-              </div>
-            </li>
             <li>
               <Link activeClassName="active" href="/dashboard">
                 <a>
-                  <span className="icon">
-                    <i className="material-icons"> dashboard </i>
-                  </span>
                   <span className="text">Dashboard</span>
                 </a>
               </Link>
@@ -90,9 +117,6 @@ class AdminContainer extends Component {
             <li>
               <Link activeClassName="active" href="/calender">
                 <a>
-                  <span className="icon">
-                    <i className="material-icons"> calendar_today </i>
-                  </span>
                   <span className="text">Calender</span>
                 </a>
               </Link>
@@ -100,9 +124,6 @@ class AdminContainer extends Component {
             <li>
               <Link activeClassName="active" href="/daily-sales">
                 <a>
-                  <span className="icon">
-                    <i className="material-icons"> list </i>
-                  </span>
                   <span className="text">Sales</span>
                 </a>
               </Link>
@@ -110,9 +131,6 @@ class AdminContainer extends Component {
             <li>
               <Link activeClassName="active" href="/client">
                 <a>
-                  <span className="icon">
-                    <i className="material-icons"> insert_emoticon </i>
-                  </span>
                   <span className="text">Client</span>
                 </a>
               </Link>
@@ -120,63 +138,34 @@ class AdminContainer extends Component {
             <li>
               <Link activeClassName="active" href="/messages">
                 <a>
-                  <span className="icon">
-                    <i className="material-icons"> question_answer </i>
-                  </span>
                   <span className="text">Messages</span>
                 </a>
               </Link>
             </li>
-            <li>
-              <Link activeClassName="active" href="/staff-members">
-                <a>
-                  <span className="icon">
-                    <i className="material-icons"> supervisor_account </i>
-                  </span>
-                  <span className="text">Staff</span>
-                </a>
-              </Link>
+            <li className="with-dropdown">
+              <Dropdown overlay={staff} trigger={["click"]}>
+                <span className="text">
+                  Staff&nbsp;&nbsp; <Icon type="down" />
+                </span>
+              </Dropdown>
             </li>
-            <li>
-              <Link
-                activeClassName="active"
-                as="/service-groups"
-                href="/service-groups"
-              >
-                <a>
-                  <span className="icon">
-                    <i className="material-icons"> format_list_bulleted </i>
-                  </span>
-                  <span className="text">Services</span>
-                </a>
-              </Link>
+            <li className="with-dropdown">
+              <Dropdown overlay={services} trigger={["click"]}>
+                <span className="text">
+                  Services&nbsp;&nbsp; <Icon type="down" />
+                </span>
+              </Dropdown>
             </li>
-            <li>
-              <Link activeClassName="active" href="/product-categories">
-                <a>
-                  <span className="icon">
-                    <i className="material-icons"> playlist_add_check </i>
-                  </span>
-                  <span className="text">Inventory</span>
-                </a>
-              </Link>
+            <li className="with-dropdown">
+              <Dropdown overlay={inventory} trigger={["click"]}>
+                <span className="text">
+                  Inventory&nbsp;&nbsp; <Icon type="down" />
+                </span>
+              </Dropdown>
             </li>
-            {/* <li>
-              <Link activeClassName="active" href="/payment">
-                <a>
-                  <span className="icon">
-                    <i className="material-icons"> bar_chart </i>
-                  </span>
-                  <span className="text">Payment</span>
-                </a>
-              </Link>
-            </li> */}
             <li>
               <Link activeClassName="active" href="/booking">
                 <a>
-                  <span className="icon">
-                    <i className="material-icons"> cloud_done </i>
-                  </span>
                   <span className="text">Online Booking</span>
                 </a>
               </Link>
@@ -184,61 +173,24 @@ class AdminContainer extends Component {
             <li>
               <Link activeClassName="active" href="/setup">
                 <a>
-                  <span className="icon">
-                    <i className="material-icons"> settings </i>
-                  </span>
                   <span className="text">Setup</span>
                 </a>
               </Link>
             </li>
           </ul>
-          {/* <footer>
-            <ul>
-              <li>
-                <Link href="/settings">
-                  <a
-                    data-toggle="tooltip"
-                    data-placement="top"
-                    title="My Setting"
-                  >
-                    <i className="fas fa-cogs" />
-                  </a>
-                </Link>
-              </li>
-              <li>
-                <Link href="/setup">
-                  <a
-                    data-toggle="tooltip"
-                    data-placement="top"
-                    title="Account Setup"
-                  >
-                    <i className="fas fa-tools" />
-                  </a>
-                </Link>
-              </li>
-              <li>
-                <Link href="/login">
-                  <a data-toggle="tooltip" data-placement="top" title="Logout">
-                    <i className="fas fa-sign-out-alt" />
-                  </a>
-                </Link>
-              </li>
-            </ul>
-          </footer> */}
         </div>
-        <div className="content">
-          <div className="content-wrap">{this.props.children}</div>
-        </div>
+        <div className="content-wrap">{this.props.children}</div>
       </AdminWrapper>
     );
   }
 }
 
 const mapStateToProps = state => ({
-  isAuthenticated: state.auth.isAuthenticated
+  isAuthenticated: state.auth.isAuthenticated,
+  user: state.user.user
 });
 
 export default connect(
   mapStateToProps,
-  { authUser }
+  { authUser, getUserRequest }
 )(AdminContainer);

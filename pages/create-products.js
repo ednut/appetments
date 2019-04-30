@@ -31,7 +31,7 @@ import ProductDetails from "./product/productDetailsModal";
 import styled from "styled-components";
 import { color, height } from "../components/styles/constant";
 import NoData from "../components/NoData";
-import TableWrapper from "../components/styles/TableWrap";
+import { Table, Divider, Tag } from "antd";
 
 const ContentWrap = styled.div`
   .action-wrap {
@@ -43,7 +43,7 @@ const ContentWrap = styled.div`
     height: 6rem;
     border-radius: 50%;
     border: none;
-    background-color: #083e8d;
+    background-color: #17977c;
     color: #fff;
     animation: moveInBottom 1s linear;
     transition: all 0.2s;
@@ -184,24 +184,15 @@ class CreateProduct extends Component {
     }
   };
 
-  handleVariantUpdateSubmit = e => {
-    e.preventDefault();
-    const { name, barcode, sku, quantity, retail_price } = this.state.variant;
-    this.setState({
-      variant: {
-        submitted: true
-      }
-    });
+  handleVariantUpdateSubmit = obj => {
     const data = {
-      name: variant.name,
-      barcode: variant.barcode,
-      sku: variant.sku,
-      retail_price: variant.retail_price
+      name: obj.name,
+      retail_price: obj.retail_price
     };
     const qty = {
-      quantity: variant.quantity
+      quantity: obj.quantity
     };
-    if (name && barcode && sku && quantity && retail_price) {
+    if (true) {
       this.props.updateVariantRequest(data, this.state.id);
       this.props.adjustInventoryRequest(qty, this.state.id);
       this.setState({ openUpdateProductVariant: false });
@@ -318,142 +309,169 @@ class CreateProduct extends Component {
 
   render() {
     if (this.props.products !== undefined) {
+      const columns = [
+        {
+          title: "Category",
+          dataIndex: "category",
+          key: "category"
+        },
+        {
+          title: "Barcode",
+          dataIndex: "barcode",
+          key: "barcode"
+        },
+        {
+          title: "Name",
+          dataIndex: "name",
+          key: "name"
+        },
+        {
+          title: "SKU",
+          dataIndex: "sku",
+          key: "sku"
+        },
+        // {
+        //   title: "Retail price",
+        //   dataIndex: "retail_price",
+        //   key: "retail_price",
+        //   render: x => (
+        //     <span>
+        //       {"$"}
+        //       {x}
+        //     </span>
+        //   )
+        // },
+        {
+          title: "Description",
+          dataIndex: "description",
+          key: "description"
+        },
+        {
+          title: "Action",
+          key: "action",
+          dataIndex: "action",
+          render: (x, record) => (
+            <span>
+              <a
+                onClick={() => {
+                  this.getProductDetails(x);
+                }}
+                href="javascript:;"
+              >
+                Manage Variants
+              </a>
+              <Divider type="vertical" />
+              <a
+                onClick={() => {
+                  this.updateProduct(x);
+                }}
+                href="javascript:;"
+              >
+                Edit
+              </a>
+              <Divider type="vertical" />
+              <a onClick={() => this.deleteProduct(x.id)} href="javascript:;">
+                Delete
+              </a>
+            </span>
+          )
+        }
+      ];
+
+      const data = this.props.products.map(function(x) {
+        return {
+          key: x.id,
+          category: x.category_name,
+          barcode: x.barcode,
+          name: x.name,
+          sku: x.sku,
+          // retail_price: x.retail_price,
+          description: x.description,
+          action: x
+        };
+      });
+      const rowSelection = {
+        onChange: (selectedRowKeys, selectedRows) => {
+          console.log(
+            `selectedRowKeys: ${selectedRowKeys}`,
+            "selectedRows: ",
+            selectedRows
+          );
+        },
+        getCheckboxProps: record => ({
+          disabled: record.name === "Disabled User", // Column configuration not to be checked
+          name: record.name
+        })
+      };
+
       return (
-        <AdminContainer>
-          <Product>
-            <ContentWrap>
-              {this.props.loading === true ? <SpinerWrap /> : null}
+        <Product>
+          <ContentWrap>
+            {this.props.loading === true ? <SpinerWrap /> : null}
 
-              <CreateProductModal
-                modalState={this.state}
-                onCloseModal={this.onCloseCreateModal}
-                handleChange={this.handleChange}
-                handleSubmit={this.handleCreateSubmit}
-                loading={this.props.loading}
-                categories={this.props.productCategories}
-                title={"Create Product"}
-              />
-              <UpdateProductModal
-                modalState={this.state}
-                onCloseModal={this.onCloseUpdateModal}
-                handleChange={this.handleChange}
-                handleSubmit={this.handleUpdateSubmit}
-                loading={this.props.loading}
-                categories={this.props.productCategories}
-                title={"Update Product"}
-              />
+            <CreateProductModal
+              modalState={this.state}
+              onCloseModal={this.onCloseCreateModal}
+              handleChange={this.handleChange}
+              handleSubmit={this.handleCreateSubmit}
+              loading={this.props.loading}
+              categories={this.props.productCategories}
+              title={"Create Product"}
+            />
+            <UpdateProductModal
+              modalState={this.state}
+              onCloseModal={this.onCloseUpdateModal}
+              handleChange={this.handleChange}
+              handleSubmit={this.handleUpdateSubmit}
+              loading={this.props.loading}
+              categories={this.props.productCategories}
+              title={"Update Product"}
+            />
 
-              <ProductDetails
-                modalState={this.state}
-                onCloseModal={this.onCloseDetailsModal}
-                handleSubmit={this.handleVariantCreateSubmit}
-                handleUpdateSubmit={this.handleVariantUpdateSubmit}
-                handleChange={this.handleVariantChange}
-                product={this.props.product}
-                update={this.updateProductVariant}
-                closeEdit={this.closeEditVariant}
-                delete={this.deleteProductVariant}
-                loading={this.props.loading}
-                title={"Product Details"}
-              />
+            <ProductDetails
+              modalState={this.state}
+              onCloseModal={this.onCloseDetailsModal}
+              handleSubmit={this.handleVariantCreateSubmit}
+              handleUpdateSubmit={this.handleVariantUpdateSubmit}
+              handleChange={this.handleVariantChange}
+              product={this.props.product}
+              update={this.updateProductVariant}
+              closeEdit={this.closeEditVariant}
+              delete={this.deleteProductVariant}
+              loading={this.props.loading}
+              title={"Product Details"}
+            />
 
-              <div className="action-wrap">
-                {/* <Button
+            <div className="action-wrap">
+              {/* <Button
                   buttonColor={color.brandColor}
                   textColor={color.whiteColor}
                   onClick={this.onOpenCreateModal}
                 >
                   Add New Product
                 </Button> */}
-                <button onClick={this.onOpenCreateModal}>
-                  <i className="material-icons"> add </i>
-                </button>
-              </div>
-              <TableWrapper style={{ maxHeight: "25rem" }}>
-                <table>
-                  <thead>
-                    <tr>
-                      <th>Category</th>
-                      <th>Barcode</th>
-                      <th>Name</th>
-                      <th>SKU</th>
-                      <th>Retail price</th>
-                      <th>description</th>
-                      <th />
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {this.props.products.map(x => (
-                      <tr key={x.id}>
-                        <td>{x.category_name}</td>
-                        <td>{x.barcode}</td>
-                        <td>{x.name}</td>
-                        <td>{x.sku}</td>
-                        <td>{x.retail_price}</td>
-                        <td style={{ width: "35%" }}>{x.description}</td>
-                        <td className="more-options dropdown-toggle">
-                          <div className="dropdown">
-                            <span
-                              className="icon-more"
-                              data-toggle="dropdown"
-                              aria-haspopup="true"
-                              aria-expanded="false"
-                            >
-                              <i className="fas fa-ellipsis-h" />
-                            </span>
-                            <div className="dropdown-menu">
-                              {/* <a
-                                className="dropdown-item"
-                                onClick={() => this.onOpenCreateVariantModal(x)}
-                              >
-                                Create Product Variants
-                              </a> */}
-
-                              <a
-                                className="dropdown-item"
-                                onClick={() => this.getProductDetails(x)}
-                              >
-                                Manage Variant
-                              </a>
-
-                              <a
-                                onClick={() => {
-                                  this.updateProduct(x);
-                                }}
-                                className="dropdown-item"
-                              >
-                                Edit
-                              </a>
-                              <a
-                                onClick={() => this.deleteProduct(x.id)}
-                                className="dropdown-item delete"
-                              >
-                                Delete
-                              </a>
-                            </div>
-                          </div>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </TableWrapper>
-              {this.props.products.length === 0 ? (
-                <NoData message="No Product Available" />
-              ) : null}
-            </ContentWrap>
-          </Product>
-        </AdminContainer>
+              <button onClick={this.onOpenCreateModal}>
+                <i className="material-icons"> add </i>
+              </button>
+            </div>
+            <Table
+              rowSelection={rowSelection}
+              columns={columns}
+              dataSource={data}
+            />
+            {this.props.products.length === 0 ? (
+              <NoData message="No Product Available" />
+            ) : null}
+          </ContentWrap>
+        </Product>
       );
     } else {
       return (
-        <AdminContainer>
-          <Product>
-            <ContentWrap>
-              <SpinerWrap />
-            </ContentWrap>
-          </Product>
-        </AdminContainer>
+        <Product>
+          <ContentWrap>
+            <SpinerWrap />
+          </ContentWrap>
+        </Product>
       );
     }
   }

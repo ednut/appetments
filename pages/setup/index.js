@@ -3,6 +3,7 @@ import Link from "next/link";
 import AdminContainer from "../../components/AdminContainer";
 import styled from "styled-components";
 import { shadowStyle, color, height } from "../../components/styles/constant";
+import { Row, Col, Card, Menu, Icon } from "antd";
 
 const SetWrap = styled.div`
   .title {
@@ -48,9 +49,9 @@ class Setup extends Component {
       <AdminContainer>
         <SetWrap>
           <div className="container">
-            <div className="row">
-              <div className="col-md-6">
-                <div className="wrapper marginBottom-2">
+            <Row>
+              <Col span={10} offset={7}>
+                <Card className="marginBottom-2">
                   <div className="title">Account Setup</div>
                   <div className="caption">
                     Manage your business general settings
@@ -66,72 +67,18 @@ class Setup extends Component {
                         <a>Locations</a>
                       </Link>
                     </li>
+
                     <li>
-                      <Link href="product-categories">
-                        <a>Product Categories</a>
+                      <Link href="/pet-category">
+                        <a>Pet Categories</a>
                       </Link>
                     </li>
+
                     <li>
                       <Link href="/calender-settings">
                         <a>Calendar Settings</a>
                       </Link>
                     </li>
-                    {/* <li>
-                      <Link href="#">
-                        <a>Online Booking Settings</a>
-                      </Link>
-                    </li>
-                    <li>
-                      <Link href="#">
-                        <a>Staff Notifications</a>
-                      </Link>
-                    </li> */}
-                  </ul>
-                </div>
-              </div>
-
-              <div className="col-md-6">
-                <div className="wrapper marginBottom-2">
-                  <div className="title">Point of Sale</div>
-                  <div className="caption">Manage point of sale settings</div>
-                  <ul>
-                    <li>
-                      <Link href="#">
-                        <a>Payment Types</a>
-                      </Link>
-                    </li>
-                    <li>
-                      <Link href="#">
-                        <a>Taxes</a>
-                      </Link>
-                    </li>
-                    <li>
-                      <Link href="#">
-                        <a>Discount Types</a>
-                      </Link>
-                    </li>
-                    <li>
-                      <Link href="#">
-                        <a>Sales Settings</a>
-                      </Link>
-                    </li>
-                    {/* <li>
-                      <Link href="#">
-                        <a>Invoices & Receipts</a>
-                      </Link>
-                    </li> */}
-                  </ul>
-                </div>
-              </div>
-
-              <div className="col-md-6">
-                <div className="wrapper marginBottom-2">
-                  <div className="title">Client Settings</div>
-                  <div className="caption">
-                    Setup client notifications, referral sources and
-                    cancellation reasons
-                  </div>
-                  <ul>
                     <li>
                       <Link href="#">
                         <a>Client Notifications</a>
@@ -139,18 +86,13 @@ class Setup extends Component {
                     </li>
                     <li>
                       <Link href="#">
-                        <a>Referral Sources</a>
-                      </Link>
-                    </li>
-                    <li>
-                      <Link href="#">
-                        <a>Cancellation Reasons</a>
+                        <a>Discount Types</a>
                       </Link>
                     </li>
                   </ul>
-                </div>
-              </div>
-            </div>
+                </Card>
+              </Col>
+            </Row>
           </div>
         </SetWrap>
       </AdminContainer>

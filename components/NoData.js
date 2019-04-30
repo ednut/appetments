@@ -26,7 +26,8 @@ const NoDataWrap = styled.div`
 class NoData extends Component {
   render() {
     return (
-      <NoDataWrap>
+      <div>
+        {/* <NoDataWrap>
         <div className="row">
           <div className="col-md-5 m-auto">
             <div className="icon">
@@ -35,7 +36,8 @@ class NoData extends Component {
             <div className="title">{this.props.message}</div>
           </div>
         </div>
-      </NoDataWrap>
+      </NoDataWrap> */}
+      </div>
     );
   }
 }

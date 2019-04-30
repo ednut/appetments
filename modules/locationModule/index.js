@@ -9,7 +9,7 @@ import {
   deactivateLocation
 } from "./locationServices";
 
-import { success, error } from "../alert";
+import { message } from "antd";
 import {
   GET_LOCATION,
   GET_ALL_LOCATIONS,
@@ -59,12 +59,12 @@ export function createLocationRequest(data) {
           payload: true
         });
         console.log(location);
-        dispatch(success("Location created successfully"));
+        dispatch(message.success("Location created successfully"));
         dispatch({ type: LOCATION_LOADING, payload: false });
       })
       .catch(err => {
         let e = err[Object.keys(err)[0]];
-        dispatch(error(e));
+        dispatch(message.error(e));
         dispatch({ type: LOCATION_LOADING, payload: false });
         dispatch({ type: LOCATION_ERROR, payload: err });
       });
@@ -88,7 +88,7 @@ export function getAllLocationsRequest() {
       })
       .catch(err => {
         let e = err[Object.keys(err)[0]];
-        dispatch(error(e));
+        dispatch(message.error(e));
         dispatch({ type: LOCATION_LOADING, payload: false });
         dispatch({ type: LOCATION_ERROR, payload: err });
       });
@@ -104,12 +104,12 @@ export function updateLocationRequest(data, id) {
           type: GET_LOCATION,
           payload: true
         });
-        dispatch(success("Location updated successfully"));
+        dispatch(message.success("Location updated successfully"));
         dispatch({ type: LOCATION_LOADING, payload: false });
       })
       .catch(err => {
         let e = err[Object.keys(err)[0]];
-        dispatch(error(e));
+        dispatch(message.error(e));
         dispatch({ type: LOCATION_LOADING, payload: false });
         dispatch({ type: LOCATION_ERROR, payload: err });
       });
@@ -125,12 +125,12 @@ export function deleteLocationRequest(id) {
           type: GET_LOCATION,
           payload: true
         });
-        dispatch(success("Location deleted successfully"));
+        dispatch(message.success("Location deleted successfully"));
         dispatch({ type: LOCATION_LOADING, payload: false });
       })
       .catch(err => {
         let e = err[Object.keys(err)[0]];
-        dispatch(error(e));
+        dispatch(message.error(e));
         dispatch({ type: LOCATION_LOADING, payload: false });
         dispatch({ type: LOCATION_ERROR, payload: err });
       });
@@ -146,12 +146,12 @@ export function addStaffToLocationRequest(data, id) {
           type: GET_LOCATION,
           payload: true
         });
-        dispatch(success("Staff added to Location successfully"));
+        dispatch(message.success("Staff added to Location successfully"));
         dispatch({ type: LOCATION_LOADING, payload: false });
       })
       .catch(err => {
         let e = err[Object.keys(err)[0]];
-        dispatch(error(e));
+        dispatch(message.error(e));
         dispatch({ type: LOCATION_LOADING, payload: false });
         dispatch({ type: LOCATION_ERROR, payload: err });
       });
@@ -167,12 +167,12 @@ export function removeStaffFromLocationRequest(data, id) {
           type: GET_LOCATION,
           payload: true
         });
-        dispatch(success("Staff removed from Location successfully"));
+        dispatch(message.success("Staff removed from Location successfully"));
         dispatch({ type: LOCATION_LOADING, payload: false });
       })
       .catch(err => {
         let e = err[Object.keys(err)[0]];
-        dispatch(error(e));
+        dispatch(message.error(e));
         dispatch({ type: LOCATION_LOADING, payload: false });
         dispatch({ type: LOCATION_ERROR, payload: err });
       });
@@ -188,12 +188,12 @@ export function activateLocationRequest(data, id) {
           type: GET_LOCATION,
           payload: true
         });
-        dispatch(success("Location activated successfully"));
+        dispatch(message.success("Location activated successfully"));
         dispatch({ type: LOCATION_LOADING, payload: false });
       })
       .catch(err => {
         let e = err[Object.keys(err)[0]];
-        dispatch(error(e));
+        dispatch(message.error(e));
         dispatch({ type: LOCATION_LOADING, payload: false });
         dispatch({ type: LOCATION_ERROR, payload: err });
       });
@@ -209,12 +209,12 @@ export function deactivateLocationRequest(data, id) {
           type: GET_LOCATION,
           payload: true
         });
-        dispatch(success("Location deactivated successfully"));
+        dispatch(message.success("Location deactivated successfully"));
         dispatch({ type: LOCATION_LOADING, payload: false });
       })
       .catch(err => {
         let e = err[Object.keys(err)[0]];
-        dispatch(error(e));
+        dispatch(message.error(e));
         dispatch({ type: LOCATION_LOADING, payload: false });
         dispatch({ type: LOCATION_ERROR, payload: err });
       });

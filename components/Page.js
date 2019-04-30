@@ -1,9 +1,10 @@
 import React, { Component } from "react";
-import { injectGlobal } from "styled-components";
+import { createGlobalStyle } from "styled-components";
 import Router from "next/router";
 import NProgress from "nprogress";
 import Meta from "./Meta";
 import Alert from "../components/Alert";
+import "antd/dist/antd.css";
 
 NProgress.configure({ showSpinner: false });
 
@@ -17,8 +18,7 @@ Router.onRouteChangeError = () => {
   NProgress.done();
 };
 
-injectGlobal`
-
+const GlobalStyle = createGlobalStyle`
     *,
     *::after,
     *::before {
@@ -49,7 +49,20 @@ injectGlobal`
         outline: none;
       }
     }
+    .react-datepicker-wrapper{
+      input{
+        border: none;
+        outline: none;
+      }
+    }
     .dropdown-toggle:after { content: none }
+    .ant-table-thead > tr > th{background: transparent}
+    .styles_modal__gNwvD .title{
+      border-bottom: none!important;
+    }
+    .ant-table-placeholder{
+      border-bottom:none;
+    }
 `;
 
 class Page extends Component {
@@ -57,6 +70,7 @@ class Page extends Component {
     return (
       <div>
         <Meta />
+        <GlobalStyle />
         <Alert />
         {this.props.children}
       </div>

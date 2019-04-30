@@ -1,5 +1,7 @@
 import { combineReducers } from "redux";
+import { reducer as formReducer } from "redux-form";
 
+import userReducer from "./modules/user";
 import loginReducer from "./modules/login";
 import signupReducer from "./modules/signup";
 import companyReducer from "./modules/company";
@@ -13,8 +15,11 @@ import serviceGroupReducer from "./modules/serviceGroupModule";
 import serviceReducer from "./modules/serviceModule";
 import productVariantReducer from "./modules/productVariantModule";
 import clientReducer from "./modules/clientModule";
+import petReducer from "./modules/petModule";
+import petCategoryReducer from "./modules/petCategoryModule";
 
 export const rootReducer = combineReducers({
+  user: userReducer,
   login: loginReducer,
   signup: signupReducer,
   company: companyReducer,
@@ -27,5 +32,8 @@ export const rootReducer = combineReducers({
   serviceReducer: serviceReducer,
   productVariantReducer: productVariantReducer,
   clientReducer: clientReducer,
-  orderReducer: orderReducer
+  orderReducer: orderReducer,
+  petReducer: petReducer,
+  petCategoryReducer: petCategoryReducer,
+  form: formReducer
 });

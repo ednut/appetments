@@ -15,6 +15,7 @@ import CreateServiceGroupModal from "./services/createServiceGroupModal";
 import UpdateServiceGroupModal from "./services/updateServiceGroupModal";
 import NoData from "../components/NoData";
 import TableWrapper from "../components/styles/TableWrap";
+import { Table, Divider, Tag } from "antd";
 
 const ContentWrap = styled.div`
   .action-wrap {
@@ -26,7 +27,7 @@ const ContentWrap = styled.div`
     height: 6rem;
     border-radius: 50%;
     border: none;
-    background-color: #083e8d;
+    background-color: #17977c;
     color: #fff;
     animation: moveInBottom 1s linear;
     transition: all 0.2s;
@@ -138,6 +139,83 @@ class ServiceGroups extends Component {
 
   render() {
     if (this.props.serviceGroups !== undefined) {
+      const columns = [
+        {
+          title: "Color",
+          dataIndex: "color",
+          key: "color",
+          render: x => (
+            <span
+              style={{
+                width: "3rem",
+                height: "3rem",
+                borderRadius: "50%",
+                background: x,
+                display: "inline-block"
+              }}
+            />
+          )
+        },
+        {
+          title: "Service Group Name",
+          dataIndex: "service_group_name",
+          key: "service_group_name"
+        },
+        {
+          title: "Description",
+          dataIndex: "description",
+          key: "description"
+        },
+        {
+          title: "Action",
+          key: "action",
+          dataIndex: "action",
+          render: (x, record) => (
+            <span>
+              <a
+                onClick={() => {
+                  this.updateServiceGroup(x);
+                }}
+                href="javascript:;"
+              >
+                Edit
+              </a>
+
+              <Divider type="vertical" />
+              <a
+                onClick={() => this.deleteServiceGroup(x.id)}
+                href="javascript:;"
+              >
+                Delete
+              </a>
+            </span>
+          )
+        }
+      ];
+
+      const data = this.props.serviceGroups.map(function(x) {
+        return {
+          key: x.id,
+          color: x.appointment_color,
+          service_group_name: x.name,
+          description: x.description,
+          action: x
+        };
+      });
+      const rowSelection = {
+        onChange: (selectedRowKeys, selectedRows) => {
+          console.log(
+            `selectedRowKeys: ${selectedRowKeys}`,
+            "selectedRows: ",
+            selectedRows
+          );
+        },
+        getCheckboxProps: record => ({
+          disabled: record.name === "Disabled User", // Column configuration not to be checked
+          name: record.name
+        })
+      };
+
       return (
         <Services>
           <ContentWrap>
@@ -171,65 +249,11 @@ class ServiceGroups extends Component {
                 <i className="material-icons"> add </i>
               </button>
             </div>
-            <TableWrapper>
-              <table>
-                <thead>
-                  <tr>
-                    <th>Color</th>
-                    <th>Service Group Name</th>
-                    <th>Description</th>
-                    <th />
-                  </tr>
-                </thead>
-                <tbody>
-                  {this.props.serviceGroups.map(x => (
-                    <tr key={x.id}>
-                      <td style={{ width: "14rem" }}>
-                        <span
-                          style={{
-                            width: "3rem",
-                            height: "3rem",
-                            borderRadius: "50%",
-                            background: x.appointment_color,
-                            display: "inline-block"
-                          }}
-                        />
-                      </td>
-                      <td>{x.name}</td>
-                      <td>{x.description}</td>
-                      <td className="more-options dropdown-toggle">
-                        <div className="dropdown">
-                          <span
-                            className="icon-more"
-                            data-toggle="dropdown"
-                            aria-haspopup="true"
-                            aria-expanded="false"
-                          >
-                            <i className="fas fa-ellipsis-h" />
-                          </span>
-                          <div className="dropdown-menu">
-                            <a
-                              onClick={() => {
-                                this.updateServiceGroup(x);
-                              }}
-                              className="dropdown-item"
-                            >
-                              Edit
-                            </a>
-                            <a
-                              onClick={() => this.deleteServiceGroup(x.id)}
-                              className="dropdown-item delete"
-                            >
-                              Delete
-                            </a>
-                          </div>
-                        </div>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </TableWrapper>
+            <Table
+              rowSelection={rowSelection}
+              columns={columns}
+              dataSource={data}
+            />
             {this.props.serviceGroups.length === 0 ? (
               <NoData message="No Service Group Created Yet." />
             ) : null}

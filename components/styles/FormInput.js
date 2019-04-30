@@ -234,7 +234,6 @@ const FormInput = styled.div`
             width: 90%;
           }
           span.edit {
-            float: right;
             width: 10%;
             display: inline-block;
             i {

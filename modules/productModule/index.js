@@ -10,7 +10,7 @@ import {
   getProductById
 } from "./productServices";
 
-import { success, error } from "../alert";
+import { message } from "antd";
 import {
   PRODUCT_CREATED,
   PRODUCT_CATEGORY_CREATED,
@@ -98,12 +98,12 @@ export function createProductRequest(data) {
           payload: true
         });
         console.log(product);
-        dispatch(success("Product created successfully"));
+        dispatch(message.success("Product created successfully"));
         dispatch({ type: LOADING_PRODUCT, payload: false });
       })
       .catch(err => {
         let e = err[Object.keys(err)[0]];
-        dispatch(error(e));
+        dispatch(message.error(e));
         dispatch({ type: LOADING_PRODUCT, payload: false });
         dispatch({ type: PRODUCT_ERROR, payload: err });
       });
@@ -120,12 +120,12 @@ export function createProductCategoryRequest(data) {
           payload: true
         });
         console.log(productCategory);
-        dispatch(success("Product category created successfully"));
+        dispatch(message.success("Product category created successfully"));
         dispatch({ type: LOADING_PRODUCT_CATEGORY, payload: false });
       })
       .catch(err => {
         let e = err[Object.keys(err)[0]];
-        dispatch(error(e));
+        dispatch(message.error(e));
         dispatch({ type: LOADING_PRODUCT_CATEGORY, payload: false });
         dispatch({ type: PRODUCT_CATEGORY_ERROR, payload: err });
       });
@@ -146,7 +146,7 @@ export function getAllProductsRequest() {
       })
       .catch(err => {
         let e = err[Object.keys(err)[0]];
-        dispatch(error(e));
+        dispatch(message.error(e));
         dispatch({ type: LOADING_PRODUCT, payload: false });
         dispatch({ type: PRODUCT_ERROR, payload: err });
       });
@@ -168,7 +168,7 @@ export function getProductsByIdRequest(id) {
       })
       .catch(err => {
         let e = err[Object.keys(err)[0]];
-        dispatch(error(e));
+        dispatch(message.error(e));
         dispatch({ type: LOADING_PRODUCT, payload: false });
         dispatch({ type: PRODUCT_ERROR, payload: err });
       });
@@ -192,7 +192,7 @@ export function getAllProductCategoriesRequest() {
       })
       .catch(err => {
         let e = err[Object.keys(err)[0]];
-        dispatch(error(e));
+        dispatch(message.error(e));
         dispatch({ type: LOADING_PRODUCT_CATEGORY, payload: false });
         dispatch({ type: PRODUCT_CATEGORY_ERROR, payload: err });
       });
@@ -208,12 +208,12 @@ export function updateProductRequest(data, id) {
           type: PRODUCT_CREATED,
           payload: true
         });
-        dispatch(success("Product updated successfully"));
+        dispatch(message.success("Product updated successfully"));
         dispatch({ type: LOADING_PRODUCT, payload: false });
       })
       .catch(err => {
         let e = err[Object.keys(err)[0]];
-        dispatch(error(e));
+        dispatch(message.error(e));
         dispatch({ type: LOADING_PRODUCT, payload: false });
         dispatch({ type: PRODUCT_ERROR, payload: err });
       });
@@ -229,12 +229,12 @@ export function updateProductCategoryRequest(data, id) {
           type: PRODUCT_CATEGORY_CREATED,
           payload: true
         });
-        dispatch(success("Product Category updated successfully"));
+        dispatch(message.success("Product Category updated successfully"));
         dispatch({ type: LOADING_PRODUCT_CATEGORY, payload: false });
       })
       .catch(err => {
         let e = err[Object.keys(err)[0]];
-        dispatch(error(e));
+        dispatch(message.error(e));
         dispatch({ type: LOADING_PRODUCT_CATEGORY, payload: false });
         dispatch({ type: PRODUCT_CATEGORY_ERROR, payload: err });
       });
@@ -250,12 +250,12 @@ export function deleteProductCategoryRequest(id) {
           type: PRODUCT_CATEGORY_CREATED,
           payload: true
         });
-        dispatch(success("Product Category deleted successfully"));
+        dispatch(message.success("Product Category deleted successfully"));
         dispatch({ type: LOADING_PRODUCT_CATEGORY, payload: false });
       })
       .catch(err => {
         let e = err[Object.keys(err)[0]];
-        dispatch(error(e));
+        dispatch(message.error(e));
         dispatch({ type: LOADING_PRODUCT_CATEGORY, payload: false });
         dispatch({ type: PRODUCT_CATEGORY_ERROR, payload: err });
       });
@@ -271,12 +271,12 @@ export function deleteProductRequest(id) {
           type: PRODUCT_CREATED,
           payload: true
         });
-        dispatch(success("Product Category deleted successfully"));
+        dispatch(message.success("Product Category deleted successfully"));
         dispatch({ type: LOADING_PRODUCT, payload: false });
       })
       .catch(err => {
         let e = err[Object.keys(err)[0]];
-        dispatch(error(e));
+        dispatch(message.error(e));
         dispatch({ type: LOADING_PRODUCT, payload: false });
         dispatch({ type: PRODUCT_ERROR, payload: err });
       });

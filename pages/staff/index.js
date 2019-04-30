@@ -36,30 +36,6 @@ class Staff extends Component {
   render() {
     return (
       <AdminContainer>
-        <StaffNav>
-          <ul>
-            <li>
-              <Link activeClassName="active" href="/staff-members">
-                <a>Staff Members</a>
-              </Link>
-            </li>
-            {/* <li>
-              <Link activeClassName="active" href="/working-hours">
-                <a>Working Hours</a>
-              </Link>
-            </li>
-            <li>
-              <Link activeClassName="active" href="closed-date">
-                <a>Closed Date</a>
-              </Link>
-            </li> */}
-            <li>
-              <Link activeClassName="active" href="permision-levels">
-                <a>Permision Levels</a>
-              </Link>
-            </li>
-          </ul>
-        </StaffNav>
         <div style={{ position: "relative" }}>{this.props.children}</div>
       </AdminContainer>
     );

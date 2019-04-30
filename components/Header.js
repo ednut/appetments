@@ -4,10 +4,7 @@ import Nav from "./styles/Nav";
 import Button from "../components/styles/Button";
 import Cookies from "js-cookie";
 import styled, { css } from "styled-components";
-
-
-
-
+import { Row, Col } from "antd";
 
 const IconHolder = styled.div`
   display: flex;
@@ -20,32 +17,33 @@ const IconHolder = styled.div`
   margin: ${props => (props.margin ? props.margin : "0px 0px")};
   border-radius: ${props => (props.borderRadius ? props.borderRadius : "0px")};
   background-repeat: no-repeat;
-  background-color: ${props => (props.backgroundColor ? props.backgroundColor : "transparent")};
+  background-color: ${props =>
+    props.backgroundColor ? props.backgroundColor : "transparent"};
   background-position: center;
   background-image: ${props => (props.src ? `url(${props.src})` : "none")};
   background-size: contain;
 `;
 
-
-
-
 const Header = props => (
   <Nav>
     <div className="container-fluid">
-      <div className="row">
-        <div className="col-md-3">
+      <Row>
+        <Col span={6}>
           <ul className="logo">
             <li>
               <Link href="/">
                 <a>
-                  <IconHolder src={"/static/images/company_logo.png"} width={"150px"} />
+                  <IconHolder
+                    src={"/static/images/company_logo.png"}
+                    width={"150px"}
+                  />
                 </a>
               </Link>
             </li>
           </ul>
-        </div>
-        <div className="col-md-9">
-          <ul className="navigation text-right">
+        </Col>
+        <Col span={18}>
+          <ul className="navigation" style={{ textAlign: "right" }}>
             <li>
               <Link href="/">
                 <a>About</a>
@@ -81,8 +79,8 @@ const Header = props => (
               </li>
             )}
           </ul>
-        </div>
-      </div>
+        </Col>
+      </Row>
     </div>
   </Nav>
 );

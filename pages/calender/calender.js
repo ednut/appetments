@@ -20,7 +20,7 @@ import {
 import { getAllProductsRequest } from "../../modules/productModule";
 import styled from "styled-components";
 import { height } from "../../components/styles/constant";
-import { convertTimeformat, convert } from "../../utils/helpers";
+import { convertTimeformat, convert, formatDate } from "../../utils/helpers";
 import SpinerWrap from "../../components/Spinner";
 import LargePopup from "./LargePopup";
 import EditPopup from "./EditPopup";
@@ -39,7 +39,7 @@ const ButtonWrap = styled.div`
     height: 6rem;
     border-radius: 50%;
     border: none;
-    background-color: #083e8d;
+    background-color: #17977c;
     color: #fff;
     animation: moveInBottom 1s linear;
     transition: all 0.2s;
@@ -112,6 +112,10 @@ class ScheduleCalender extends Component {
     }
   }
 
+  updateDate = date => {
+    this.setState({ picked_date: date });
+  };
+
   handleCreateSubmit = data => {
     this.props.createOrderRequest(data);
     this.setState({ openLargePopup: false });
@@ -134,7 +138,7 @@ class ScheduleCalender extends Component {
     if (obj !== undefined) {
       let t = moment(obj.start).format();
       let x = t.split("T");
-      let pickedDate = moment(obj.start).format("dddd, MMMM Do YYYY");
+      let pickedDate = obj.start;
       let cleanTime = function() {
         let x = convertTimeformat(
           "24",
@@ -151,7 +155,7 @@ class ScheduleCalender extends Component {
         selected_time: cleanTime()
       });
     } else {
-      let selectedTime = moment().format("dddd, MMMM Do YYYY");
+      let selectedTime = new Date();
       let t = moment().format();
       let x = t.split("T");
       this.setState({
@@ -218,6 +222,11 @@ class ScheduleCalender extends Component {
         payment_status: x.payment_status,
         payment_reference: x.payment_reference
       }));
+
+      let todayDate = new Date();
+      let currentDate = formatDate(todayDate);
+      console.log(currentDate);
+
       return (
         <React.Fragment>
           {this.props.loading === true ? <SpinerWrap /> : null}
@@ -228,6 +237,7 @@ class ScheduleCalender extends Component {
             product={this.props.products && this.props.products}
             service={this.props.services && this.props.services}
             selectedService={this.props.service && this.props.service}
+            updateDate={this.updateDate}
             getService={this.getService}
             handleAppointmentChange={this.handleChange}
             handleAppointmentSubmit={this.handleCreateSubmit}
@@ -261,16 +271,30 @@ class ScheduleCalender extends Component {
               <i className="material-icons"> add </i>
             </button>
           </ButtonWrap>
-
+          <h1
+            style={{
+              fontSize: "2.5rem",
+              fontWeight: "300",
+              paddingLeft: "5rem",
+              paddingRight: "5rem"
+            }}
+          >
+            {currentDate}
+          </h1>
           <BigCalendar
-            style={{ minHeight: "70rem" }}
+            style={{
+              minHeight: "70rem",
+              marginTop: "0rem",
+              marginLeft: "5rem",
+              marginRight: "5rem"
+            }}
             localizer={localizer}
             events={event}
             selectable
             views={["week", "day"]}
             defaultView="week"
             step={30}
-            timeslots={1}
+            timeslots={2}
             min={
               new Date(
                 currentYear(),

@@ -4,6 +4,8 @@ import FormInput from "../../components/styles/FormInput";
 import Button from "../../components/styles/Button";
 import { shadowStyle, color, height } from "../../components/styles/constant";
 import styled from "styled-components";
+import FormWrap from "../../components/styles/FormWrap";
+import { Row, Col } from "antd";
 
 const ModalWrap = styled.div`
   width: 55rem;
@@ -19,6 +21,9 @@ const ModalWrap = styled.div`
   footer {
     height: 5rem;
     width: 100%;
+    button {
+      float: right;
+    }
   }
 `;
 
@@ -38,9 +43,9 @@ class UpdateClientModal extends Component {
           <div className="title">{this.props.title}</div>
           <FormInput>
             <form onSubmit={this.props.handleSubmit}>
-              <div className="row">
-                <div className="col-md-6">
-                  <div className="form-wrap">
+              <Row gutter={16}>
+                <Col span={12}>
+                  <FormWrap>
                     <label htmlFor="">First Name</label>
                     <input
                       type="text"
@@ -52,10 +57,10 @@ class UpdateClientModal extends Component {
                     {submitted && !first_name && (
                       <div className="error">First name is required</div>
                     )}
-                  </div>
-                </div>
-                <div className="col-md-6">
-                  <div className="form-wrap">
+                  </FormWrap>
+                </Col>
+                <Col span={12}>
+                  <FormWrap>
                     <label htmlFor="">Last Name</label>
                     <input
                       type="text"
@@ -67,10 +72,10 @@ class UpdateClientModal extends Component {
                     {submitted && !last_name && (
                       <div className="error">Last name is required</div>
                     )}
-                  </div>
-                </div>
-                <div className="col-md-6">
-                  <div className="form-wrap">
+                  </FormWrap>
+                </Col>
+                <Col span={12}>
+                  <FormWrap>
                     <label htmlFor="">Email</label>
                     <input
                       type="email"
@@ -82,10 +87,10 @@ class UpdateClientModal extends Component {
                     {submitted && !email && (
                       <div className="error">Email is required</div>
                     )}
-                  </div>
-                </div>
-                <div className="col-md-6">
-                  <div className="form-wrap">
+                  </FormWrap>
+                </Col>
+                <Col span={12}>
+                  <FormWrap>
                     <label htmlFor="">Phone Number</label>
                     <input
                       type="text"
@@ -97,9 +102,9 @@ class UpdateClientModal extends Component {
                     {submitted && !phone_number && (
                       <div className="error">Phone number is required</div>
                     )}
-                  </div>
-                </div>
-              </div>
+                  </FormWrap>
+                </Col>
+              </Row>
 
               <footer>
                 <Button

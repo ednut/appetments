@@ -4,6 +4,8 @@ import FormInput from "../../components/styles/FormInput";
 import Button from "../../components/styles/Button";
 import { shadowStyle, color, height } from "../../components/styles/constant";
 import styled from "styled-components";
+import { Row, Col } from "antd";
+import FormWrap from "../../components/styles/FormWrap";
 
 const ModalWrap = styled.div`
   width: 55rem;
@@ -19,6 +21,9 @@ const ModalWrap = styled.div`
   footer {
     height: 5rem;
     width: 100%;
+    button {
+      float: right;
+    }
   }
 `;
 
@@ -38,9 +43,9 @@ class CreateServiceGroupModal extends Component {
           <div className="title">{this.props.title}</div>
           <FormInput>
             <form onSubmit={this.props.handleSubmit}>
-              <div className="row">
-                <div className="col-md-6">
-                  <div className="form-wrap">
+              <Row gutter={16}>
+                <Col span={12}>
+                  <FormWrap>
                     <label htmlFor="">Appointment Color</label>
                     <select
                       name="appointment_color"
@@ -64,10 +69,10 @@ class CreateServiceGroupModal extends Component {
                     {submitted && !appointment_color && (
                       <div className="error">Appointment color is required</div>
                     )}
-                  </div>
-                </div>
-                <div className="col-md-6">
-                  <div className="form-wrap">
+                  </FormWrap>
+                </Col>
+                <Col span={12}>
+                  <FormWrap>
                     <label htmlFor="">Service Group Name</label>
                     <input
                       type="text"
@@ -80,10 +85,10 @@ class CreateServiceGroupModal extends Component {
                         Service group name is required
                       </div>
                     )}
-                  </div>
-                </div>
-                <div className="col-md-12">
-                  <div className="form-wrap">
+                  </FormWrap>
+                </Col>
+                <Col span={24}>
+                  <FormWrap>
                     <label htmlFor="">Description</label>
                     <textarea
                       name="description"
@@ -93,9 +98,9 @@ class CreateServiceGroupModal extends Component {
                     {submitted && !description && (
                       <div className="error">Description is required</div>
                     )}
-                  </div>
-                </div>
-              </div>
+                  </FormWrap>
+                </Col>
+              </Row>
 
               <footer>
                 <Button

@@ -28,20 +28,10 @@ class Messages extends Component {
     return (
       <AdminContainer>
         <NoData>
-          <div className="row">
-            <div className="col-md-5 m-auto">
-              <div className="icon">
-                <i className="material-icons"> mail_outline </i>
-              </div>
-              <div className="title">No Recent Messages</div>
-              <div className="caption">
-                Appetments will send automated customer notifications,
-                reminders, confirmations and much more. Make the most of this
-                feature by saving customer contact details in Appetments and
-                give it a try!
-              </div>
-            </div>
+          <div className="icon">
+            <i className="material-icons"> mail_outline </i>
           </div>
+          <div className="title">No Recent Messages</div>
         </NoData>
       </AdminContainer>
     );

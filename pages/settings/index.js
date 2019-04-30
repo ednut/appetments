@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { color, shadowStyle } from "../../components/styles/constant";
 import AdminContainer from "../../components/AdminContainer";
 import Button from "../../components/styles/Button";
+import { Row, Col } from "antd";
 
 const SettingWrap = styled.div`
   .title {

@@ -1,3 +1,6 @@
+export const GET_USER = "GET_USER";
+export const USER_ERROR = "USER_ERROR";
+
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 export const LOGIN_ERROR = "LOGIN_ERROR";
 export const LOGIN_LOADING = "LOGIN_LOADING";
@@ -84,3 +87,15 @@ export const GET_ALL_ORDERS = "GET_ALL_ORDERS";
 export const DELETE_ORDER = "DELETE_ORDER";
 export const ORDER_ERROR = "ORDER_ERROR";
 export const ORDER_LOADING = "ORDER_LOADING";
+
+export const CREATE_PET = "CREATE_PET";
+export const GET_ALL_PETS = "GET_ALL_PETS";
+export const DELETE_PET = "DELETE_PET";
+export const PET_ERROR = "PET_ERROR";
+export const PET_LOADING = "PET_LOADING";
+
+export const CREATE_PET_CATEGORY = "CREATE_PET_CATEGORY";
+export const GET_ALL_PETS_CATEGORY = "GET_ALL_PETS_CATEGORY";
+export const DELETE_PET_CATEGORY = "DELETE_PET_CATEGORY";
+export const PET_CATEGORY_ERROR = "PET_CATEGORY_ERROR";
+export const PET_CATEGORY_LOADING = "PET_CATEGORY_LOADING";

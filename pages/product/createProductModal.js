@@ -4,6 +4,8 @@ import FormInput from "../../components/styles/FormInput";
 import Button from "../../components/styles/Button";
 import { color } from "../../components/styles/constant";
 import styled from "styled-components";
+import FormWrap from "../../components/styles/FormWrap";
+import { Row, Col } from "antd";
 
 const ModalWrap = styled.div`
   width: 55rem;
@@ -19,6 +21,9 @@ const ModalWrap = styled.div`
   footer {
     height: 5rem;
     width: 100%;
+    button {
+      float: right;
+    }
   }
 `;
 
@@ -42,9 +47,9 @@ class CreateProductModal extends Component {
           <div className="title">{this.props.title}</div>
           <FormInput>
             <form onSubmit={this.props.handleSubmit}>
-              <div className="row">
-                <div className="col-md-6">
-                  <div className="form-wrap">
+              <Row gutter={16}>
+                <Col span={12}>
+                  <FormWrap>
                     <label htmlFor="">Product Name</label>
                     <input
                       type="text"
@@ -55,11 +60,11 @@ class CreateProductModal extends Component {
                     {submitted && !name && (
                       <div className="error">Product name is required</div>
                     )}
-                  </div>
-                </div>
+                  </FormWrap>
+                </Col>
 
-                <div className="col-md-6">
-                  <div className="form-wrap">
+                <Col span={12}>
+                  <FormWrap>
                     <label htmlFor="">Category</label>
                     <select name="category" onChange={this.props.handleChange}>
                       <option>---- Select Category ----</option>
@@ -74,11 +79,11 @@ class CreateProductModal extends Component {
                     {submitted && !category && (
                       <div className="error">Category is required</div>
                     )}
-                  </div>
-                </div>
+                  </FormWrap>
+                </Col>
 
-                <div className="col-md-4">
-                  <div className="form-wrap">
+                <Col span={8}>
+                  <FormWrap>
                     <label htmlFor="">Barcode</label>
                     <input
                       type="text"
@@ -89,11 +94,11 @@ class CreateProductModal extends Component {
                     {submitted && !barcode && (
                       <div className="error">Barcode is required</div>
                     )}
-                  </div>
-                </div>
+                  </FormWrap>
+                </Col>
 
-                <div className="col-md-4">
-                  <div className="form-wrap">
+                <Col span={8}>
+                  <FormWrap>
                     <label htmlFor="">SKU</label>
                     <input
                       type="text"
@@ -104,11 +109,11 @@ class CreateProductModal extends Component {
                     {submitted && !sku && (
                       <div className="error">SKU is required</div>
                     )}
-                  </div>
-                </div>
+                  </FormWrap>
+                </Col>
 
-                <div className="col-md-4">
-                  <div className="form-wrap">
+                <Col span={8}>
+                  <FormWrap>
                     <label htmlFor="">Retail price</label>
                     <input
                       type="text"
@@ -119,11 +124,11 @@ class CreateProductModal extends Component {
                     {submitted && !retail_price && (
                       <div className="error">Retail price is required</div>
                     )}
-                  </div>
-                </div>
+                  </FormWrap>
+                </Col>
 
-                <div className="col-md-12">
-                  <div className="form-wrap">
+                <Col span={24}>
+                  <FormWrap>
                     <label htmlFor="">Product Description</label>
                     <textarea
                       name="description"
@@ -135,9 +140,9 @@ class CreateProductModal extends Component {
                         Product description is required
                       </div>
                     )}
-                  </div>
-                </div>
-              </div>
+                  </FormWrap>
+                </Col>
+              </Row>
 
               <footer>
                 <Button

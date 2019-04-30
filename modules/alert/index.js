@@ -29,9 +29,6 @@ export function success(message) {
       type: ALERT_SUCCESS,
       payload: { errType: "success", message: message }
     });
-    setTimeout(() => {
-      dispatch({ type: ALERT_CLEAR });
-    }, 3000);
   };
 }
 
@@ -45,8 +42,5 @@ export function error(message) {
       type: ALERT_ERROR,
       payload: { errType: "error", message: message }
     });
-    setTimeout(() => {
-      dispatch({ type: ALERT_CLEAR });
-    }, 3000);
   };
 }

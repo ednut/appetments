@@ -33,25 +33,7 @@ const StaffNav = styled.div`
 
 class Services extends Component {
   render() {
-    return (
-      <AdminContainer>
-        <StaffNav>
-          <ul>
-            <li>
-              <Link activeClassName="active" href="/service-groups">
-                <a>Service Groups</a>
-              </Link>
-            </li>
-            <li>
-              <Link activeClassName="active" href="/create-services">
-                <a>Services</a>
-              </Link>
-            </li>
-          </ul>
-        </StaffNav>
-        {this.props.children}
-      </AdminContainer>
-    );
+    return <AdminContainer>{this.props.children}</AdminContainer>;
   }
 }
 

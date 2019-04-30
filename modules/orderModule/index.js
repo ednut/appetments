@@ -1,6 +1,6 @@
 import { createOrder, getAllOrders, update, _delete } from "./orderServices";
 
-import { success, error } from "../alert";
+import { message } from "antd";
 import {
   CREATE_ORDER,
   GET_ALL_ORDERS,
@@ -50,12 +50,12 @@ export function createOrderRequest(data) {
           payload: true
         });
         console.log(order);
-        dispatch(success("Order created successfully"));
+        dispatch(message.success("Order created successfully"));
         dispatch({ type: ORDER_LOADING, payload: false });
       })
       .catch(err => {
         let e = err[Object.keys(err)[0]];
-        dispatch(error(e));
+        dispatch(message.error(e));
         dispatch({ type: ORDER_LOADING, payload: false });
         dispatch({ type: ORDER_ERROR, payload: err });
       });
@@ -76,7 +76,7 @@ export function getAllOrdersRequest() {
       })
       .catch(err => {
         let e = err[Object.keys(err)[0]];
-        dispatch(error(e));
+        dispatch(message.error(e));
         dispatch({ type: ORDER_LOADING, payload: false });
         dispatch({ type: ORDER_ERROR, payload: err });
       });
@@ -92,12 +92,12 @@ export function updateOrderRequest(data, orderID) {
           type: CREATE_ORDER,
           payload: true
         });
-        dispatch(success("Order updated successfully"));
+        dispatch(message.success("Order updated successfully"));
         dispatch({ type: ORDER_LOADING, payload: false });
       })
       .catch(err => {
         let e = err[Object.keys(err)[0]];
-        dispatch(error(e));
+        dispatch(message.error(e));
         dispatch({ type: ORDER_LOADING, payload: false });
         dispatch({ type: ORDER_ERROR, payload: err });
       });
@@ -113,12 +113,12 @@ export function deleteOrderRequest(id) {
           type: CREATE_ORDER,
           payload: true
         });
-        dispatch(success("Order deleted successfully"));
+        dispatch(message.success("Order deleted successfully"));
         dispatch({ type: ORDER_LOADING, payload: false });
       })
       .catch(err => {
         let e = err[Object.keys(err)[0]];
-        dispatch(error(e));
+        dispatch(message.error(e));
         dispatch({ type: ORDER_LOADING, payload: false });
         dispatch({ type: ORDER_ERROR, payload: err });
       });
