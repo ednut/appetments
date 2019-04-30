@@ -2,6 +2,9 @@
   "name": "appetment",
   "version": "1.0.0",
   "description": "Appertment App",
+  "engines": {
+    "node": "10.15.1"
+  },
   "main": "index.js",
   "scripts": {
     "dev": "next -p 3000",
