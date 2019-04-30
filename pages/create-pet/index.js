@@ -1,19 +1,19 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import styled from "styled-components";
-import { shadowStyle, color, height } from "../components/styles/constant";
+import { shadowStyle, color, height } from "../../components/styles/constant";
 import {
   getAllPetsRequest,
   createPetRequest,
   updatePetRequest,
   deletePetRequest
-} from "../modules/petModule";
-import SpinerWrap from "../components/Spinner";
-import Button from "../components/styles/Button";
+} from "../../modules/petModule";
+import SpinerWrap from "../../components/Spinner";
+import Button from "../../components/styles/Button";
 import CreatePetModal from "./pet/createPetModal";
 import UpdatePetModal from "./pet/updatePetModal";
-import NoData from "../components/NoData";
-import TableWrapper from "../components/styles/TableWrap";
+import NoData from "../../components/NoData";
+import TableWrapper from "../../components/styles/TableWrap";
 import { Table, Divider } from "antd";
 
 const PetContentWrap = styled.div`
