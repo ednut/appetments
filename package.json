@@ -1,6 +1,9 @@
 {
   "name": "appetment",
   "version": "1.0.0",
+  "engines": {
+    "node": "10.15.1"
+  },
   "description": "Appertment App",
   "main": "index.js",
   "scripts": {
