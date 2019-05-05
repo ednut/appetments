@@ -14,7 +14,7 @@ import CreateProductCategoryModal from "./createProductCategoryModal";
 import UpdateProductCategoryModal from "./updateProductCategoryModal";
 import styled from "styled-components";
 import { color, height } from "../../components/styles/constant";
-import { Table, Divider, Tag } from "antd";
+import { Table, Divider, Tag, Popconfirm } from "antd";
 
 const ContentWrap = styled.div`
   .action-wrap {
@@ -153,12 +153,14 @@ class ProductCategory extends Component {
                 Edit
               </a>
               <Divider type="vertical" />
-              <a
-                onClick={() => this.deleteProductCategory(x.id)}
-                href="javascript:;"
+              <Popconfirm
+                title="Are you sure you want to delete this product category?"
+                onConfirm={() => this.deleteProductCategory(x.id)}
+                okText="Yes"
+                cancelText="No"
               >
-                Delete
-              </a>
+                <a href="javascript:;">Delete</a>
+              </Popconfirm>
             </span>
           )
         }

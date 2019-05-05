@@ -13,14 +13,14 @@ const AdminWrapper = styled.section`
       li {
         display: inline-block;
         padding: 2rem 0;
-        color: #b4b5b6;
+        color: rgba(0, 0, 0, 0.65);
         font-size: 1.6rem;
         position: relative;
         &.with-dropdown {
           padding: 2rem 0;
           cursor: pointer;
           span {
-            color: #b4b5b6;
+            color: rgba(0, 0, 0, 0.65);
             padding: 2rem;
             font-size: 1.6rem;
             position: relative;
@@ -31,7 +31,7 @@ const AdminWrapper = styled.section`
                 width: 100%;
                 position: absolute;
                 color: #777;
-                border-bottom: 3px solid #4fc160;
+                border-bottom: 3px solid ${color.brandColor};
                 left: 0;
                 bottom: -5px;
               }
@@ -39,7 +39,7 @@ const AdminWrapper = styled.section`
           }
         }
         a {
-          color: #b4b5b6;
+          color: rgba(0, 0, 0, 0.65);
           padding: 2rem;
           font-size: 1.6rem;
           position: relative;
@@ -50,7 +50,7 @@ const AdminWrapper = styled.section`
               width: 100%;
               position: absolute;
               color: #777;
-              border-bottom: 3px solid #4fc160;
+              border-bottom: 3px solid ${color.brandColor};
               left: 0;
               bottom: -5px;
             }

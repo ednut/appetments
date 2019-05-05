@@ -1,6 +1,8 @@
 export const Users = "https://azultech.net/users/";
 export const SignupAPI = "https://azultech.net/users/";
 export const LoginAPI = "https://azultech.net/login/";
+export const GoogleLoginAPI = "https://azultech.net/users/google/login/";
+export const GoogleSignupAPI = "https://azultech.net/users/google/signup/";
 export const ComapanyAPI = "https://azultech.net/company/";
 export const LocationAPI = "https://azultech.net/locations/";
 export const StaffAPI = "https://azultech.net/staff/";
@@ -15,3 +17,7 @@ export const ClientAPi = "https://azultech.net/customers/";
 export const OrderAPi = "https://azultech.net/orders/";
 export const PetAPI = "https://azultech.net/pets/";
 export const PetCategoriesAPI = "https://azultech.net/pet-categories/";
+
+export const BankDetailsAPI = "https://azultech.net/bank-details/";
+export const MessagessAPI = "https://azultech.net/messages/";
+export const RemindersAPI = "https://azultech.net/reminders/";

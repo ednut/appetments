@@ -4,6 +4,8 @@ import FormInput from "../../components/styles/FormInput";
 import Button from "../../components/styles/Button";
 import { color } from "../../components/styles/constant";
 import styled from "styled-components";
+import FormWrap from "../../components/styles/FormWrap";
+import { Row, Col, Select } from "antd";
 
 const ModalWrap = styled.div`
   width: 55rem;
@@ -24,16 +26,17 @@ const ModalWrap = styled.div`
 
 class UpdatePetToClient extends Component {
   render() {
-    const { name, pet_type, submitted, openUpdatePet } = this.props.modalState;
+    const { name, category, submitted, openUpdatePet } = this.props.modalState;
+    console.log(category);
     return (
       <Modal open={openUpdatePet} onClose={this.props.onCloseModal}>
         <ModalWrap>
           <div className="title">{this.props.title}</div>
           <FormInput>
             <form onSubmit={this.props.handleSubmit}>
-              <div className="row">
-                <div className="col-md-6">
-                  <div className="form-wrap">
+              <Row gutter={16}>
+                <Col span={24}>
+                  <FormWrap>
                     <label htmlFor="">Name</label>
                     <input
                       type="text"
@@ -45,30 +48,30 @@ class UpdatePetToClient extends Component {
                     {submitted && !name && (
                       <div className="error">Name is required</div>
                     )}
-                  </div>
-                </div>
-                <div className="col-md-6">
-                  <div className="form-wrap">
-                    <label htmlFor="">Pets</label>
-                    <select
-                      name="pet_type"
-                      value={pet_type}
-                      onChange={this.props.handleChange}
+                  </FormWrap>
+                </Col>
+                <Col span={24}>
+                  <FormWrap>
+                    <label htmlFor="">Pet category</label>
+                    <Select
+                      onChange={this.handleChange}
+                      placeholder="Select pet category"
+                      name="category"
+                      defaultValue={category.category_name}
                     >
-                      <option value="">---- Select pets ----</option>
-                      <option value="dog">Dog</option>
-                      <option value="cat">Cat</option>
-                      <option value="bird">Bird</option>
-                      <option value="guinea pig">Guinea pig</option>
-                      <option value="reptile">Reptile</option>
-                      <option value="ferret">Ferret</option>
-                    </select>
-                    {submitted && !pet_type && (
-                      <div className="error">Pet is required</div>
+                      {this.props.categories &&
+                        this.props.categories.map(x => (
+                          <Option key={x.id} value={x.id}>
+                            {x.name}
+                          </Option>
+                        ))}
+                    </Select>
+                    {submitted && !category && (
+                      <div className="error">Pet category is required</div>
                     )}
-                  </div>
-                </div>
-              </div>
+                  </FormWrap>
+                </Col>
+              </Row>
               <footer>
                 <Button
                   buttonColor={color.brandColor}

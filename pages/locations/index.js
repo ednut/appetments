@@ -20,7 +20,7 @@ import AddStaffToLocation from "./addStaffToLocationModal";
 import styled from "styled-components";
 import { color, height } from "../../components/styles/constant";
 import TableWrapper from "../../components/styles/TableWrap";
-import { Table, Divider, Tag } from "antd";
+import { Table, Divider, Tag, Popconfirm } from "antd";
 
 const ContentWrap = styled.div`
   .action-wrap {
@@ -262,13 +262,18 @@ class Location extends Component {
                     )}
 
                     {x !== "No Staff Created" ? (
-                      <span
-                        onClick={() => this.deletePet(x.id)}
-                        className="icon"
-                        style={{ marginLeft: "8px" }}
+                      <Popconfirm
+                        title="Are you sure you want to delete this staff?"
+                        onConfirm={() =>
+                          this.props.removeStaffFromLocationRequest(x.id)
+                        }
+                        okText="Yes"
+                        cancelText="No"
                       >
-                        <i className="fas fa-times" />
-                      </span>
+                        <span className="icon" style={{ marginLeft: "8px" }}>
+                          <i className="fas fa-times" />
+                        </span>
+                      </Popconfirm>
                     ) : null}
                   </Tag>
                 );
@@ -316,9 +321,14 @@ class Location extends Component {
               </a>
 
               <Divider type="vertical" />
-              <a onClick={() => this.deleteLocation(x.id)} href="javascript:;">
-                Delete
-              </a>
+              <Popconfirm
+                title="Are you sure you want to delete this location?"
+                onConfirm={() => this.deleteLocation(x.id)}
+                okText="Yes"
+                cancelText="No"
+              >
+                <a href="javascript:;">Delete</a>
+              </Popconfirm>
             </span>
           )
         }

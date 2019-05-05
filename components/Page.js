@@ -3,7 +3,6 @@ import { createGlobalStyle } from "styled-components";
 import Router from "next/router";
 import NProgress from "nprogress";
 import Meta from "./Meta";
-import Alert from "../components/Alert";
 import "antd/dist/antd.css";
 
 NProgress.configure({ showSpinner: false });
@@ -55,14 +54,26 @@ const GlobalStyle = createGlobalStyle`
         outline: none;
       }
     }
-    .dropdown-toggle:after { content: none }
+    /* .dropdown-toggle:after { content: none }
     .ant-table-thead > tr > th{background: transparent}
     .styles_modal__gNwvD .title{
       border-bottom: none!important;
-    }
+    } */
     .ant-table-placeholder{
       border-bottom:none;
     }
+    .ant-empty-image img {
+        height: 10rem;
+        margin-top: 8rem;
+    }
+    .ant-empty-description {
+      margin: 0;
+      margin-top: 15rem;
+  }
+  .ant-dropdown-menu-item span{
+    display: inline-block;
+    width: 100%;
+  }
 `;
 
 class Page extends Component {
@@ -71,7 +82,6 @@ class Page extends Component {
       <div>
         <Meta />
         <GlobalStyle />
-        <Alert />
         {this.props.children}
       </div>
     );

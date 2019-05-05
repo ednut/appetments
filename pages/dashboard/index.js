@@ -16,7 +16,7 @@ const DashboardCard = styled.div`
     text-transform: uppercase;
     border-bottom: 1px solid #e5e5e5;
     padding: 0 1rem 1rem 1rem;
-    color: #67768c;
+    color: rgba(0,0,0,0.65);;
     font-size: 1.5rem;
     font-weight: 500;
   }
@@ -28,7 +28,7 @@ const DashboardCard = styled.div`
       &.icon {
         i {
           font-size: 5rem;
-          color: #67768c;
+          color: ${color.brandColor};
         }
       }
       &.data-title {
@@ -39,7 +39,7 @@ const DashboardCard = styled.div`
       }
     }
     .caption {
-      color: #67768c;
+      color: rgba(0,0,0,0.65);
     }
   }
 `;

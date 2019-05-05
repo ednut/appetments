@@ -58,7 +58,7 @@ class AddPetToClient extends Component {
                 </Col>
                 <Col span={24}>
                   <FormWrap>
-                    <label htmlFor="">Pets</label>
+                    <label htmlFor="">Pet category</label>
                     <Select
                       onChange={this.handleChange}
                       placeholder="Select pet category"
@@ -72,7 +72,7 @@ class AddPetToClient extends Component {
                         ))}
                     </Select>
                     {submitted && !category && (
-                      <div className="error">Pet is required</div>
+                      <div className="error">Pet category is required</div>
                     )}
                   </FormWrap>
                 </Col>

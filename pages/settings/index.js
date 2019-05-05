@@ -4,7 +4,8 @@ import styled from "styled-components";
 import { color, shadowStyle } from "../../components/styles/constant";
 import AdminContainer from "../../components/AdminContainer";
 import Button from "../../components/styles/Button";
-import { Row, Col } from "antd";
+import FormWrap from "../../components/styles/FormWrap";
+import { Row, Col, Card } from "antd";
 
 const SettingWrap = styled.div`
   .title {
@@ -31,102 +32,107 @@ class Settings extends Component {
     return (
       <AdminContainer>
         <SettingWrap className="container">
-          <div className="row marginBottom-2">
-            <div className="col-md-5">
-              <div className="title">Personal Details</div>
-              <div className="caption">
-                Set your name and contact information, the email address entered
-                here is used for your login access
-              </div>
-            </div>
-            <div className="col-md-6 offset-md-1">
-              <div className="wrapper">
-                <FormInput>
-                  <form>
-                    <div className="row">
-                      <div className="col-md-6">
-                        <div className="form-wrap">
-                          <label htmlFor="">First Name</label>
-                          <input type="text" />
+          <Row>
+            <Col span={18} offset={3}>
+              <Row gutter={16} className="marginBottom-2">
+                <Col span={10}>
+                  <div className="title">Personal Details</div>
+                  <div className="caption">
+                    Set your name and contact information, the email address
+                    entered here is used for your login access
+                  </div>
+                </Col>
+                <Col span={12} offset={2}>
+                  <Card>
+                    <FormInput>
+                      <form>
+                        <div className="row">
+                          <Col span={24}>
+                            <FormWrap>
+                              <label htmlFor="">First Name</label>
+                              <input type="text" placeholder="First Name" />
+                            </FormWrap>
+                          </Col>
+                          <Col span={24}>
+                            <FormWrap>
+                              <label htmlFor="">Last Name</label>
+                              <input type="text" placeholder="Last Name" />
+                            </FormWrap>
+                          </Col>
+                          <Col span={24}>
+                            <FormWrap>
+                              <label htmlFor="">Mobile Number</label>
+                              <input type="text" placeholder="Mobile Number" />
+                            </FormWrap>
+                          </Col>
+                          <Col span={24}>
+                            <FormWrap>
+                              <label htmlFor="">Email</label>
+                              <input type="email" placeholder="Email" />
+                            </FormWrap>
+                          </Col>
                         </div>
-                      </div>
-                      <div className="col-md-6">
-                        <div className="form-wrap">
-                          <label htmlFor="">Last Name</label>
-                          <input type="text" />
-                        </div>
-                      </div>
-                      <div className="col-md-12">
-                        <div className="form-wrap">
-                          <label htmlFor="">Mobile Number</label>
-                          <input type="text" />
-                        </div>
-                      </div>
-                      <div className="col-md-12">
-                        <div className="form-wrap">
-                          <label htmlFor="">Email</label>
-                          <input type="email" />
-                        </div>
-                      </div>
-                    </div>
-                  </form>
-                </FormInput>
-              </div>
-            </div>
-          </div>
+                      </form>
+                    </FormInput>
+                  </Card>
+                </Col>
+              </Row>
 
-          <div className="row marginBottom-2">
-            <div className="col-md-5">
-              <div className="title">Change Password</div>
-              <div className="caption">
-                To make an update, enter your exisiting password followed by a
-                new one. If you don't know your existing password, you can
-                logout and use the Reset Password link on the Sign In page.
-              </div>
-            </div>
-            <div className="col-md-6 offset-md-1">
-              <div className="wrapper">
-                <FormInput>
-                  <form>
-                    <div className="row">
-                      <div className="col-md-12">
-                        <div className="form-wrap">
-                          <label htmlFor="">Current Password</label>
-                          <input
-                            type="Password"
-                            placeholder="Current Password"
-                          />
-                        </div>
-                      </div>
-                      <div className="col-md-12">
-                        <div className="form-wrap">
-                          <label htmlFor="">New Password</label>
-                          <input type="text" placeholder="New Password" />
-                        </div>
-                      </div>
+              <Row className="marginBottom-2">
+                <Col span={10}>
+                  <div className="title">Change Password</div>
+                  <div className="caption">
+                    To make an update, enter your exisiting password followed by
+                    a new one. If you don't know your existing password, you can
+                    logout and use the Reset Password link on the Sign In page.
+                  </div>
+                </Col>
+                <Col span={12} offset={2}>
+                  <Card>
+                    <FormInput>
+                      <form>
+                        <Row>
+                          <Col span={24}>
+                            <FormWrap>
+                              <label htmlFor="">New Password</label>
+                              <input type="text" placeholder="New Password" />
+                            </FormWrap>
+                          </Col>
 
-                      <div className="col-md-12">
-                        <div className="form-wrap">
-                          <label htmlFor="">Verify Password</label>
-                          <input type="text" placeholder="Verify Password" />
-                        </div>
-                      </div>
-                    </div>
-                  </form>
-                </FormInput>
-              </div>
-            </div>
-          </div>
-          <div>
-            <Button
-              className="float-right"
-              buttonColor={color.brandColor}
-              textColor={color.whiteColor}
-            >
-              {" "}
-              Save
-            </Button>
-          </div>
+                          <Col span={24}>
+                            <FormWrap>
+                              <label htmlFor="">Verify Password</label>
+                              <input
+                                type="text"
+                                placeholder="Verify Password"
+                              />
+                            </FormWrap>
+                          </Col>
+                        </Row>
+                      </form>
+                    </FormInput>
+                  </Card>
+                </Col>
+              </Row>
+              <Row>
+                <Col span={24}>
+                  <br />
+                  <Button
+                    buttonColor={color.brandColor}
+                    textColor={color.whiteColor}
+                    style={{ float: "right" }}
+                  >
+                    {" "}
+                    Save Changes
+                  </Button>
+                  <br />
+                  <br />
+                  <br />
+                  <br />
+                </Col>
+              </Row>
+            </Col>
+          </Row>
         </SettingWrap>
       </AdminContainer>
     );

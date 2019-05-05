@@ -1,16 +1,17 @@
 import React, { Component } from "react";
+import Router from "next/router";
 import { reduxForm, Field } from "redux-form";
 import isValidEmail from "sane-email-validation";
 import FormWrap from "../../components/styles/FormWrap";
 import Link from "next/link";
 import { connect } from "react-redux";
-import { signupRequest } from "../../modules/signup";
+import { signupRequest, googleSignupRequest } from "../../modules/signup";
 import Wrap from "../../components/FormWrap";
 import FormInput from "../../components/styles/FormInput";
 import Button from "../../components/styles/Button";
 import { color } from "../../components/styles/constant";
-import GoogleSignIn from "../../components/GoogleSignIn";
-import { Row, Col, Select, Icon } from "antd";
+import { GoogleLogin } from "react-google-login";
+import { Row, Col, message, Icon } from "antd";
 
 const RenderInput = ({ input, meta, label }) => (
   <FormWrap>
@@ -51,15 +52,41 @@ const validate = values => {
   return errors;
 };
 
-// const onSignIn = googleUser => {
-//   var profile = googleUser.getBasicProfile();
-//   console.log("ID: " + profile.getId()); // Do not send to your backend! Use an ID token instead.
-//   console.log("Name: " + profile.getName());
-//   console.log("Image URL: " + profile.getImageUrl());
-//   console.log("Email: " + profile.getEmail()); // This is null if the 'email' scope is not present.
-// };
+class GoogleButton extends Component {
+  render() {
+    const googleSigninSuccess = response => {
+      let user = response.profileObj;
+      const obj = {
+        google_id: user.googleId,
+        first_name: user.givenName,
+        last_name: user.familyName,
+        email: user.email
+      };
+      this.props.signUp(obj);
+    };
 
-const Signup = ({ handleSubmit, signupRequest, loading }) => (
+    const googleSigninFailure = response => {
+      console.log(response);
+      message.error("Google signup not succesful", 5);
+    };
+
+    return (
+      <GoogleLogin
+        clientId="624757778024-t7cf1t4c1uvovhdcl53rsuhpko4e6nle.apps.googleusercontent.com" //CLIENTID NOT CREATED YET
+        buttonText="SIGNUP WITH GOOGLE"
+        onSuccess={googleSigninSuccess}
+        onFailure={googleSigninFailure}
+      />
+    );
+  }
+}
+
+const Signup = ({
+  handleSubmit,
+  signupRequest,
+  googleSignupRequest,
+  loading
+}) => (
   <Wrap>
     <div className="caption">Create an account</div>
     <div className="wrap">
@@ -126,12 +153,22 @@ const Signup = ({ handleSubmit, signupRequest, loading }) => (
                   )}
                 </Button>
               </div>
-              <br />
-              {/* <div className="g-signin2" data-onsuccess="onSignIn" /> */}
-              {/* <GoogleSignIn /> */}
             </Row>
           </form>
         </FormInput>
+        <div
+          style={{
+            width: "100%",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            flexDirection: "column",
+            marginTop: "2rem"
+          }}
+        >
+          <h4>OR</h4>
+          <GoogleButton signUp={googleSignupRequest} />
+        </div>
       </div>
     </div>
     <div className="footer-info">
@@ -155,5 +192,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { signupRequest }
+  { signupRequest, googleSignupRequest }
 )(SignupPage);

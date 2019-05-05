@@ -66,41 +66,7 @@ const featuresRotated = [
   }
 ];
 
-// const TextRotation = styled(ReactTextRotator)`
-//   font-size: 2rem;
-//   color: ${color.lightShade};
-//   font-weight: bold;
-// `;
-
 class LandingPage extends React.Component {
-  // constructor(props){
-  //         super(props);
-  //         this.state = {
-  //           top: "",
-  //           height: "",
-  //           scroll: "",
-  //          };
-  //         this.handleScroll = this.handleScroll.bind(this);
-  //     }
-  //
-  //
-  //   handleScroll() {
-  //       this.setState({scroll: window.scrollY});
-  //   }
-  //
-  //   componentDidMount() {
-  //         const el = document.querySelector('Header');
-  //         console.log(el, "--------->")
-  //         this.setState({top: el.offsetTop, height: el.offsetHeight});
-  //         window.addEventListener('scroll', this.handleScroll);
-  //   }
-  //
-  //   componentDidUpdate() {
-  //       this.state.scroll > this.state.top ?
-  //           document.body.style.paddingTop = `${this.state.height}px` :
-  //           document.body.style.paddingTop = 0;
-  //   }
-
   render() {
     return (
       <React.Fragment>

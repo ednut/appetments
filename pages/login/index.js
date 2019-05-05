@@ -4,7 +4,7 @@ import isValidEmail from "sane-email-validation";
 
 import FormWrap from "../../components/styles/FormWrap";
 import { connect } from "react-redux";
-import { loginRequest } from "../../modules/login";
+import { loginRequest, googleLoginRequest } from "../../modules/login";
 import { PropTypes } from "prop-types";
 import Router from "next/router";
 import NProgress from "nprogress";
@@ -13,7 +13,9 @@ import Wrap from "../../components/FormWrap";
 import FormInput from "../../components/styles/FormInput";
 import Button from "../../components/styles/Button";
 import { color } from "../../components/styles/constant";
-import { Icon } from "antd";
+import { Icon, message } from "antd";
+
+import { GoogleLogin } from "react-google-login";
 
 const RenderInput = ({ input, meta, label }) => (
   <FormWrap>
@@ -37,7 +39,6 @@ const RenderPassword = ({ input, meta, label }) => (
 
 const validate = values => {
   const errors = {};
-  console.log(values);
   if (!values.username) {
     errors.username = "Email is required";
   } else if (!isValidEmail(values.username)) {
@@ -50,9 +51,39 @@ const validate = values => {
   return errors;
 };
 
+class GoogleButton extends Component {
+  componentDidMount() {
+    console.log("called");
+    this.props.login({ google_id: "101391954422435368542" });
+  }
+
+  render() {
+    const googleLoginSuccess = response => {
+      let user = response.profileObj;
+      const obj = {
+        google_id: user.googleId
+      };
+      this.props.login(obj);
+    };
+
+    const googleLoginFailure = response => {
+      console.log(response);
+      message.error("Google login not succesful", 5);
+    };
+
+    return (
+      <GoogleLogin
+        clientId="624757778024-t7cf1t4c1uvovhdcl53rsuhpko4e6nle.apps.googleusercontent.com" //CLIENTID NOT CREATED YET
+        buttonText="LOGIN WITH GOOGLE"
+        onSuccess={googleLoginSuccess}
+        onFailure={googleLoginFailure}
+      />
+    );
+  }
+}
+
 const Login = ({ handleSubmit, submitting, loginRequest, loading }) => (
   <Wrap>
-    {/* {console.log(loginRequest)} */}
     <div className="caption">Login to your account</div>
     <div className="wrap">
       <div className="login-wrap">
@@ -89,6 +120,19 @@ const Login = ({ handleSubmit, submitting, loginRequest, loading }) => (
             </Button>
           </form>
         </FormInput>
+        <div
+          style={{
+            width: "100%",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            flexDirection: "column",
+            marginTop: "2rem"
+          }}
+        >
+          <h4>OR</h4>
+          <GoogleButton login={googleLoginRequest} />
+        </div>
       </div>
     </div>
     <div className="footer-info">
@@ -111,5 +155,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { loginRequest }
+  { loginRequest, googleLoginRequest }
 )(LoginPage);

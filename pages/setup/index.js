@@ -89,6 +89,11 @@ class Setup extends Component {
                         <a>Discount Types</a>
                       </Link>
                     </li>
+                    <li>
+                      <Link href="#">
+                        <a>Account Details</a>
+                      </Link>
+                    </li>
                   </ul>
                 </Card>
               </Col>

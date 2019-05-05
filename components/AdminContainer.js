@@ -8,51 +8,6 @@ import Link from "../components/Link";
 import { Icon, Menu, Dropdown } from "antd";
 
 class AdminContainer extends Component {
-  state = {
-    displayStaff: false,
-    displayService: false,
-    displayInventory: false
-  };
-
-  showDropdownMenuStaff = event => {
-    event.preventDefault();
-    this.setState({ displayStaff: true }, () => {
-      document.addEventListener("click", this.hideDropdownMenuStaff);
-    });
-  };
-
-  hideDropdownMenuStaff = () => {
-    this.setState({ displayStaff: false }, () => {
-      document.removeEventListener("click", this.hideDropdownMenuStaff);
-    });
-  };
-
-  showDropdownMenuService = event => {
-    event.preventDefault();
-    this.setState({ displayService: true }, () => {
-      document.addEventListener("click", this.hideDropdownMenuService);
-    });
-  };
-
-  hideDropdownMenuService = () => {
-    this.setState({ displayService: false }, () => {
-      document.removeEventListener("click", this.hideDropdownMenuService);
-    });
-  };
-
-  showDropdownMenuInventory = event => {
-    event.preventDefault();
-    this.setState({ displayInventory: true }, () => {
-      document.addEventListener("click", this.hideDropdownMenuInventory);
-    });
-  };
-
-  hideDropdownMenuInventory = () => {
-    this.setState({ displayInventory: false }, () => {
-      document.removeEventListener("click", this.hideDropdownMenuInventory);
-    });
-  };
-
   componentDidMount() {
     this.props.authUser();
     this.props.getUserRequest();
@@ -98,6 +53,46 @@ class AdminContainer extends Component {
         <Menu.Item key="1">
           <Link href="/create-products">
             <a>Product</a>
+          </Link>
+        </Menu.Item>
+      </Menu>
+    );
+
+    const setup = (
+      <Menu>
+        <Menu.Item key="0">
+          <Link href="/company-details">
+            <a>Company Details</a>
+          </Link>
+        </Menu.Item>
+        <Menu.Item key="1">
+          <Link href="/locations">
+            <a>Locations</a>
+          </Link>
+        </Menu.Item>
+        <Menu.Item key="2">
+          <Link href="/pet-category">
+            <a>Pet Categories</a>
+          </Link>
+        </Menu.Item>
+        <Menu.Item key="3">
+          <Link href="/calender-settings">
+            <a>Calendar Settings</a>
+          </Link>
+        </Menu.Item>
+        <Menu.Item key="4">
+          <Link href="#">
+            <a>Client Notifications</a>
+          </Link>
+        </Menu.Item>
+        <Menu.Item key="5">
+          <Link href="#">
+            <a>Discount Types</a>
+          </Link>
+        </Menu.Item>
+        <Menu.Item key="6">
+          <Link href="#">
+            <a>Account Details</a>
           </Link>
         </Menu.Item>
       </Menu>
@@ -170,12 +165,12 @@ class AdminContainer extends Component {
                 </a>
               </Link>
             </li>
-            <li>
-              <Link activeClassName="active" href="/setup">
-                <a>
-                  <span className="text">Setup</span>
-                </a>
-              </Link>
+            <li className="with-dropdown">
+              <Dropdown overlay={setup} trigger={["click"]}>
+                <span className="text">
+                  Setup&nbsp;&nbsp; <Icon type="down" />
+                </span>
+              </Dropdown>
             </li>
           </ul>
         </div>

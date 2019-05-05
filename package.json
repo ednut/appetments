@@ -9,7 +9,7 @@
   "scripts": {
     "dev": "next -p 3000",
     "build": "next build",
-    "start": "next start -p $PORT",
+    "start": "next start  -p $PORT",
     "heroku-postbuild": "next build"
   },
   "author": "Adegbite Babatunde",
@@ -26,11 +26,12 @@
     "nprogress": "^0.2.0",
     "prop-types": "^15.7.2",
     "rc-color-picker": "^1.2.6",
-    "react": "^16.8.2",
+    "react": "^16.8.6",
     "react-adopt": "^0.6.0",
     "react-big-calendar": "^0.20.4",
     "react-datepicker": "^2.3.0",
     "react-dom": "^16.8.6",
+    "react-google-login": "^5.0.4",
     "react-redux": "^7.0.1",
     "react-responsive-modal": "^3.6.0",
     "react-select": "^2.4.2",

@@ -15,7 +15,7 @@ import CreateServiceGroupModal from "./services/createServiceGroupModal";
 import UpdateServiceGroupModal from "./services/updateServiceGroupModal";
 import NoData from "../components/NoData";
 import TableWrapper from "../components/styles/TableWrap";
-import { Table, Divider, Tag } from "antd";
+import { Table, Divider, Popconfirm } from "antd";
 
 const ContentWrap = styled.div`
   .action-wrap {
@@ -182,12 +182,14 @@ class ServiceGroups extends Component {
               </a>
 
               <Divider type="vertical" />
-              <a
-                onClick={() => this.deleteServiceGroup(x.id)}
-                href="javascript:;"
+              <Popconfirm
+                title="Are you sure you want to delete this service group?"
+                onConfirm={() => this.deleteServiceGroup(x.id)}
+                okText="Yes"
+                cancelText="No"
               >
-                Delete
-              </a>
+                <a href="javascript:;">Delete</a>
+              </Popconfirm>
             </span>
           )
         }

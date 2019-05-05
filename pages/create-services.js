@@ -18,7 +18,7 @@ import CreateServiceModal from "./services/createServiceModal";
 import UpdateServiceModal from "./services/updateServiceModal";
 import AddStaffToService from "./services/addStaffToServiceModal";
 import NoData from "../components/NoData";
-import { Table, Divider, Tag } from "antd";
+import { Table, Divider, Tag, Popconfirm } from "antd";
 
 const ContentWrap = styled.div`
   .action-wrap {
@@ -247,13 +247,18 @@ class CreateService extends Component {
                     )}
 
                     {x !== "No Staff Created" ? (
-                      <span
-                        // onClick={() => this.deletePet(x.id)}
-                        className="icon"
-                        style={{ marginLeft: "8px" }}
+                      <Popconfirm
+                        title="Are you sure you want to delete this staff?"
+                        onConfirm={() =>
+                          console.log("functionality not present yet")
+                        }
+                        okText="Yes"
+                        cancelText="No"
                       >
-                        <i className="fas fa-times" />
-                      </span>
+                        <span className="icon" style={{ marginLeft: "8px" }}>
+                          <i className="fas fa-times" />
+                        </span>
+                      </Popconfirm>
                     ) : null}
                   </Tag>
                 );
@@ -291,9 +296,14 @@ class CreateService extends Component {
               </a>
 
               <Divider type="vertical" />
-              <a onClick={() => this.deleteService(x.id)} href="javascript:;">
-                Delete
-              </a>
+              <Popconfirm
+                title="Are you sure you want to delete this service?"
+                onConfirm={() => this.deleteService(x.id)}
+                okText="Yes"
+                cancelText="No"
+              >
+                <a href="javascript:;">Delete</a>
+              </Popconfirm>
             </span>
           )
         }

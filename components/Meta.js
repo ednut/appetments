@@ -25,6 +25,12 @@ const Meta = () => (
       href="https://fonts.googleapis.com/css?family=Fira+Sans:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i"
       rel="stylesheet"
     />
+    <link rel="stylesheet" type="text/css" href="/static/nprogress.css" />
+    <script src="https://apis.google.com/js/platform.js" async defer />
+    <meta
+      name="google-signin-client_id"
+      content="778297059235-1h7gcqmtgihatq7f7l5fe01qo0prfipd.apps.googleusercontent.com"
+    />
   </Head>
 );
 

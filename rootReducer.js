@@ -17,6 +17,8 @@ import productVariantReducer from "./modules/productVariantModule";
 import clientReducer from "./modules/clientModule";
 import petReducer from "./modules/petModule";
 import petCategoryReducer from "./modules/petCategoryModule";
+import bankDetailsReducer from "./modules/bankDetailsModule";
+import messagesReducer from "./modules/messagesModule";
 
 export const rootReducer = combineReducers({
   user: userReducer,
@@ -35,5 +37,7 @@ export const rootReducer = combineReducers({
   orderReducer: orderReducer,
   petReducer: petReducer,
   petCategoryReducer: petCategoryReducer,
+  bankDetailsReducer: bankDetailsReducer,
+  messagesReducer: messagesReducer,
   form: formReducer
 });

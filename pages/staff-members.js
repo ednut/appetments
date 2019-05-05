@@ -15,7 +15,7 @@ import CreateStaffModal from "./staff/createStaffModal";
 import UpdateStaffModal from "./staff/updateStaffModal";
 import NoData from "../components/NoData";
 import TableWrapper from "../components/styles/TableWrap";
-import { Table, Divider } from "antd";
+import { Table, Divider, Popconfirm } from "antd";
 
 const StaffContentWrap = styled.div`
   position: relative;
@@ -172,9 +172,14 @@ class StaffMembers extends Component {
               </a>
 
               <Divider type="vertical" />
-              <a onClick={() => this.deleteStaff(x.id)} href="javascript:;">
-                Delete
-              </a>
+              <Popconfirm
+                title="Are you sure you want to delete this staff?"
+                onConfirm={() => this.deleteStaff(x.id)}
+                okText="Yes"
+                cancelText="No"
+              >
+                <a href="javascript:;">Delete</a>
+              </Popconfirm>
             </span>
           )
         }

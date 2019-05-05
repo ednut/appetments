@@ -16,7 +16,7 @@ Router.onRouteChangeError = () => {
 };
 
 const Wrap = styled.section`
-  height: 100vh;
+  min-height: 100vh;
   background-image: linear-gradient(
     to right,
     #f6f6fa,

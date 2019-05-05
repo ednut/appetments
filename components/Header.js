@@ -5,6 +5,7 @@ import Button from "../components/styles/Button";
 import Cookies from "js-cookie";
 import styled, { css } from "styled-components";
 import { Row, Col } from "antd";
+import { logout } from "../services/userService";
 
 const IconHolder = styled.div`
   display: flex;
@@ -70,13 +71,20 @@ const Header = props => (
                 </li>
               </React.Fragment>
             ) : (
-              <li className="signup">
-                <Link href="/dashboard">
-                  <Button noHover withBorder radius={`3rem`}>
-                    Dashboard
-                  </Button>
-                </Link>
-              </li>
+              <React.Fragment>
+                <li>
+                  <Link href="/">
+                    <a onClick={logout}>Logout</a>
+                  </Link>
+                </li>
+                <li className="signup">
+                  <Link href="/dashboard">
+                    <Button noHover withBorder radius={`3rem`}>
+                      Dashboard
+                    </Button>
+                  </Link>
+                </li>
+              </React.Fragment>
             )}
           </ul>
         </Col>

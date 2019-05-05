@@ -159,7 +159,7 @@ class PetCategoryMembers extends Component {
 
               <Divider type="vertical" />
               <Popconfirm
-                title="Are you sure delete this category?"
+                title="Are you sure you want to delete this category?"
                 onConfirm={() => this.deletePetCategory(x.id)}
                 okText="Yes"
                 cancelText="No"

@@ -6,7 +6,7 @@ import { color, shadowStyle } from "../components/styles/constant";
 import { Spin, Icon, Menu, Dropdown } from "antd";
 
 const MenuWrap = styled.div`
-  background-color: #70973b;
+  background-color: #17977c;
   color: ${color.whiteColor};
   width: 100%;
   height: 6.5rem;
@@ -16,6 +16,7 @@ const MenuWrap = styled.div`
     flex-basis: 27%;
     height: 100%;
     position: relative;
+    overflow: hidden;
     a {
       display: block;
       width: 100%;
@@ -40,8 +41,9 @@ const MenuWrap = styled.div`
     span.logoDog {
       display: block;
       position: absolute;
-      right: -17.4rem;
+      right: -12rem;
       top: -1px;
+      width: 80%;
     }
   }
   .search-sec {
@@ -55,7 +57,7 @@ const MenuWrap = styled.div`
       padding: 0 1rem;
       display: flex;
       i {
-        flex-basis: 10%;
+        flex-basis: 7%;
         color: #fff;
         opacity: 1 !important;
         line-height: 45px;
@@ -79,24 +81,44 @@ const MenuWrap = styled.div`
       }
       input::-webkit-input-placeholder {
         color: #fff !important;
-        font-weight: 600;
+        font-weight: 400;
       }
 
       input:-moz-placeholder {
         /* Firefox 18- */
         color: #fff !important;
-        font-weight: 600;
+        font-weight: 400;
       }
 
       input::-moz-placeholder {
         /* Firefox 19+ */
         color: #fff !important;
-        font-weight: 600;
+        font-weight: 400;
       }
 
       input:-ms-input-placeholder {
         color: #fff !important;
-        font-weight: 600;
+        font-weight: 400;
+      }
+
+      input:focus {
+        &::-webkit-input-placeholder {
+          opacity: 0.3;
+        }
+
+        &:-moz-placeholder {
+          /* Firefox 18- */
+          opacity: 0.3;
+        }
+
+        &::-moz-placeholder {
+          /* Firefox 19+ */
+          opacity: 0.3;
+        }
+
+        &:-ms-input-placeholder {
+          opacity: 0.3;
+        }
       }
     }
   }
@@ -114,8 +136,12 @@ const MenuWrap = styled.div`
         margin-left: 2rem;
         line-height: 6.4rem;
         font-weight: 600;
+        a {
+          color: #fff;
+        }
         i {
           font-size: 20px;
+          padding-top: 23px;
         }
       }
     }
@@ -125,7 +151,7 @@ const MenuWrap = styled.div`
       border-radius: 50%;
       background: white;
       margin-top: 13px;
-      background-image: url("https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500");
+      background-image: url("https://www.w3schools.com/howto/img_avatar.png");
       background-repeat: no-repeat;
       background-size: 100% auto;
       background-position: top;
@@ -286,7 +312,7 @@ class SubNav extends Component {
                   this.props.user.last_name
                 }`
               ) : (
-                <Spin indicator={antIcon} />
+                <Spin style={{ marginTop: "-17px" }} indicator={antIcon} />
               )}
             </li>
             <li>
@@ -295,7 +321,11 @@ class SubNav extends Component {
               </Dropdown>
             </li>
             <li>
-              <i className="fas fa-globe-americas" />
+              <Link href="/messages">
+                <a>
+                  <i className="fas fa-globe-americas" />
+                </a>
+              </Link>
             </li>
           </ul>
         </div>

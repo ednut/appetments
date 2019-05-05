@@ -24,7 +24,7 @@ import UpdatePetToClient from "./updatePetToClientModal";
 import styled from "styled-components";
 import { color, height } from "../../components/styles/constant";
 import NoData from "../../components/NoData";
-import { Table, Divider, Tag } from "antd";
+import { Table, Divider, Tag, Popconfirm } from "antd";
 
 const ContentWrap = styled.div`
   .action-wrap {
@@ -186,7 +186,6 @@ class Client extends Component {
   };
 
   addingPetToClient = x => {
-    console.log(x);
     this.setState({
       id: x.id
     });
@@ -209,7 +208,7 @@ class Client extends Component {
     this.setState({
       id: pet.id,
       name: pet.name,
-      category: pet.category,
+      category: pet,
       openUpdatePet: true
     });
   };
@@ -259,31 +258,37 @@ class Client extends Component {
           dataIndex: "pet",
           render: pets => (
             <span>
-              {pets.map(x => {
+              {pets.map(y => {
                 return (
-                  <Tag key={x}>
-                    {x !== "No Pet Created" ? (
-                      <span
-                        onClick={() => {
-                          this.updatePet(x);
-                        }}
-                      >
-                        {x}
-                      </span>
-                    ) : (
-                      <span>{x}</span>
-                    )}
+                  Array.isArray(y) &&
+                  y.map(x => (
+                    <Tag key={x.id}>
+                      {x !== "No Pet Created" ? (
+                        <span
+                          onClick={() => {
+                            this.updatePet(x);
+                          }}
+                        >
+                          {x.name}
+                        </span>
+                      ) : (
+                        <span>{x.name}</span>
+                      )}
 
-                    {x !== "No Pet Created" ? (
-                      <span
-                        onClick={() => this.deletePet(x.id)}
-                        className="icon"
-                        style={{ marginLeft: "8px" }}
-                      >
-                        <i className="fas fa-times" />
-                      </span>
-                    ) : null}
-                  </Tag>
+                      {x !== "No Pet Created" ? (
+                        <Popconfirm
+                          title="Are you sure you want to delete this pet?"
+                          onConfirm={() => this.deletePet(x.id)}
+                          okText="Yes"
+                          cancelText="No"
+                        >
+                          <span className="icon" style={{ marginLeft: "8px" }}>
+                            <i className="fas fa-times" />
+                          </span>
+                        </Popconfirm>
+                      ) : null}
+                    </Tag>
+                  ))
                 );
               })}
             </span>
@@ -330,9 +335,14 @@ class Client extends Component {
               )}
 
               <Divider type="vertical" />
-              <a onClick={() => this.deleteClient(x.id)} href="javascript:;">
-                Delete
-              </a>
+              <Popconfirm
+                title="Are you sure you want to delete this client?"
+                onConfirm={() => this.deleteClient(x.id)}
+                okText="Yes"
+                cancelText="No"
+              >
+                <a href="javascript:;">Delete</a>
+              </Popconfirm>
             </span>
           )
         }
@@ -347,12 +357,12 @@ class Client extends Component {
           pet:
             x.pets.map(function(pet) {
               let arr = [];
-              arr.push(pet.name);
+              arr.push(pet);
               return arr;
             }).length > 0
               ? x.pets.map(function(pet) {
                   let arr = [];
-                  arr.push(pet.name);
+                  arr.push(pet);
                   return arr;
                 })
               : ["No Pet Created"],
@@ -410,6 +420,7 @@ class Client extends Component {
               onCloseModal={this.onCloseUpdatePetModal}
               handleChange={this.handleChange}
               handleSubmit={this.handlePetUpdateSubmit}
+              categories={this.props.petCategories && this.props.petCategories}
               loading={this.props.loading}
               title={"Edit Pet"}
             />

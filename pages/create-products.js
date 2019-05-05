@@ -31,7 +31,7 @@ import ProductDetails from "./product/productDetailsModal";
 import styled from "styled-components";
 import { color, height } from "../components/styles/constant";
 import NoData from "../components/NoData";
-import { Table, Divider, Tag } from "antd";
+import { Table, Divider, Tag, Popconfirm } from "antd";
 
 const ContentWrap = styled.div`
   .action-wrap {
@@ -370,9 +370,14 @@ class CreateProduct extends Component {
                 Edit
               </a>
               <Divider type="vertical" />
-              <a onClick={() => this.deleteProduct(x.id)} href="javascript:;">
-                Delete
-              </a>
+              <Popconfirm
+                title="Are you sure you want to delete this product?"
+                onConfirm={() => this.deleteProduct(x.id)}
+                okText="Yes"
+                cancelText="No"
+              >
+                <a href="javascript:;">Delete</a>
+              </Popconfirm>
             </span>
           )
         }

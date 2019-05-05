@@ -223,10 +223,10 @@ const CalenderWrap = styled.div`
     border: none;
     box-shadow: none;
     margin: 0;
-    padding: 2px 5px;
-    background-color: #3174ad;
-    border-radius: 5px;
-    color: #fff;
+    padding: 10px 10px;
+    background-color: rgb(204, 231, 255);
+    border-radius: 0px;
+    color: #56616b;
     cursor: pointer;
     width: 100%;
     text-align: left;
@@ -505,7 +505,7 @@ const CalenderWrap = styled.div`
     right: 0;
   }
   .rbc-day-slot .rbc-event {
-    border: 1px solid #265985;
+    border: 1px solid transparent;
     display: -webkit-flex;
     display: -ms-flexbox;
     display: flex;
@@ -519,23 +519,38 @@ const CalenderWrap = styled.div`
     align-items: flex-start;
     overflow: hidden;
     position: absolute;
+
+    display: flex !important;
+    flex-direction: column-reverse !important;
+    justify-content: flex-end !important;
   }
+
   .rbc-day-slot .rbc-event-label {
     -webkit-flex: none;
     -ms-flex: none;
     flex: none;
     padding-right: 5px;
     width: auto;
+    padding-top: 5px;
   }
+
   .rbc-day-slot .rbc-event-content {
     width: 100%;
-    -webkit-flex: 1 1 0;
+    text-transform: capitalize;
+    ${'' /* -webkit-flex: 1 1 0;
     -ms-flex: 1 1 0px;
     flex: 1 1 0;
     word-wrap: break-word;
     line-height: 1;
     height: 100%;
-    min-height: 1em;
+    min-height: 1em; */}
+  }
+  .rbc-day-slot .rbc-event-content::after {
+    width: 20px;
+    height: 20px;
+    background: #fff;
+    position: absolute;
+    border-radius: 100%;
   }
   .rbc-day-slot .rbc-time-slot {
     border-top: 1px solid #f7f7f7;

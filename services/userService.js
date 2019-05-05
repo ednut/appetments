@@ -6,7 +6,9 @@ import {
   SignupAPI,
   ComapanyAPI,
   LocationsAPI,
-  StaffAPI
+  StaffAPI,
+  GoogleLoginAPI,
+  GoogleSignupAPI
 } from "../Config";
 
 export const Login = postData => {
@@ -20,6 +22,17 @@ export const Login = postData => {
     .then(user => user);
 };
 
+export const googleLogin = postData => {
+  const requestOptions = {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(postData)
+  };
+  return Fetch(GoogleLoginAPI, requestOptions)
+    .then(handleResponse)
+    .then(user => user);
+};
+
 export const Signup = postData => {
   const requestOptions = {
     method: "POST",
@@ -27,6 +40,17 @@ export const Signup = postData => {
     body: JSON.stringify(postData)
   };
   return Fetch(SignupAPI, requestOptions)
+    .then(handleResponse)
+    .then(user => user);
+};
+
+export const GoogleSignup = postData => {
+  const requestOptions = {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(postData)
+  };
+  return Fetch(GoogleSignupAPI, requestOptions)
     .then(handleResponse)
     .then(user => user);
 };
@@ -139,7 +163,7 @@ function handleResponse(response) {
         // logout();
         Router.push("/");
       }
-      const error = data || data.message || response.statusText;
+      const error = data || data.message || response.statusText || [];
       return Promise.reject(error);
     }
     // console.log(data);
