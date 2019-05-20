@@ -57,7 +57,7 @@ const Wrap = styled.section`
     margin-top: 2rem;
     box-shadow: 0 0 0 0.1rem rgba(0, 0, 0, 0.01),
       0 0.2rem 0.3rem rgba(0, 0, 0, 0.04);
-    flex-basis: 35%;
+    flex-basis: 45%;
   }
   .footer-info {
     padding: 1rem;

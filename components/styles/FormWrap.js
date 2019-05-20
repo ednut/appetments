@@ -19,14 +19,14 @@ const FormWrap = styled.div`
   }
   &[focus-within] {
     border-color: rgba(0, 0, 0, 0.1) !important;
-    background-color: #e7e7e7;
+    background-color: rgba(231, 231, 231, 0.4);
     label {
       opacity: 0.4;
     }
   }
   &:focus-within {
     border-color: rgba(0, 0, 0, 0.1) !important;
-    background-color: #e7e7e7;
+    background-color: rgba(231, 231, 231, 0.4);
     label {
       opacity: 0.4;
     }

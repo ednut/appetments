@@ -6,11 +6,11 @@ const Meta = () => (
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="shortcut icon" href="/static/images/favicon.png" />
     <title>Appetments</title>
+
     <link
       rel="stylesheet"
-      href="https://use.fontawesome.com/releases/v5.6.1/css/all.css"
-      integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP"
-      crossOrigin="anonymous"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      rel="stylesheet"
     />
     <link
       rel="stylesheet"
@@ -26,6 +26,14 @@ const Meta = () => (
       rel="stylesheet"
     />
     <link rel="stylesheet" type="text/css" href="/static/nprogress.css" />
+
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.6.1/css/all.css"
+      integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP"
+      crossOrigin="anonymous"
+    />
+
     <script src="https://apis.google.com/js/platform.js" async defer />
     <meta
       name="google-signin-client_id"

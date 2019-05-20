@@ -46,6 +46,7 @@ export function loginRequest(postData) {
           type: LOGIN_SUCCESS,
           payload: user
         });
+        console.log(user);
         let ed = moment(user.expiry_date).format("h:mm:ss");
         let convertHourstoDays = x => {
           let timeArray = x.split(":");
@@ -72,11 +73,13 @@ export function loginRequest(postData) {
       },
       err => {
         let e = err[Object.keys(err)[0]];
-        dispatch(message.error(e));
+        message.error(e);
         dispatch({ type: LOGIN_LOADING, payload: false });
         dispatch({ type: LOGIN_ERROR, payload: err });
         if (err.message) {
-          dispatch(error(err.message));
+          message.error(err.message);
+        } else {
+          return;
         }
       }
     );
@@ -119,7 +122,7 @@ export function googleLoginRequest(postData) {
       },
       err => {
         let e = err[Object.keys(err)[0]];
-        dispatch(message.error(e));
+        message.error(e);
         dispatch({ type: LOGIN_LOADING, payload: false });
         dispatch({ type: LOGIN_ERROR, payload: err });
         if (err.message) {

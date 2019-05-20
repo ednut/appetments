@@ -12,54 +12,50 @@ import { color, shadowStyle } from "../../components/styles/constant";
 import AdminContainer from "../../components/AdminContainer";
 import Button from "../../components/styles/Button";
 import { Row, Col, Card } from "antd";
+import FormWrap from "../../components/styles/FormWrap";
 
 const SettingWrap = styled.div`
-  .title {
-    font-weight: 600;
-    font-size: 1.7rem;
-    margin-bottom: 1.5rem;
-    color: ${color.brandColor};
+  .page-title {
+    font-weight: 400;
+    font-size: 20px;
   }
-  .wrapper {
-    padding: 2rem 4rem;
-    background-color: ${color.whiteColor};
-    box-shadow: ${shadowStyle.shadow};
-    border-radius: 0.5rem;
-  }
-  label {
-    font-weight: 600;
-    color: #888;
-    font-size: 1.3rem;
-  }
-  .cont {
-    font-size: 1.7rem;
-    line-height: 2rem;
-    margin-bottom: 1.5rem;
-  }
-  .marginBottom-2 {
-    margin-bottom: 4rem;
-  }
-  button {
-    width: 6rem;
-    height: 6rem;
-    border-radius: 50%;
-    border: none;
-    background-color: #17977c;
-    color: #fff;
-    animation: moveInBottom 1s linear;
-    transition: all 0.2s;
-    padding-left: 5px;
-    box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.2);
-    position: fixed;
-    bottom: 50px;
-    right: 40px;
-    cursor: pointer;
-    outline: none;
-    i {
-      font-size: 24px;
+  .page-content {
+    margin-top: 4rem;
+    margin-bottom: 5rem;
+    .userInfo {
+      margin-bottom: 5rem;
+      .title {
+        font-weight: 600;
+        font-size: 20px;
+        padding-bottom: 5px;
+      }
+      .user-avata {
+        width: 10rem;
+        height: 10rem;
+        border-radius: 50%;
+        display: inline-block;
+        text-align: center;
+        vertical-align: text-bottom;
+        background: #2e977b;
+        color: #fff;
+        font-weight: 600;
+        font-size: 40px;
+        padding-top: 15px;
+        color: #fff;
+        font-weight: 600;
+        font-size: 40px;
+        padding-top: 15px;
+      }
+      .user-fullname {
+        font-size: 18px;
+        margin-left: 20px;
+        vertical-align: top;
+        padding-top: 33px;
+        display: inline-block;
+      }
     }
-    &:hover {
-      transform: translateY(-0.3rem);
+    button {
+      float: right;
     }
   }
 `;
@@ -158,13 +154,95 @@ class Company extends Component {
               loading={this.props.loading}
               title={"Update Calender Settings"}
             />
-            <div className="action-wrap">
+            {/* <div className="action-wrap">
               <button onClick={this.updateInput}>
                 <i className="far fa-edit" />
               </button>
+            </div> */}
+
+            <div className="page-content">
+              <Row>
+                <Col span={14} offset={5}>
+                  <div className="userInfo">
+                    <div className="title">Calender Settings</div>
+                    <div className="caption">
+                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                      Quo perferendis mollitia molestias inventore! Quos,
+                      adipisicing elit. Quo perferendis mollitia molestias
+                      inventore! Quos, quidem.
+                    </div>
+                  </div>
+                  <FormInput>
+                    <form>
+                      <Row gutter={16}>
+                        <Col span={8}>
+                          <FormWrap>
+                            <label htmlFor="">Hours bookable in advance</label>
+                            <input
+                              type="text"
+                              name="first_name"
+                              defaultValue="3"
+                            />
+                          </FormWrap>
+                        </Col>
+                        <Col span={8}>
+                          <FormWrap>
+                            <label htmlFor="">
+                              Max day bookable in advance
+                            </label>
+                            <input
+                              type="text"
+                              name="last_name"
+                              defaultValue="10"
+                            />
+                          </FormWrap>
+                        </Col>
+                        <Col span={8}>
+                          <FormWrap>
+                            <label htmlFor="">Cancellation limit</label>
+                            <input type="email" name="email" defaultValue="3" />
+                          </FormWrap>
+                        </Col>
+                        <Col span={12}>
+                          <FormWrap>
+                            <label htmlFor="">Opening time</label>
+                            <input
+                              type="text"
+                              name="company_name"
+                              defaultValue="09:00:00"
+                            />
+                          </FormWrap>
+                        </Col>
+                        <Col span={12}>
+                          <FormWrap>
+                            <label htmlFor="">Closing time</label>
+                            <input
+                              type="website"
+                              name="text"
+                              defaultValue="17:00:00"
+                            />
+                          </FormWrap>
+                        </Col>
+
+                        <Col span={24}>
+                          <Button
+                            buttonColor={color.brandColor}
+                            textColor={color.whiteColor}
+                            type="submit"
+                            className="float-left"
+                          >
+                            {" "}
+                            {"Save Calender Settings"}
+                          </Button>
+                        </Col>
+                      </Row>
+                    </form>
+                  </FormInput>
+                </Col>
+              </Row>
             </div>
 
-            <Row className="marginBottom-2">
+            {/* <Row className="marginBottom-2">
               <Col span={16} offset={4}>
                 <Card>
                   <div className="title">Booking Details</div>
@@ -202,7 +280,7 @@ class Company extends Component {
                   </div>
                 </Card>
               </Col>
-            </Row>
+            </Row> */}
           </SettingWrap>
         </AdminContainer>
       );

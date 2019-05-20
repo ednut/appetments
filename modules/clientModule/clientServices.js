@@ -167,6 +167,38 @@ export function _deletePet(id) {
     .then(client => client);
 }
 
+export function customerLogin(data) {
+  var auth = "Token " + Cookies.get("token");
+  const requestOptions = {
+    method: "POST",
+    headers: {
+      Authorization: auth,
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(data)
+  };
+
+  return Fetch(ClientAPi + `login/`, requestOptions)
+    .then(handleResponse)
+    .then(client => client);
+}
+
+export function customerSignup(data) {
+  var auth = "Token " + Cookies.get("token");
+  const requestOptions = {
+    method: "POST",
+    headers: {
+      Authorization: auth,
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(data)
+  };
+
+  return Fetch(ClientAPi + `signup/`, requestOptions)
+    .then(handleResponse)
+    .then(client => client);
+}
+
 function handleResponse(response) {
   return response.text().then(text => {
     const data = text && JSON.parse(text);

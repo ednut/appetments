@@ -1,6 +1,8 @@
 import { createOrder, getAllOrders, update, _delete } from "./orderServices";
 
 import { message } from "antd";
+import Router from "next/router";
+
 import {
   CREATE_ORDER,
   GET_ALL_ORDERS,
@@ -114,6 +116,28 @@ export function deleteOrderRequest(id) {
           payload: true
         });
         dispatch(message.success("Order deleted successfully"));
+        dispatch({ type: ORDER_LOADING, payload: false });
+      })
+      .catch(err => {
+        let e = err[Object.keys(err)[0]];
+        dispatch(message.error(e));
+        dispatch({ type: ORDER_LOADING, payload: false });
+        dispatch({ type: ORDER_ERROR, payload: err });
+      });
+  };
+}
+
+export function createOnlineOrderRequest(data) {
+  return dispatch => {
+    dispatch({ type: ORDER_LOADING, payload: true });
+    createOrder(data)
+      .then(order => {
+        dispatch({
+          type: CREATE_ORDER,
+          payload: true
+        });
+        dispatch(message.success("Order created successfully"));
+        Router.push("/online-booking-success");
         dispatch({ type: ORDER_LOADING, payload: false });
       })
       .catch(err => {

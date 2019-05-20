@@ -6,14 +6,16 @@ import { color, shadowStyle } from "../components/styles/constant";
 import { Spin, Icon, Menu, Dropdown } from "antd";
 
 const MenuWrap = styled.div`
-  background-color: #17977c;
+  background-color: ${color.brandColor};
   color: ${color.whiteColor};
   width: 100%;
   height: 6.5rem;
   padding: 0 5rem;
   display: flex;
   .logo-wrap {
-    flex-basis: 27%;
+    flex-basis: 24rem;
+    margin-right: 5rem;
+    /* border: 1px solid; */
     height: 100%;
     position: relative;
     overflow: hidden;
@@ -32,7 +34,7 @@ const MenuWrap = styled.div`
         position: absolute;
         width: 16rem;
         top: 30px;
-        left: 7rem;
+        left: 5rem;
         font-size: 11px;
         font-weight: 500;
       }
@@ -168,22 +170,22 @@ class SubNav extends Component {
     const profile = (
       <Menu>
         <Menu.Item key="0">
-          <Link href="/settings">
+          <Link href="/company-details">
             <span>
               {" "}
               <Icon type="setting" /> &nbsp;&nbsp;My Settings
             </span>
           </Link>
         </Menu.Item>
-        <Menu.Item key="1">
+        {/* <Menu.Item key="1">
           <Link href="/setup">
             <span>
               {" "}
               <Icon type="user" /> &nbsp;&nbsp;Account Setup
             </span>
           </Link>
-        </Menu.Item>
-        <Menu.Divider />
+        </Menu.Item> */}
+        {/* <Menu.Divider /> */}
         <Menu.Item key="3">
           <Link href="/login">
             <span onClick={logout}>
@@ -200,7 +202,7 @@ class SubNav extends Component {
             <a>
               <span className="logoText">
                 <svg
-                  width="65%"
+                  width="18rem"
                   height="100%"
                   viewBox="0 0 1600 400"
                   style={{
@@ -277,14 +279,16 @@ class SubNav extends Component {
                 </svg>
                 <span className="text">Easy Pet Appointments.</span>
               </span>
-              <span className="logoDog">
+              <span className="">
                 <svg
                   viewBox="0 0 570 587"
                   version="1.1"
                   width="18%"
                   style={{
                     fill: "#ffffff",
-                    marginTop: "5px"
+                    marginTop: "5px",
+                    position: "absolute",
+                    right: "0"
                   }}
                 >
                   <g id="layer101" transform="matrix(1,0,0,1,-9.76836,10.6267)">

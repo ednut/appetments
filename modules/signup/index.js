@@ -55,7 +55,7 @@ export function signupRequest(postData) {
         };
         localStorage.setItem("companyID", JSON.stringify(user.company));
         localStorage.setItem("userID", JSON.stringify(user.id));
-        dispatch(message.success("Signup Was Successful", 5));
+        message.success("Signup Was Successful", 5);
         dispatch({ type: SIGNUP_LOADING, payload: false });
         Cookies.set("token", user.auth_token, {
           expires: convertHourstoDays(ed)
@@ -72,7 +72,7 @@ export function signupRequest(postData) {
         let e = Array.isArray(err)
           ? err[Object.keys(err)[0]][0]
           : "Somthing went wrong";
-        dispatch(message.error(e, 5));
+        message.error(e, 5);
         dispatch({ type: SIGNUP_LOADING, payload: false });
         dispatch({ type: SIGNUP_ERROR, payload: err });
       });
@@ -99,7 +99,7 @@ export function googleSignupRequest(postData) {
           let HrToDay = totalHr / 24;
           return HrToDay;
         };
-        dispatch(message.success("Signup Was Successful", 5));
+        message.success("Signup Was Successful", 5);
         notification.open({
           message: "Change Password",
           description:
@@ -119,7 +119,7 @@ export function googleSignupRequest(postData) {
         let e = Array.isArray(err)
           ? err[Object.keys(err)[0]][0]
           : "Somthing went wrong";
-        dispatch(message.error(e, 5));
+        message.error(e);
         dispatch({ type: SIGNUP_LOADING, payload: false });
         dispatch({ type: SIGNUP_ERROR, payload: err });
       });

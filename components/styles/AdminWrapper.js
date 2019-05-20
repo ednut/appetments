@@ -60,7 +60,7 @@ const AdminWrapper = styled.section`
     }
   }
   .content-wrap {
-    margin-top: 5rem;
+    margin-top: 3rem;
     width: 1315px;
     margin-left: auto !important;
     margin-right: auto !important;

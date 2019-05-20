@@ -50,12 +50,12 @@ export function createStaffRequest(data) {
           payload: true
         });
         console.log(staff);
-        dispatch(message.success("Staff created successfully"));
+        dispatch(message.success("Staff created successfully", 5));
         dispatch({ type: STAFF_LOADING, payload: false });
       })
       .catch(err => {
         let e = err[Object.keys(err)[0]];
-        dispatch(message.error(e));
+        dispatch(message.error(e, 5));
         dispatch({ type: STAFF_LOADING, payload: false });
         dispatch({ type: STAFF_ERROR, payload: err });
       });
@@ -76,7 +76,7 @@ export function getAllStaffsRequest() {
       })
       .catch(err => {
         let e = err[Object.keys(err)[0]];
-        dispatch(message.error(e));
+        dispatch(message.error(e, 5));
         dispatch({ type: STAFF_LOADING, payload: false });
         dispatch({ type: STAFF_ERROR, payload: err });
       });
@@ -92,12 +92,12 @@ export function updateStaffRequest(data, staffID) {
           type: CREATE_STAFF,
           payload: true
         });
-        dispatch(message.success("Staff updated successfully"));
+        dispatch(message.success("Staff updated successfully", 5));
         dispatch({ type: STAFF_LOADING, payload: false });
       })
       .catch(err => {
         let e = err[Object.keys(err)[0]];
-        dispatch(message.error(e));
+        dispatch(message.error(e, 5));
         dispatch({ type: STAFF_LOADING, payload: false });
         dispatch({ type: STAFF_ERROR, payload: err });
       });
@@ -113,12 +113,12 @@ export function deleteStaffRequest(id) {
           type: CREATE_STAFF,
           payload: true
         });
-        dispatch(message.success("Staff deleted successfully"));
+        dispatch(message.success("Staff deleted successfully", 5));
         dispatch({ type: STAFF_LOADING, payload: false });
       })
       .catch(err => {
         let e = err[Object.keys(err)[0]];
-        dispatch(message.error(e));
+        dispatch(message.error(e, 5));
         dispatch({ type: STAFF_LOADING, payload: false });
         dispatch({ type: STAFF_ERROR, payload: err });
       });

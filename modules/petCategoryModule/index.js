@@ -13,7 +13,8 @@ import {
   GET_ALL_PETS_CATEGORY,
   DELETE_PET_CATEGORY,
   PET_CATEGORY_ERROR,
-  PET_CATEGORY_LOADING
+  PET_CATEGORY_LOADING,
+  RELOAD_PET
 } from "../types";
 
 // Reducer
@@ -30,6 +31,11 @@ export default function(state = initialState, action) {
       return {
         ...state,
         petCategoryCreated: action.payload
+      };
+    case RELOAD_PET:
+      return {
+        ...state,
+        reloadPet: action.payload
       };
     case GET_ALL_PETS_CATEGORY:
       return {
@@ -56,12 +62,12 @@ export function createPetCategoryRequest(data) {
           type: CREATE_PET_CATEGORY,
           payload: true
         });
-        dispatch(message.success("Pet created successfully", 5));
+        message.success("Pet created successfully", 5);
         dispatch({ type: PET_CATEGORY_LOADING, payload: false });
       })
       .catch(err => {
         let e = err[Object.keys(err)[0]];
-        dispatch(message.error(e, 5));
+        message.error(e, 5);
         dispatch({ type: PET_CATEGORY_LOADING, payload: false });
         dispatch({ type: PET_CATEGORY_ERROR, payload: err });
       });
@@ -77,12 +83,13 @@ export function getAllPetsCategoryRequest() {
           type: GET_ALL_PETS_CATEGORY,
           payload: petsCategory
         });
+        dispatch({ type: RELOAD_PET, payload: true });
         dispatch({ type: CREATE_PET_CATEGORY, payload: false });
         dispatch({ type: PET_CATEGORY_LOADING, payload: false });
       })
       .catch(err => {
         let e = err[Object.keys(err)[0]];
-        dispatch(message.error(e, 5));
+        message.error(e, 5);
         dispatch({ type: PET_CATEGORY_LOADING, payload: false });
         dispatch({ type: PET_CATEGORY_ERROR, payload: err });
       });
@@ -103,7 +110,7 @@ export function getPetsCategoryByIdRequest(id) {
       })
       .catch(err => {
         let e = err[Object.keys(err)[0]];
-        dispatch(message.error(e, 5));
+        message.error(e, 5);
         dispatch({ type: PET_CATEGORY_LOADING, payload: false });
         dispatch({ type: PET_CATEGORY_ERROR, payload: err });
       });
@@ -119,12 +126,12 @@ export function updatePetCategoryRequest(data, id) {
           type: CREATE_PET_CATEGORY,
           payload: true
         });
-        dispatch(message.success("Pet updated successfully", 5));
+        message.success("Pet updated successfully", 5);
         dispatch({ type: PET_CATEGORY_LOADING, payload: false });
       })
       .catch(err => {
         let e = err[Object.keys(err)[0]];
-        dispatch(message.error(e, 5));
+        message.error(e, 5);
         dispatch({ type: PET_CATEGORY_LOADING, payload: false });
         dispatch({ type: PET_CATEGORY_ERROR, payload: err });
       });
@@ -140,12 +147,12 @@ export function deletePetCategoryRequest(id) {
           type: CREATE_PET_CATEGORY,
           payload: true
         });
-        dispatch(message.success("Pet deleted successfully", 5));
+        message.success("Pet deleted successfully");
         dispatch({ type: PET_CATEGORY_LOADING, payload: false });
       })
       .catch(err => {
         let e = err[Object.keys(err)[0]];
-        ispatch(message.error(e, 5));
+        message.error(e, 5);
         dispatch({ type: PET_CATEGORY_LOADING, payload: false });
         dispatch({ type: PET_CATEGORY_ERROR, payload: err });
       });
@@ -161,12 +168,12 @@ export function activatePetCategoryRequest(id) {
           type: CREATE_PET_CATEGORY,
           payload: true
         });
-        dispatch(message.success("Pet activated successfully", 5));
+        message.success("Pet activated successfully", 5);
         dispatch({ type: PET_CATEGORY_LOADING, payload: false });
       })
       .catch(err => {
         let e = err[Object.keys(err)[0]];
-        dispatch(message.error(e), 5);
+        message.error(e, 5);
         dispatch({ type: PET_CATEGORY_LOADING, payload: false });
         dispatch({ type: PET_CATEGORY_ERROR, payload: err });
       });
@@ -182,12 +189,12 @@ export function deactivatePetCategoryRequest(id) {
           type: CREATE_PET_CATEGORY,
           payload: true
         });
-        dispatch(message.success("Pet deactivated successfully"));
+        message.success("Pet deactivated successfully");
         dispatch({ type: PET_CATEGORY_LOADING, payload: false });
       })
       .catch(err => {
         let e = err[Object.keys(err)[0]];
-        dispatch(message.error(e));
+        message.error(e, 5);
         dispatch({ type: PET_CATEGORY_LOADING, payload: false });
         dispatch({ type: PET_CATEGORY_ERROR, payload: err });
       });

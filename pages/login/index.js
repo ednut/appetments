@@ -106,8 +106,8 @@ const Login = ({ handleSubmit, submitting, loginRequest, loading }) => (
               type="password"
             />
             <Button
-              buttonColor={"#17977c"}
-              buttonHover={"rgba(23, 151, 124, 0.9)"}
+              buttonColor={color.brandColor}
+              buttonHover={color.brandColor}
               textColor={color.whiteColor}
               type="submit"
               className="button full"

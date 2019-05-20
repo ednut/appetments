@@ -1,17 +1,30 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import Cookies from "js-cookie";
+import styled from "styled-components";
 import { authUser } from "../services/authentication";
 import { getUserRequest } from "../modules/user";
+// import { getAllCompanyModule } from "../modules/company";
 import SubNav from "./Menu";
 import AdminWrapper from "./styles/AdminWrapper";
 import Link from "../components/Link";
 import { Icon, Menu, Dropdown } from "antd";
+
+const Div = styled.div``;
 
 class AdminContainer extends Component {
   componentDidMount() {
     this.props.authUser();
     this.props.getUserRequest();
   }
+
+  // componentDidUpdate() {
+  //   console.log(this.props.company && this.props.company.company_code);
+  //   Cookies.set(
+  //     "companyCode",
+  //     this.props.company && this.props.company.company_code
+  //   );
+  // }
 
   render() {
     const staff = (
@@ -97,6 +110,7 @@ class AdminContainer extends Component {
         </Menu.Item>
       </Menu>
     );
+
     return (
       <AdminWrapper>
         <SubNav user={this.props.user} />
@@ -174,7 +188,9 @@ class AdminContainer extends Component {
             </li>
           </ul>
         </div>
-        <div className="content-wrap">{this.props.children}</div>
+        <Div className="content-wrap" user={this.props.user}>
+          {this.props.children}
+        </Div>
       </AdminWrapper>
     );
   }

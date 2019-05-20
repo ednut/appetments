@@ -28,7 +28,7 @@ const StaffContentWrap = styled.div`
     height: 6rem;
     border-radius: 50%;
     border: none;
-    background-color: #17977c;
+    background-color: ${color.brandColor};
     color: #fff;
     animation: moveInBottom 1s linear;
     transition: all 0.2s;

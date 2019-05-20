@@ -25,6 +25,7 @@ import SpinerWrap from "../../components/Spinner";
 import LargePopup from "./LargePopup";
 import EditPopup from "./EditPopup";
 import CheckoutPopup from "./CheckoutPopup";
+import { color } from "../../components/styles/constant";
 
 const localizer = BigCalendar.momentLocalizer(moment);
 
@@ -39,7 +40,7 @@ const ButtonWrap = styled.div`
     height: 6rem;
     border-radius: 50%;
     border: none;
-    background-color: #17977c;
+    background-color: ${color.brandColor};
     color: #fff;
     animation: moveInBottom 1s linear;
     transition: all 0.2s;
