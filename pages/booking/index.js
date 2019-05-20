@@ -68,11 +68,20 @@ class Booking extends Component {
                   </p>
                   <Link
                     route="online-booking"
-                    params={{ slug: this.props.company.company_code }}
+                    params={{
+                      slug:
+                        this.props.company.company_code === null
+                          ? this.props.company.company_name.toLowerCase()
+                          : this.props.company.company_code
+                    }}
                   >
                     <a target="_blank">{` https://appetments.herokuapp.com${
                       Router.pathname
-                    }/${this.props.company.company_code}`}</a>
+                    }/${
+                      this.props.company.company_code === null
+                        ? this.props.company.company_name.toLowerCase()
+                        : this.props.company.company_code
+                    }`}</a>
                   </Link>
 
                   <button
