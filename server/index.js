@@ -7,5 +7,5 @@ const handler = routes.getRequestHandler(app);
 // Without express
 const { createServer } = require("http");
 app.prepare().then(() => {
-  createServer(handler).listen($PORT);
+  createServer(handler).listen(3001);
 });
