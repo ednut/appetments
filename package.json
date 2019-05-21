@@ -7,7 +7,7 @@
   },
   "main": "index.js",
   "scripts": {
-    "dev": "node server",
+    "dev": "next -p 3000",
     "build": "next build",
     "start": "next start  -p $PORT",
     "heroku-postbuild": "next build"

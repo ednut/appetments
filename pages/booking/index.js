@@ -9,7 +9,7 @@ import { shadowStyle, color, height } from "../../components/styles/constant";
 import { Row, Col, message } from "antd";
 import SpinerWrap from "../../components/Spinner";
 import copy from "copy-to-clipboard";
-import { Link } from "../../server/routes";
+import Link from "next/link";
 
 const BookingWrap = styled.div`
   .title {
@@ -49,6 +49,7 @@ class Booking extends Component {
     // console.log(Router.pathname);
     // console.log(t.his.props.url);
     if (this.props.company !== undefined) {
+      console.log(this.props.company.company_code);
       return (
         <AdminContainer>
           <BookingWrap>
@@ -66,14 +67,29 @@ class Booking extends Component {
                     Shedul online bookings are super easy to use and your page
                     works great on desktop, tablets and mobiles.
                   </p>
+
+                  {/* <Link
+                    href={`/online-booking?company-code=${
+                      this.props.company.company_code === null
+                        ? this.props.company.company_name.toLowerCase()
+                        : this.props.company.company_code
+                    }`}
+                  >
+                    <a target="_blank">{` https://appetments.herokuapp.com${
+                      Router.pathname
+                    }/${
+                      this.props.company.company_code === null
+                        ? this.props.company.company_name.toLowerCase()
+                        : this.props.company.company_code
+                    }`}</a>
+                  </Link> */}
+
                   <Link
-                    route="online-booking"
-                    params={{
-                      slug:
-                        this.props.company.company_code === null
-                          ? this.props.company.company_name.toLowerCase()
-                          : this.props.company.company_code
-                    }}
+                    href={`/online-booking?company-code=${
+                      this.props.company.company_code === null
+                        ? this.props.company.company_name.toLowerCase()
+                        : this.props.company.company_code
+                    }`}
                   >
                     <a target="_blank">{` https://appetments.herokuapp.com${
                       Router.pathname
@@ -83,7 +99,6 @@ class Booking extends Component {
                         : this.props.company.company_code
                     }`}</a>
                   </Link>
-
                   <button
                     onClick={() => {
                       copy(
