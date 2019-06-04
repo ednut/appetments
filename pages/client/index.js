@@ -155,6 +155,7 @@ class Client extends Component {
     this.setState({
       category: e
     });
+    console.log("from parent", e);
   };
 
   onOpenCreateModal = () => {
@@ -251,6 +252,11 @@ class Client extends Component {
           title: "Phone Number",
           dataIndex: "phone_number",
           key: "phone_number"
+        },
+        {
+          title: "Client Code",
+          dataIndex: "client_code",
+          key: "client_code"
         },
         {
           title: "Pet",
@@ -354,6 +360,7 @@ class Client extends Component {
           last_name: x.last_name,
           email: x.email,
           phone_number: x.phone_number,
+          client_code: x.customer_code,
           pet:
             x.pets.map(function(pet) {
               let arr = [];

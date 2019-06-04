@@ -13,6 +13,9 @@ const BodyContent = styled.div`
   .mtop-10 {
     margin-top: 10rem;
   }
+  .mtop-5 {
+    margin-top: 5rem;
+  }
   .header {
     height: 8rem;
     line-height: 8rem;
@@ -148,6 +151,30 @@ const BodyContent = styled.div`
   }
   .dazsFI {
     margin-bottom: 10px;
+  }
+  .no-service {
+    position: relative;
+    .ant-empty {
+      p {
+        display: none;
+      }
+    }
+    .text {
+      margin-top: 10rem;
+      font-weight: 600;
+      font-size: 18px;
+    }
+    button {
+      margin-top: 2rem;
+    }
+  }
+  .service-creation {
+    margin-bottom: 4rem;
+  }
+  .service-wrap {
+    table {
+      width: 100%;
+    }
   }
 `;
 

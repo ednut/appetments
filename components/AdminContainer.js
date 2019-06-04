@@ -71,6 +71,21 @@ class AdminContainer extends Component {
       </Menu>
     );
 
+    const onlineBooking = (
+      <Menu>
+        <Menu.Item key="0">
+          <Link href="/booking">
+            <a>Online Booking</a>
+          </Link>
+        </Menu.Item>
+        <Menu.Item key="1">
+          <Link href="/online-orders">
+            <a>Online Orders</a>
+          </Link>
+        </Menu.Item>
+      </Menu>
+    );
+
     const setup = (
       <Menu>
         <Menu.Item key="0">
@@ -172,12 +187,12 @@ class AdminContainer extends Component {
                 </span>
               </Dropdown>
             </li>
-            <li>
-              <Link activeClassName="active" href="/booking">
-                <a>
-                  <span className="text">Online Booking</span>
-                </a>
-              </Link>
+            <li className="with-dropdown">
+              <Dropdown overlay={onlineBooking} trigger={["click"]}>
+                <span className="text">
+                  Online Booking&nbsp;&nbsp; <Icon type="down" />
+                </span>
+              </Dropdown>
             </li>
             <li className="with-dropdown">
               <Dropdown overlay={setup} trigger={["click"]}>

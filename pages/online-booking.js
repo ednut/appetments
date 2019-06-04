@@ -3,6 +3,7 @@ import OnlineBookingWrapper from "../components/OnlineBookingWrapper";
 import { Row, Col, Form, Input, Icon } from "antd";
 import { connect } from "react-redux";
 import Cookies from "js-cookie";
+import { getCompanyByCodeRequest } from "../modules/company";
 import {
   customerLoginRequest,
   customerSignupRequest
@@ -26,6 +27,9 @@ class PageContent extends Component {
 
   componentDidMount() {
     this.props.form.validateFields();
+    this.props.getCompanyByCodeRequest({
+      company_code: Router.router.query.company_code
+    });
   }
 
   moveToNext = () => {
@@ -50,60 +54,73 @@ class PageContent extends Component {
       isFieldTouched
     } = this.props.form;
 
+    // console.log(Router.router.query.company_code);
+
     const codeError = isFieldTouched("code") && getFieldError("code");
-    return (
-      <OnlineBookingWrapper>
-        <div className="header"> Online Booking</div>
-        {this.props.loading === true ? <SpinerWrap /> : null}
-        <div className="container">
-          <div className="row">
-            <div className="col-md-12">
-              <div className="page-title">
-                Enter your code if you're an existing user
+    if (this.props.company !== undefined) {
+      return (
+        <OnlineBookingWrapper>
+          <div className="header">
+            {" "}
+            Welcome to {this.props.company.company_name}
+          </div>
+          {this.props.loading === true ? <SpinerWrap /> : null}
+          <div className="container">
+            <div className="row">
+              <div className="col-md-12">
+                <div className="page-title">
+                  Enter your code if you're an existing user
+                </div>
+              </div>
+              <div className="col-md-8 offset-md-2">
+                <FormInput>
+                  <Form onSubmit={this.handleSubmit}>
+                    <FormWrap>
+                      <Form.Item
+                        validateStatus={codeError ? "error" : ""}
+                        help={codeError || ""}
+                        label="Enter your code"
+                      >
+                        {getFieldDecorator("customer_code", {
+                          rules: [
+                            {
+                              required: false,
+                              message: "Please input your code!"
+                            }
+                          ]
+                        })(<Input type="text" placeholder="Enter code" />)}
+                      </Form.Item>
+                    </FormWrap>
+                    <br />
+
+                    <Button
+                      buttonColor={color.brandColor}
+                      buttonHover={color.brandColor}
+                      textColor={color.whiteColor}
+                      disabled={hasErrors(getFieldsError())}
+                      type="submit"
+                      className="button full"
+                    >
+                      Submit
+                    </Button>
+                  </Form>
+                </FormInput>
               </div>
             </div>
-            <div className="col-md-8 offset-md-2">
-              <FormInput>
-                <Form onSubmit={this.handleSubmit}>
-                  <FormWrap>
-                    <Form.Item
-                      validateStatus={codeError ? "error" : ""}
-                      help={codeError || ""}
-                      label="Enter your code"
-                    >
-                      {getFieldDecorator("customer_code", {
-                        rules: [
-                          {
-                            required: false,
-                            message: "Please input your code!"
-                          }
-                        ]
-                      })(<Input type="text" placeholder="Enter code" />)}
-                    </Form.Item>
-                  </FormWrap>
-                  <br />
-
-                  <Button
-                    buttonColor={color.brandColor}
-                    buttonHover={color.brandColor}
-                    textColor={color.whiteColor}
-                    disabled={hasErrors(getFieldsError())}
-                    type="submit"
-                    className="button full"
-                  >
-                    Submit
-                  </Button>
-                </Form>
-              </FormInput>
-            </div>
           </div>
-        </div>
-        <footer>
-          <div className="selected-info-wrap" />
-          <button onClick={this.moveToNext}>Continue as a new user</button>
-        </footer>
-      </OnlineBookingWrapper>
-    );
+          <footer>
+            <div className="selected-info-wrap" />
+            <button onClick={this.moveToNext}>Continue as a new user</button>
+          </footer>
+        </OnlineBookingWrapper>
+      );
+    } else {
+      return (
+        <OnlineBookingWrapper>
+          <SpinerWrap />
+        </OnlineBookingWrapper>
+      );
+    }
   }
 }
 
@@ -111,13 +128,15 @@ const VerifyUserForm = Form.create({ name: "veryfy_user" })(PageContent);
 
 const mapStateToProps = state => ({
   data: state.clientReducer.clientData,
-  loading: state.clientReducer.loadingClient
+  loading: state.clientReducer.loadingClient,
+  company: state.company.selectedCompany
 });
 
 export default connect(
   mapStateToProps,
   {
     customerLoginRequest,
-    customerSignupRequest
+    customerSignupRequest,
+    getCompanyByCodeRequest
   }
 )(VerifyUserForm);

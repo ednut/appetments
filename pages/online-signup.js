@@ -63,6 +63,7 @@ class PageContent extends Component {
     const email = isFieldTouched("email") && getFieldError("email");
     const phone_number =
       isFieldTouched("phone_number") && getFieldError("phone_number");
+
     return (
       <OnlineBookingWrapper>
         <div className="header">
@@ -177,9 +178,9 @@ class PageContent extends Component {
           </div>
         </div>
         {/* <footer>
-          <div className="selected-info-wrap" />
-          <button onClick={this.moveToNext}>Continue as a new user</button>
-        </footer> */}
+            <div className="selected-info-wrap" />
+            <button onClick={this.moveToNext}>Continue as a new user</button>
+          </footer> */}
       </OnlineBookingWrapper>
     );
   }

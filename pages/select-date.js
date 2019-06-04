@@ -6,6 +6,7 @@ import { connect } from "react-redux";
 import { serviceDataRequest } from "../modules/clientModule";
 import { createOnlineOrderRequest } from "../modules/orderModule";
 import { convertTimeformat, convert, formatDate } from "../utils/helpers";
+import Cookies from "js-cookie";
 import SpinerWrap from "../components/Spinner";
 import FormInput from "../components/styles/FormInput";
 import FormWrap from "../components/styles/FormWrap";
@@ -23,6 +24,8 @@ class SelectTime extends Component {
   }
 
   handleSubmit = data => {
+    const { user } = this.props.data;
+
     let t = moment(data.time).format();
     let x = t.split("T");
     let pickedDate = data.time;
@@ -36,7 +39,8 @@ class SelectTime extends Component {
     };
     let obj = {
       total_price: 0,
-      customer: data.data.data.id,
+      company: user.company,
+      customer: user.id,
       products: [],
       start_time: `${
         moment(data.date)
@@ -44,22 +48,19 @@ class SelectTime extends Component {
           .split("T")[0]
       }T${cleanTime()}`,
       note: "online booking",
-      services: [
-        {
-          service: data.data.service.id,
-          pet: data.data.pet,
-          price: data.data.service.price,
-          start_time: `${
-            moment(data.date)
-              .format()
-              .split("T")[0]
-          }T${cleanTime()}`,
-          duration: data.data.service.duration
-        }
-      ]
+      services: this.props.data.service.map(x => ({
+        duration: x.duration,
+        pet: x.pet[0],
+        price: x.price,
+        start_time: `${
+          moment(data.date)
+            .format()
+            .split("T")[0]
+        }T${cleanTime()}`,
+        service: x.service
+      }))
     };
     this.props.createOnlineOrderRequest(obj);
-    console.log(obj);
   };
 
   onChange = time => {
@@ -77,9 +78,9 @@ class SelectTime extends Component {
       Router.back();
     }
     const format = "HH:mm";
+    console.log(this.props.data);
     return (
       <OnlineBookingWrapper>
-        {console.log(this.props.data)}
         {this.props.loading === true ? <SpinerWrap /> : null}
         <div className="header">
           <Icon onClick={goBack} type="left" /> Pick date and time

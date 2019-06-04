@@ -2,12 +2,14 @@ import {
   COMPANY_ERROR,
   COMPANY_LOADING,
   GET_COMPANY,
+  GET_COMPANY_BY_CODE,
   COMPANY_SUCCESS,
   COMPANY_UPDATED_SUCCESSFULLY
 } from "../types";
 import {
   createCompany,
   getAllCompany,
+  getCompanyByCode,
   update,
   getCompanyById,
   addCloseDateToCompany,
@@ -37,6 +39,11 @@ export default function(state = initialState, action) {
       return {
         ...state,
         companies: action.payload
+      };
+    case GET_COMPANY_BY_CODE:
+      return {
+        ...state,
+        selectedCompany: action.payload
       };
     case COMPANY_UPDATED_SUCCESSFULLY:
       return {
@@ -70,6 +77,26 @@ export function createCompanyRequest(postData) {
         dispatch(message.success("Company created successfully"));
         dispatch({ type: COMPANY_LOADING, payload: false });
         Router.push("/dashboard");
+      })
+      .catch(err => {
+        let e = err[Object.keys(err)[0]];
+        dispatch(message.error(e));
+        dispatch({ type: COMPANY_LOADING, payload: false });
+        dispatch({ type: COMPANY_ERROR, payload: err });
+      });
+  };
+}
+
+export function getCompanyByCodeRequest(data) {
+  return dispatch => {
+    dispatch({ type: COMPANY_LOADING, payload: true });
+    getCompanyByCode(data)
+      .then(company => {
+        dispatch({
+          type: GET_COMPANY_BY_CODE,
+          payload: company
+        });
+        dispatch({ type: COMPANY_LOADING, payload: false });
       })
       .catch(err => {
         let e = err[Object.keys(err)[0]];

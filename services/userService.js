@@ -55,6 +55,10 @@ export const GoogleSignup = postData => {
     .then(user => user);
 };
 
+export function logout() {
+  Cookies.remove("token");
+}
+
 export const createCompany = postData => {
   var auth = "Token " + Cookies.get("token");
   const requestOptions = {
@@ -149,10 +153,20 @@ export function removeCloseDateFromCompany(data, id) {
     .then(company => company);
 }
 
-export function logout() {
-  // remove token from local storage to log user out
-  Cookies.remove("token");
-}
+export const getCompanyByCode = data => {
+  var auth = "Token " + Cookies.get("token");
+  const requestOptions = {
+    method: "POST",
+    headers: {
+      Authorization: auth,
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(data)
+  };
+  return Fetch(ComapanyAPI + `get-by-code/`, requestOptions)
+    .then(handleResponse)
+    .then(user => user);
+};
 
 function handleResponse(response) {
   return response.text().then(text => {

@@ -49,7 +49,6 @@ class Booking extends Component {
     // console.log(Router.pathname);
     // console.log(t.his.props.url);
     if (this.props.company !== undefined) {
-      console.log(this.props.company.company_code);
       return (
         <AdminContainer>
           <BookingWrap>
@@ -67,33 +66,14 @@ class Booking extends Component {
                     Shedul online bookings are super easy to use and your page
                     works great on desktop, tablets and mobiles.
                   </p>
-
-                  {/* <Link
-                    href={`/online-booking?company-code=${
-                      this.props.company.company_code === null
-                        ? this.props.company.company_name.toLowerCase()
-                        : this.props.company.company_code
-                    }`}
-                  >
-                    <a target="_blank">{` https://appetments.herokuapp.com${
-                      Router.pathname
-                    }/${
-                      this.props.company.company_code === null
-                        ? this.props.company.company_name.toLowerCase()
-                        : this.props.company.company_code
-                    }`}</a>
-                  </Link> */}
-
                   <Link
-                    href={`/online-booking?company-code=${
+                    href={`/online-booking?company_code=${
                       this.props.company.company_code === null
                         ? this.props.company.company_name.toLowerCase()
                         : this.props.company.company_code
                     }`}
                   >
-                    <a target="_blank">{` https://appetments.herokuapp.com${
-                      Router.pathname
-                    }/${
+                    <a target="_blank">{`http://localhost:3000/online-booking?company_code=${
                       this.props.company.company_code === null
                         ? this.props.company.company_name.toLowerCase()
                         : this.props.company.company_code
@@ -102,7 +82,7 @@ class Booking extends Component {
                   <button
                     onClick={() => {
                       copy(
-                        ` https://appetments.herokuapp.com${Router.pathname}/${
+                        ` http://localhost:3000/online-booking?company_code=${
                           this.props.company.company_code
                         }`
                       );

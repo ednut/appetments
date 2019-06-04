@@ -112,7 +112,7 @@ class Success extends Component {
                 </div>
               </div>
               <div>
-                <Link href="/online-booking">
+                {/* <Link href="/online-booking">
                   <a
                     style={{
                       display: "inline-block",
@@ -127,7 +127,7 @@ class Success extends Component {
                   >
                     Make another appointment
                   </a>
-                </Link>
+                </Link> */}
               </div>
             </div>
           </div>
