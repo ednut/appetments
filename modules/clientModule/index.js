@@ -344,7 +344,10 @@ export function customerLoginRequest(data) {
           type: CLIENT_LOGIN,
           payload: client
         });
-        // message.success("Login successful");
+        dispatch({
+          type: PET_CREATED,
+          payload: false
+        });
         Router.push("/select-service");
         dispatch({ type: LOADING_CLIENT, payload: false });
       })
@@ -365,6 +368,10 @@ export function customerSignupRequest(data) {
         dispatch({
           type: CLIENT_SIGNUP,
           payload: client
+        });
+        dispatch({
+          type: PET_CREATED,
+          payload: false
         });
         console.log("got it", client.customer_code);
         message.success("Signup successful");

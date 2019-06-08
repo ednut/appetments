@@ -47,14 +47,18 @@ class SelectService extends Component {
     this.props.getAllPetsCategoryRequest();
   }
 
-  componentDidUpdate() {
-    if (this.state.update) {
-      this.updatePet();
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.petCreated) {
+      this.props.customerLoginRequest({
+        customer_code: Cookies.get("CustomerID")
+      });
     }
   }
 
   updatePet = () => {
-    this.forceUpdate();
+    // this.props.customerLoginRequest({
+    //   customer_code: Cookies.get("CustomerID")
+    // });
     this.setState({ update: false });
   };
 
@@ -81,7 +85,6 @@ class SelectService extends Component {
     this.setState({
       category: e
     });
-    console.log(e);
   };
 
   handlePetSubmit = e => {
@@ -157,9 +160,7 @@ class SelectService extends Component {
 
   removeService = obj => {
     // let service = this.totalService.map(x => x.service.map(y => y));
-    console.log("before", this.totalService);
     this.totalService.splice(this.totalService.indexOf(obj), 1);
-    console.log("after", this.totalService);
     this.setState(prevState => ({
       service: prevState.service.concat(this.totalService)
     }));
@@ -175,14 +176,13 @@ class SelectService extends Component {
 
   remove = x => {
     this.totalService.splice(this.totalService.indexOf(x.serviceId), 1);
-    console.log("", this.totalService);
   };
 
   render() {
     function goBack() {
       Router.back();
     }
-    console.log(this.totalService);
+    console.log(this.props.petCreated);
     if (this.props.services !== undefined && this.props.data !== undefined) {
       return (
         <OnlineBookingWrapper>
@@ -244,7 +244,6 @@ class SelectService extends Component {
                           </tr>
                           {this.totalService.map(y => (
                             <tr key={y.service}>
-                              {console.log(y)}
                               <td>
                                 {" "}
                                 <span className="tag">{y.pet_name}</span>{" "}
@@ -323,6 +322,7 @@ const mapStateToProps = state => ({
   services: state.serviceReducer.services,
   petCategories: state.petCategoryReducer.petsCategory,
   reloadPet: state.petCategoryReducer.reloadPet,
+  petCreated: state.clientReducer.petCreated,
   data: state.clientReducer.clientData,
   loading: state.clientReducer.loadingClient
 });
