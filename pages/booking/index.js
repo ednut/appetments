@@ -73,7 +73,7 @@ class Booking extends Component {
                         : this.props.company.company_code
                     }`}
                   >
-                    <a target="_blank">{`http://localhost:3000/online-booking?company_code=${
+                    <a target="_blank">{`https://appetments.herokuapp.com/online-booking?company_code=${
                       this.props.company.company_code === null
                         ? this.props.company.company_name.toLowerCase()
                         : this.props.company.company_code
@@ -82,7 +82,7 @@ class Booking extends Component {
                   <button
                     onClick={() => {
                       copy(
-                        ` http://localhost:3000/online-booking?company_code=${
+                        ` https://appetments.herokuapp.com/online-booking?company_code=${
                           this.props.company.company_code
                         }`
                       );
