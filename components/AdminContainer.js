@@ -141,7 +141,7 @@ class AdminContainer extends Component {
             <li>
               <Link activeClassName="active" href="/calender">
                 <a>
-                  <span className="text">Calender</span>
+                  <span className="text">Calendar</span>
                 </a>
               </Link>
             </li>
