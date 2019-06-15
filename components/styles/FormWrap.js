@@ -80,6 +80,9 @@ const FormWrap = styled.div`
       }
     }
   }
+  input:disabled {
+    cursor: not-allowed;
+  }
   .ant-select-selection {
     border: none;
     outline: none;

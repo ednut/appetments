@@ -208,6 +208,12 @@ class Location extends Component {
     this.setState({ openStaffService: true });
   };
 
+  removingStaffFromLocation = x => {
+    let staff = [x];
+    console.log(staff, this.state.id);
+    this.props.removeStaffFromLocationRequest(staff, this.state.id);
+  };
+
   updateLocation = location => {
     this.setState({
       id: location.id,
@@ -244,40 +250,29 @@ class Location extends Component {
           title: "Staff",
           key: "staff",
           dataIndex: "staff",
-          render: staffs => (
-            <span>
-              {staffs.map(x => {
-                return (
-                  <Tag key={x}>
-                    {x !== "No Staff Created" ? (
-                      <span
-                        onClick={() => {
-                          this.updatePet(x);
-                        }}
-                      >
-                        {x}
+          render: obj => (
+            <span onClick={() => this.setState({ id: obj.id })}>
+              {/* {console.log("data", obj)} */}
+              {obj.staff.length !== 0 ? (
+                obj.staff.map(staff => (
+                  <Tag key={staff.id}>
+                    {" "}
+                    <span>{staff.first_name}</span>{" "}
+                    <Popconfirm
+                      title="Are you sure you want to delete this staff?"
+                      onConfirm={() => this.removingStaffFromLocation(staff.id)}
+                      okText="Yes"
+                      cancelText="No"
+                    >
+                      <span className="icon" style={{ marginLeft: "8px" }}>
+                        <i className="fas fa-times" />
                       </span>
-                    ) : (
-                      <span>{x}</span>
-                    )}
-
-                    {x !== "No Staff Created" ? (
-                      <Popconfirm
-                        title="Are you sure you want to delete this staff?"
-                        onConfirm={() =>
-                          this.props.removeStaffFromLocationRequest(x.id)
-                        }
-                        okText="Yes"
-                        cancelText="No"
-                      >
-                        <span className="icon" style={{ marginLeft: "8px" }}>
-                          <i className="fas fa-times" />
-                        </span>
-                      </Popconfirm>
-                    ) : null}
+                    </Popconfirm>
                   </Tag>
-                );
-              })}
+                ))
+              ) : (
+                <Tag>No Staff Created</Tag>
+              )}
             </span>
           )
         },
@@ -334,6 +329,7 @@ class Location extends Component {
         }
       ];
       const data = this.props.locations.map(function(x) {
+        console.log(x);
         return {
           key: x.id,
           location: ` ${x.location_name}
@@ -343,18 +339,7 @@ class Location extends Component {
           zip_code: x.zip_code,
           city: x.city,
           state: x.state,
-          staff:
-            x.staff.map(function(x) {
-              let arr = [];
-              arr.push(`${x.first_name} ${x.last_name}`);
-              return arr;
-            }).length > 0
-              ? x.staff.map(function(x) {
-                  let arr = [];
-                  arr.push(`${x.first_name} ${x.last_name}`);
-                  return arr;
-                })
-              : ["No Staff Created"],
+          staff: x,
           action: x
         };
       });

@@ -158,10 +158,10 @@ export function addStaffToLocationRequest(data, id) {
   };
 }
 
-export function removeStaffFromLocationRequest(id) {
+export function removeStaffFromLocationRequest(data, id) {
   return dispatch => {
     dispatch({ type: LOCATION_LOADING, payload: true });
-    removeStaff(id)
+    removeStaff(data, id)
       .then(location => {
         dispatch({
           type: GET_LOCATION,

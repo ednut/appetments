@@ -51,6 +51,7 @@ class PetCategoryMembers extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      id: "",
       company: "",
       name: "",
       submitted: false,
@@ -84,9 +85,10 @@ class PetCategoryMembers extends Component {
 
   handleUpdateSubmit = e => {
     e.preventDefault();
-    const { name } = this.state;
+    const { name, id } = this.state;
     this.setState({ submitted: true });
     const data = {
+      id: id,
       name: name
     };
     if (name) {
@@ -123,6 +125,8 @@ class PetCategoryMembers extends Component {
   updatePetCategory = pet => {
     console.log(pet);
     this.setState({
+      id: pet.id,
+      company: pet.company,
       name: pet.name,
       openUpdatePet: true
     });

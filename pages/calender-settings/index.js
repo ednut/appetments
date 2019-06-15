@@ -64,12 +64,22 @@ class Company extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      id: "",
-      hours_bookable_in_advance: "",
-      max_day_bookable_in_advance: "",
-      cancellation_limit: "",
-      opening_time: "",
-      closing_time: "",
+      id: this.props.companies ? this.props.companies.id : "",
+      hours_bookable_in_advance: this.props.companies
+        ? this.props.companies.hours_bookable_in_advance
+        : "",
+      max_day_bookable_in_advance: this.props.companies
+        ? this.props.companies.max_day_bookable_in_advance
+        : "",
+      cancellation_limit: this.props.companies
+        ? this.props.companies.cancellation_limit
+        : "",
+      opening_time: this.props.companies
+        ? this.props.companies.opening_time
+        : "",
+      closing_time: this.props.companies
+        ? this.props.companies.closing_time
+        : "",
       submitted: false,
       openUpdateCompany: false
     };
@@ -142,6 +152,14 @@ class Company extends Component {
 
   render() {
     if (this.props.companies !== undefined) {
+      console.log("state", this.state);
+      const {
+        hours_bookable_in_advance,
+        max_day_bookable_in_advance,
+        cancellation_limit,
+        opening_time,
+        closing_time
+      } = this.state;
       return (
         <AdminContainer>
           <SettingWrap className="container">
@@ -173,15 +191,16 @@ class Company extends Component {
                     </div>
                   </div>
                   <FormInput>
-                    <form>
+                    <form onSubmit={this.handleSubmit}>
                       <Row gutter={16}>
                         <Col span={8}>
                           <FormWrap>
                             <label htmlFor="">Hours bookable in advance</label>
                             <input
                               type="text"
-                              name="first_name"
-                              defaultValue="3"
+                              onChange={this.handleChange}
+                              name="hours_bookable_in_advance"
+                              value={hours_bookable_in_advance}
                             />
                           </FormWrap>
                         </Col>
@@ -192,15 +211,21 @@ class Company extends Component {
                             </label>
                             <input
                               type="text"
-                              name="last_name"
-                              defaultValue="10"
+                              onChange={this.handleChange}
+                              name="max_day_bookable_in_advance"
+                              value={max_day_bookable_in_advance}
                             />
                           </FormWrap>
                         </Col>
                         <Col span={8}>
                           <FormWrap>
                             <label htmlFor="">Cancellation limit</label>
-                            <input type="email" name="email" defaultValue="3" />
+                            <input
+                              type="text"
+                              name="cancellation_limit"
+                              onChange={this.handleChange}
+                              value={cancellation_limit}
+                            />
                           </FormWrap>
                         </Col>
                         <Col span={12}>
@@ -208,8 +233,9 @@ class Company extends Component {
                             <label htmlFor="">Opening time</label>
                             <input
                               type="text"
-                              name="company_name"
-                              defaultValue="09:00:00"
+                              name="opening_time"
+                              onChange={this.handleChange}
+                              value={opening_time}
                             />
                           </FormWrap>
                         </Col>
@@ -217,9 +243,10 @@ class Company extends Component {
                           <FormWrap>
                             <label htmlFor="">Closing time</label>
                             <input
-                              type="website"
-                              name="text"
-                              defaultValue="17:00:00"
+                              type="text"
+                              name="closing_time"
+                              onChange={this.handleChange}
+                              value={closing_time}
                             />
                           </FormWrap>
                         </Col>
@@ -241,46 +268,6 @@ class Company extends Component {
                 </Col>
               </Row>
             </div>
-
-            {/* <Row className="marginBottom-2">
-              <Col span={16} offset={4}>
-                <Card>
-                  <div className="title">Booking Details</div>
-                  <div className="row">
-                    <div className="col-md-4">
-                      <label htmlFor="">Hours bookable in advance</label>
-                      <div className="cont">
-                        {this.props.companies.hours_bookable_in_advance}
-                      </div>
-                    </div>
-                    <div className="col-md-4">
-                      <label htmlFor="">Max day bookable in advance</label>
-                      <div className="cont">
-                        {this.props.companies.max_day_bookable_in_advance}
-                      </div>
-                    </div>
-                    <div className="col-md-4">
-                      <label htmlFor="">Cancellation limit</label>
-                      <div className="cont">
-                        {this.props.companies.cancellation_limit}
-                      </div>
-                    </div>
-                    <div className="col-md-4">
-                      <label htmlFor="">Opening time</label>
-                      <div className="cont">
-                        {this.props.companies.opening_time}
-                      </div>
-                    </div>
-                    <div className="col-md-4">
-                      <label htmlFor="">Closing time</label>
-                      <div className="cont">
-                        {this.props.companies.closing_time}
-                      </div>
-                    </div>
-                  </div>
-                </Card>
-              </Col>
-            </Row> */}
           </SettingWrap>
         </AdminContainer>
       );

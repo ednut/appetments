@@ -4,12 +4,14 @@ import {
   getPetCategoryById,
   activatePetCategory,
   deactivatePetCategory,
+  updatePetCategory,
   _deletePetCategory
 } from "./petCategoryServices";
 
 import { message } from "antd";
 import {
   CREATE_PET_CATEGORY,
+  UPDATE_PET_CATEGORY,
   GET_ALL_PETS_CATEGORY,
   DELETE_PET_CATEGORY,
   PET_CATEGORY_ERROR,
@@ -123,7 +125,7 @@ export function updatePetCategoryRequest(data, id) {
     updatePetCategory(data, id)
       .then(petCategory => {
         dispatch({
-          type: CREATE_PET_CATEGORY,
+          type: UPDATE_PET_CATEGORY,
           payload: true
         });
         message.success("Pet updated successfully", 5);

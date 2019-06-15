@@ -1,7 +1,7 @@
 import Router from "next/router";
 import Fetch from "isomorphic-unfetch";
 import Cookies from "js-cookie";
-import { ClientAPi } from "../../Config";
+import { ClientAPi, PetAPI } from "../../Config";
 
 export function createClient(data) {
   var auth = "Token " + Cookies.get("token");
@@ -162,7 +162,7 @@ export function _deletePet(id) {
     }
   };
 
-  return Fetch(ClientAPi + `${id}/pets/`, requestOptions)
+  return Fetch(PetAPI + `${id}/`, requestOptions)
     .then(handleResponse)
     .then(client => client);
 }

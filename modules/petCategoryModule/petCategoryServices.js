@@ -64,6 +64,22 @@ export function activatePetCategory(id) {
     .then(petCategory => petCategory);
 }
 
+export function updatePetCategory(data, id) {
+  var auth = "Token " + Cookies.get("token");
+  const requestOptions = {
+    method: "PATCH",
+    headers: {
+      Authorization: auth,
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(data)
+  };
+
+  return Fetch(PetCategoriesAPI + `${id}`, requestOptions)
+    .then(handleResponse)
+    .then(petCategory => petCategory);
+}
+
 export function deactivatePetCategory(id) {
   var auth = "Token " + Cookies.get("token");
   const requestOptions = {

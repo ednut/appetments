@@ -61,10 +61,14 @@ class Company extends Component {
     super(props);
     this.state = {
       id: "",
-      company_name: "",
-      description: "",
-      website: "",
-      contact_number: "",
+      company_name: this.props.companies
+        ? this.props.companies.company_name
+        : "",
+      description: this.props.companies ? this.props.companies.description : "",
+      website: this.props.companies ? this.props.companies.website : "",
+      contact_number: this.props.companies
+        ? this.props.companies.contact_number
+        : "",
       groomer: {
         id: "",
         first_name: "",
@@ -135,8 +139,6 @@ class Company extends Component {
       const antIcon = (
         <Icon type="loading" style={{ fontSize: 18, color: "white" }} spin />
       );
-      console.log(this.props.companies);
-      const { submitted } = this.state;
       return (
         <AdminContainer>
           <SettingWrap className="container">
@@ -167,8 +169,9 @@ class Company extends Component {
                             <input
                               type="text"
                               name="first_name"
+                              disabled
                               defaultValue={
-                                this.props.companies.first_name || ""
+                                this.props.companies.groomer.first_name || ""
                               }
                               placeholder="Enter your first name"
                             />
@@ -180,8 +183,9 @@ class Company extends Component {
                             <input
                               type="text"
                               name="last_name"
+                              disabled
                               defaultValue={
-                                this.props.companies.last_name || ""
+                                this.props.companies.groomer.last_name || ""
                               }
                               placeholder="Enter your first name"
                             />
@@ -193,7 +197,10 @@ class Company extends Component {
                             <input
                               type="email"
                               name="email"
-                              defaultValue={this.props.companies.email || ""}
+                              disabled
+                              defaultValue={
+                                this.props.companies.groomer.email || ""
+                              }
                               placeholder="Enter your email"
                             />
                           </FormWrap>
@@ -204,9 +211,7 @@ class Company extends Component {
                             <input
                               type="text"
                               name="company_name"
-                              defaultValue={
-                                this.props.companies.company_name || ""
-                              }
+                              value={this.state.company_name}
                               onChange={this.handleChange}
                               placeholder="Enter your company name"
                             />
@@ -223,7 +228,7 @@ class Company extends Component {
                             <input
                               type="text"
                               name="website"
-                              defaultValue={this.props.companies.website || ""}
+                              value={this.state.website}
                               onChange={this.handleChange}
                               placeholder="Enter your website"
                             />
@@ -238,9 +243,7 @@ class Company extends Component {
                             <input
                               type="text"
                               name="contact_number"
-                              defaultValue={
-                                this.props.companies.contact_number || ""
-                              }
+                              value={this.state.contact_number}
                               onChange={this.handleChange}
                               placeholder="Enter your contact number"
                             />
@@ -256,9 +259,7 @@ class Company extends Component {
                             <label htmlFor="">Description</label>
                             <textarea
                               name="description"
-                              defaultValue={
-                                this.props.companies.description || ""
-                              }
+                              value={this.state.description}
                               onChange={this.handleChange}
                               placeholder="Enter description"
                             />

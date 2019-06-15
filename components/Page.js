@@ -97,6 +97,20 @@ const GlobalStyle = createGlobalStyle`
     .ant-spin{
       color: ${color.brandColor}!important;
     }
+    .ant-table-body{
+      table{
+        tr{
+          td{
+            text-transform: capitalize;
+          }
+        }
+      }
+    }
+    .action-wrap{
+      button{
+        z-index: 1000;
+      }
+    }
 
   .container {
     width: 100%;

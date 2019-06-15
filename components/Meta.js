@@ -6,7 +6,10 @@ const Meta = () => (
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="shortcut icon" href="/static/images/favicon.png" />
     <title>Appetments</title>
-
+    <meta
+      name="google-site-verification"
+      content="W1NqonsRdh3iIEz_CLEbNJgrrXZ4GR3H19dJNzXyvbk"
+    />
     <link
       rel="stylesheet"
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
